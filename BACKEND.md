@@ -60,6 +60,12 @@ npx wrangler d1 execute wc2026 --local --command "SELECT created_at, display_nam
 ```
 npm run deploy
 ```
+
+> **When you change `i18n.js` or `scoring.js`, bump the cache-buster.** Every page loads
+> them as `i18n.js?v=N` / `scoring.js?v=N`. Increment `N` in all four HTML files
+> (index, leaderboard, standings, faq) so browsers fetch the new file instead of a cached
+> copy. (Skipping this can show raw keys like `q10_sub` to users on a stale cache.)
+
 (or connect the repo in the Cloudflare dashboard → Pages → it auto-builds on push).
 After the first deploy, bind the D1 database to the Pages project in the dashboard
 (**Settings → Functions → D1 bindings**: variable `DB` → `wc2026`) if it isn't already
