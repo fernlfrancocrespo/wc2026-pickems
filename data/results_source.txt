@@ -1,0 +1,11 @@
+# Match results — one played match per line, used to build live group standings.
+# Format:  HomeTeam <goals>-<goals> AwayTeam
+# Lines starting with '#' and blank lines are ignored. Only group-stage matches
+# (both teams in the same group) affect the standings; knockout lines are skipped.
+#
+# After editing, regenerate data/live.json:
+#   python scrape.py --only results --results-txt data/results_source.txt --verbose
+#
+# Examples (delete these once real results start):
+# Mexico 2-1 South Africa
+# South Korea 0-0 Czechia

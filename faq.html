@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>World Cup 2026 Pick-'Ems · FAQ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --navy:#0D1B2A; --navy-card:#1A2D40; --navy-input:#0F2235; --red:#C8102E; --gold:#C9A84C; --gold-light:#E8C66A; --white:#fff; --grey-light:#B8C5D0; --grey-mid:#6B8099; --border:rgba(255,255,255,0.08); --radius:12px; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;line-height:1.6}
+    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--navy)}::-webkit-scrollbar-thumb{background:var(--navy-card);border-radius:3px}
+    a{color:inherit}
+    .site-header{background:linear-gradient(120deg,#080f18,#1a0812 50%,#080f18);border-bottom:2px solid var(--gold);padding:18px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .header-left{display:flex;align-items:center;gap:14px}
+    .header-logo{width:6px;height:38px;border-radius:3px;background:var(--gold)}
+    .header-titles h1{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:3px;line-height:1}
+    .header-titles h1 span{color:var(--gold)}
+    .header-titles p{font-size:.7rem;color:var(--grey-mid);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+    .header-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .nav-link{display:flex;align-items:center;gap:6px;color:var(--grey-light);text-decoration:none;font-size:.78rem;font-weight:600;padding:7px 12px;border:1px solid var(--border);border-radius:8px;transition:all .15s;white-space:nowrap}
+    .nav-link:hover{color:var(--gold);border-color:var(--gold)}
+    .nav-link.cta{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+    .lang-toggle{display:flex;gap:4px;background:rgba(255,255,255,.05);border-radius:8px;padding:3px}
+    .lang-btn{display:flex;align-items:center;gap:5px;background:transparent;border:none;cursor:pointer;padding:5px 9px;border-radius:6px;color:var(--grey-light);font-family:'Inter',sans-serif;font-size:.72rem;font-weight:700;transition:all .15s}
+    .lang-btn img{width:20px;border-radius:2px;display:block}
+    .lang-btn.active{background:var(--gold);color:var(--navy)}
+    .wrap{max-width:780px;margin:0 auto;padding:40px 20px 80px}
+    .intro{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:2px;margin-bottom:6px}
+    .intro-sub{color:var(--grey-mid);font-size:.9rem;margin-bottom:28px}
+    .faq-card{background:var(--navy-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin-bottom:14px;border-left:3px solid var(--gold)}
+    .faq-card h3{color:var(--gold);font-size:1.02rem;margin-bottom:7px}
+    .faq-card p{color:var(--grey-light);font-size:.92rem}
+    .faq-card a{color:var(--gold-light);text-decoration:none;font-weight:600}
+    .faq-card a:hover{text-decoration:underline}
+    .faq-card ul{margin:8px 0 0 18px;color:var(--grey-light);font-size:.9rem}
+    .faq-card li{margin-bottom:4px}
+    .prize{border-left-color:var(--red)}
+    .prize h3{color:#f87171}
+    .contact-card{background:linear-gradient(120deg,rgba(201,168,76,.1),rgba(200,16,46,.06));border:1px solid var(--gold);border-radius:var(--radius);padding:24px;margin-top:26px;text-align:center}
+    .contact-card h3{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:1.5px;color:var(--white);margin-bottom:8px}
+    .contact-card p{color:var(--grey-light);font-size:.9rem;max-width:440px;margin:0 auto 18px}
+    .contact-btn{display:inline-block;background:var(--gold);color:var(--navy);font-weight:700;font-size:.92rem;text-decoration:none;padding:13px 26px;border-radius:10px;transition:filter .15s}
+    .contact-btn:hover{filter:brightness(1.08)}
+    @media(max-width:600px){
+      .site-header{padding:14px 16px}
+      .header-titles h1{font-size:1.4rem}
+      .header-right{width:100%;justify-content:space-between}
+      .lang-btn span{display:none}
+    }
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-left">
+    <div class="header-logo"></div>
+    <div class="header-titles">
+      <a href="/" style="text-decoration:none;color:inherit">
+        <h1>WORLD CUP 2026 <span id="hdr-tag">FAQ</span></h1>
+      </a>
+      <p id="hdr-sub">Rules &amp; support</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <a class="nav-link" href="/standings.html" id="nav-standings">Live standings</a>
+    <a class="nav-link" href="/leaderboard.html" id="nav-board">Leaderboard</a>
+    <a class="nav-link cta" href="/" id="nav-form">Make a pick</a>
+    <div class="lang-toggle" id="lang-toggle">
+      <button class="lang-btn" data-lang="en" title="English"><img src="https://flagcdn.com/w40/gb.png" alt="EN"><span>EN</span></button>
+      <button class="lang-btn" data-lang="pt" title="Português"><img src="https://flagcdn.com/w40/br.png" alt="PT"><span>PT</span></button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="intro" id="intro-title">FREQUENTLY ASKED QUESTIONS</div>
+  <div class="intro-sub" id="intro-sub">Everything you need to know about the pool.</div>
+  <div id="faq-list"></div>
+  <div class="contact-card">
+    <h3 id="contact-title">STILL NEED HELP?</h3>
+    <p id="contact-body">Use the support form to request a bracket deletion, report a website bug, or ask anything else.</p>
+    <a class="contact-btn" id="contact-btn" href="https://forms.gle/vyf6di6pDW4Mr8kT6" target="_blank" rel="noreferrer">Open the support form</a>
+  </div>
+</div>
+
+<script src="i18n.js"></script>
+<script>
+const CONTACT = "https://forms.gle/vyf6di6pDW4Mr8kT6";
+
+const FAQ = {
+  en: {
+    introTitle: "FREQUENTLY ASKED QUESTIONS",
+    introSub: "Everything you need to know about the pool.",
+    navStandings: "Live standings", navBoard: "Leaderboard", navForm: "Make a pick",
+    tag: "FAQ", sub: "Rules & support",
+    items: [
+      ["What is this?",
+       "It's a World Cup bracket predictor that goes way beyond just picking the winner. You'll call everything from which young player has a breakout tournament to how many seconds the fastest goal takes. Every question is worth points, and whoever has the most by the time the final whistle blows wins."],
+      ["How does it work?",
+       "First I built a dataset of every team, roster, and FIFA ranking by scraping public sources like Wikipedia. The goal was something you could just fill out and share with a link, with no accounts and no logins. You make your picks before kickoff, they lock in, and as real results come in your score updates on its own."],
+      ["What do I get if I win?",
+       "Bragging rights, mostly. And if you're with us at the Lastinger Center for Learning, the top scorer gets a prize that'll be revealed at LAX, our all-associates conference (in Orlando this year)."],
+      ["Can I share this with anyone?",
+       "Yes! Feel free to send it to anyone you want."],
+      ["How will the knockout bracket work?",
+       "The group stage ends on June 27 and the knockout rounds begin on June 28. I'll email you a link to edit your bracket and see how many points you've scored so far. If you fill it out before the knockout starts, the system updates your original entry to include your bracket picks too."],
+      ["Can I change my picks before it locks?",
+       "Yes! Just fill out a fresh bracket and make sure you use the same email address. If you don't remember which email you used, contact me down below."],
+      ["How does scoring work?",
+       "There are three kinds of question. Exact picks like the champion or the award winners are all or nothing. Group order gives you points for each team you put in the real top two, plus a bonus for a perfect 1 to 4. Numeric props let you pick a range, and you get full points if the real number lands in your range, or half if you are one range off. Tap the small ‘i’ next to any question on the form to see its exact rule."],
+      ["When do the scores update?",
+       "Manually, after each matchday. Fernando hopes to have the scores updated within 12 hours of each game finishing."],
+      ["How many times will you email us?",
+       "Only once! I have no use for a pile of random emails, so I promise you won't get any spam from me. And your email is never shared with anyone."],
+      ["Who made this, and why?",
+       "Hello! My name is Fernando and I made this to do a World Cup bracket with my family, who live across the world. I was inspired by Riot Games' League of Legends pick-ems and wanted something like that for the World Cup. It was mostly vibe coded, though I do have a computer science degree. Hope you enjoy it."],
+    ],
+    contactTitle: "STILL NEED HELP?",
+    contactBody: "Use the support form to request a bracket deletion, report a website bug, or ask anything else.",
+    contactBtn: "Open the support form",
+  },
+  pt: {
+    introTitle: "PERGUNTAS FREQUENTES",
+    introSub: "Tudo o que você precisa saber sobre o bolão.",
+    navStandings: "Classificação ao vivo", navBoard: "Placar", navForm: "Fazer palpite",
+    tag: "FAQ", sub: "Regras e suporte",
+    items: [
+      ["O que é isto?",
+       "É um bolão da Copa do Mundo que vai muito além de só escolher o campeão. Você vai prever de tudo, desde qual jovem terá uma grande Copa até quantos segundos leva o gol mais rápido. Cada pergunta vale pontos, e quem tiver mais quando soar o apito final vence."],
+      ["Como funciona?",
+       "Primeiro montei uma base de dados com todas as seleções, elencos e rankings da FIFA, coletando de fontes públicas como a Wikipédia. A ideia era algo que você pudesse preencher e compartilhar com um link, sem contas e sem logins. Você faz seus palpites antes do apito inicial, eles travam, e conforme saem os resultados sua pontuação se atualiza sozinha."],
+      ["O que eu ganho se vencer?",
+       "Orgulho, principalmente. E se você é do Lastinger Center for Learning, quem fizer mais pontos ganha um prêmio que será revelado no LAX, nossa conferência de associados (este ano em Orlando)."],
+      ["Posso compartilhar com qualquer pessoa?",
+       "Sim! Pode mandar para quem você quiser."],
+      ["Como vai funcionar o mata-mata?",
+       "A fase de grupos termina em 27 de junho e o mata-mata começa em 28 de junho. Vou te enviar um link para editar seu chaveamento e ver quantos pontos você já fez. Se você preencher antes do mata-mata começar, o sistema atualiza seu palpite original para incluir o chaveamento também."],
+      ["Posso mudar meus palpites antes de travar?",
+       "Sim! Basta preencher um novo bolão usando o mesmo endereço de e-mail. Se você não lembrar qual e-mail usou, entre em contato comigo aqui embaixo."],
+      ["Como funciona a pontuação?",
+       "Há três tipos de pergunta. Palpites exatos, como o campeão ou os prêmios, são tudo ou nada. A ordem dos grupos dá pontos para cada seleção que você colocar entre as duas primeiras reais, com um bônus pela ordem perfeita de 1 a 4. As apostas numéricas deixam você escolher uma faixa, e você ganha pontuação cheia se o número real cair na sua faixa, ou metade se errar por uma faixa. Toque no ‘i’ ao lado de qualquer pergunta no formulário para ver a regra exata."],
+      ["Com que frequência os placares são atualizados?",
+       "Manualmente, após cada rodada. O Fernando espera atualizar os placares em até 12 horas após o fim de cada jogo."],
+      ["Quantas vezes vocês vão me enviar e-mail?",
+       "Só uma vez! Não tenho uso para um monte de e-mails aleatórios, então prometo que você não vai receber spam meu. E seu e-mail nunca é compartilhado com ninguém."],
+      ["Quem fez isto, e por quê?",
+       "Olá! Meu nome é Fernando e eu fiz isto para jogar um bolão da Copa do Mundo com a minha família, que mora espalhada pelo mundo. Me inspirei nos pick-ems de League of Legends da Riot Games e quis algo assim para a Copa. Foi feito bem no improviso, embora eu tenha formação em ciência da computação. Espero que você curta."],
+    ],
+    contactTitle: "AINDA PRECISA DE AJUDA?",
+    contactBody: "Use o formulário de suporte para pedir a exclusão de um palpite, reportar um bug no site ou perguntar qualquer coisa.",
+    contactBtn: "Abrir o formulário de suporte",
+  },
+};
+
+function render() {
+  const lang = (typeof getLang === 'function' && FAQ[getLang()]) ? getLang() : 'en';
+  const data = FAQ[lang];
+  document.getElementById('hdr-tag').textContent = data.tag;
+  document.getElementById('hdr-sub').textContent = data.sub;
+  document.getElementById('intro-title').textContent = data.introTitle;
+  document.getElementById('intro-sub').textContent = data.introSub;
+  document.getElementById('nav-standings').textContent = data.navStandings;
+  document.getElementById('nav-board').textContent = data.navBoard;
+  document.getElementById('nav-form').textContent = data.navForm;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  const list = document.getElementById('faq-list');
+  list.innerHTML = data.items.map(([q, a]) =>
+    `<div class="faq-card"><h3>${q}</h3><p>${a}</p></div>`
+  ).join('');
+  document.getElementById('contact-title').textContent = data.contactTitle;
+  document.getElementById('contact-body').textContent = data.contactBody;
+  document.getElementById('contact-btn').textContent = data.contactBtn;
+  document.getElementById('contact-btn').href = CONTACT;
+}
+
+document.querySelectorAll('.lang-btn').forEach(b =>
+  b.addEventListener('click', () => { if (typeof setLang === 'function') setLang(b.dataset.lang); else render(); }));
+if (typeof onLangChange === 'function') onLangChange(render);
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Node / Wrangler
+node_modules/
+.wrangler/
+.dev.vars
+
+# OS / editor
+.DS_Store
+Thumbs.db
+server.log
+
+# Local-only review folder (not deployed)
+archive/
+.claude/

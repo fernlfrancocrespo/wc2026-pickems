@@ -1,0 +1,25 @@
+# Cloudflare Pages + Functions + D1 config
+# The static site (index.html, i18n.js, data/*.json) is served from the repo root;
+# anything under ./functions becomes API routes on the same origin.
+
+name = "wc2026-pickems"
+compatibility_date = "2024-11-01"
+pages_build_output_dir = "."
+
+# D1 database binding (available in Functions as env.DB).
+# Create it once with:  wrangler d1 create wc2026
+# then paste the printed database_id below.
+[[d1_databases]]
+binding = "DB"
+database_name = "wc2026"
+database_id = "b9304899-3f95-4d4f-a718-d36fc32408c7"
+
+[vars]
+# Hard cap on total submissions — once reached, the API returns "closed" (423).
+# Bump or lower this to throttle virality; set very low to effectively pause intake.
+MAX_SUBMISSIONS = "1000"
+
+# Optional knobs set as SECRETS (not here), via:
+#   wrangler pages secret put ENTRY_CODE     # require a shared code to submit
+#   wrangler pages secret put SALT           # salt for the IP hash
+#   wrangler pages secret put RESULTS_TOKEN  # require ?token=... to read /api/results

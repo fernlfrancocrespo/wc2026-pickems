@@ -1,0 +1,3 @@
+# Pretty share links: /p/<slug> serves the app (URL stays /p/<slug>), which then
+# looks the entry up via /api/entry?slug=<slug> and renders it read-only.
+/p/* /index.html 200

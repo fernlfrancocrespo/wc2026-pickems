@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>World Cup 2026 Pick-'Ems · Leaderboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:#0D1B2A; --navy-card:#1A2D40; --navy-input:#0F2235;
+      --red:#C8102E; --gold:#C9A84C; --gold-light:#E8C66A;
+      --white:#fff; --grey-light:#B8C5D0; --grey-mid:#6B8099;
+      --border:rgba(255,255,255,0.08); --radius:12px; --radius-sm:8px;
+      --green:#22c55e;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;font-size:15px}
+    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--navy)}::-webkit-scrollbar-thumb{background:var(--navy-card);border-radius:3px}
+    a{color:inherit}
+
+    /* header */
+    .site-header{background:linear-gradient(120deg,#080f18,#1a0812 50%,#080f18);border-bottom:2px solid var(--gold);padding:18px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,.5)}
+    .header-top-mobile { display: flex; align-items: center; justify-content: space-between; }
+    .header-left{display:flex;align-items:center;gap:14px}
+    .header-logo{font-size:2rem;line-height:1}
+    .header-titles h1{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:3px;line-height:1}
+    .header-titles h1 span{color:var(--gold)}
+    .header-titles p{font-size:.7rem;color:var(--grey-mid);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+    .header-right{display:flex;align-items:center;gap:14px}
+    .header-nav-row { display: flex; align-items: center; gap: 14px; }
+    .nav-link{display:flex;align-items:center;gap:6px;color:var(--grey-light);text-decoration:none;font-size:.78rem;font-weight:600;padding:7px 12px;border:1px solid var(--border);border-radius:8px;transition:all .15s;white-space:nowrap}
+    .nav-link:hover{color:var(--gold);border-color:var(--gold)}
+    .lang-toggle-desktop{display:flex;gap:4px;background:rgba(255,255,255,.05);border-radius:8px;padding:3px}
+    .lang-dropdown-mobile { display: none; position: relative; }
+    .lang-btn{display:flex;align-items:center;gap:5px;background:transparent;border:none;cursor:pointer;padding:5px 9px;border-radius:6px;color:var(--grey-light);font-family:'Inter',sans-serif;font-size:.72rem;font-weight:700;transition:all .15s}
+    .lang-btn img{width:20px;border-radius:2px;display:block}
+    .lang-btn.active{background:var(--gold);color:var(--navy)}
+    
+    /* Custom Mobile Language Dropdown Styles */
+    .lang-dropdown-btn { background: var(--navy-card); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; color: var(--white); font-weight: 600; font-size: 0.8rem; padding: 7px 12px; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+    .lang-dropdown-content { display: none; position: absolute; top: calc(100% + 5px); right: 0; background: #1A2D40; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; width: 140px; z-index: 1010; box-shadow: 0 5px 15px rgba(0,0,0,0.5); overflow: hidden; }
+    .lang-dropdown-mobile.open .lang-dropdown-content { display: block; }
+    .lang-option { width: 100%; text-align: left; background: none; border: none; color: var(--grey-light); padding: 12px 16px; font-size: 0.85rem; cursor: pointer; transition: background 0.2s; }
+    .lang-option:hover { background: rgba(201,168,76,0.1); color: var(--white); }
+    .lang-option + .lang-option { border-top: 1px solid rgba(255,255,255,0.04); }
+
+    /* summary */
+    .summary{display:grid;grid-template-columns:1fr 2fr;gap:16px;margin-bottom:22px}
+    .stat-card,.champ-card{background:var(--navy-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px}
+    .stat-card{display:flex;flex-direction:column;justify-content:center;text-align:center}
+    .stat-num{font-family:'Bebas Neue',sans-serif;font-size:3.2rem;color:var(--gold);line-height:1}
+    .stat-label{font-size:.72rem;text-transform:uppercase;letter-spacing:1px;color:var(--grey-mid);margin-top:4px}
+    .champ-card .ttl{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--grey-mid);margin-bottom:12px}
+    .champ-row{display:flex;align-items:center;gap:14px}
+    .champ-row img{width:54px;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+    .champ-name{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:1px;line-height:1}
+    .champ-pct{color:var(--gold);font-weight:700;font-size:.9rem;margin-top:3px}
+
+    .section{background:var(--navy-card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:18px;overflow:hidden}
+    .section-head{padding:15px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+    .section-head h2{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px}
+    .lb-accent{width:4px;height:16px;border-radius:2px;background:var(--gold);flex-shrink:0}
+    .section-body{padding:18px 22px}
+
+    /* popular grid */
+    .pop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+    .pop-card{background:var(--navy);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px}
+    .pop-q{font-size:.74rem;color:var(--grey-mid);margin-bottom:10px;line-height:1.3;min-height:30px}
+    .pop-pick{display:flex;align-items:center;gap:9px}
+    .pop-pick img{width:26px;border-radius:2px}
+    .pop-pick .nm{font-weight:600;font-size:.92rem;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .pop-pick .pc{color:var(--gold);font-weight:700;font-size:.82rem}
+
+    /* bars */
+    .qblock{margin-bottom:18px}
+    .showmore{margin-top:4px;background:none;border:none;color:var(--gold);font-family:'Inter',sans-serif;font-size:.74rem;font-weight:600;cursor:pointer;padding:3px 0}
+    .showmore:hover{text-decoration:underline}
+    .qblock:last-child{margin-bottom:0}
+    .qtitle{font-size:.82rem;font-weight:600;margin-bottom:8px;display:flex;gap:8px}
+    .qtitle .qn{font-family:'Bebas Neue',sans-serif;color:var(--gold);font-size:1rem}
+    .bar{display:flex;align-items:center;gap:9px;margin-bottom:5px}
+    .bar img{width:20px;border-radius:2px;flex-shrink:0}
+    .bar-name{font-size:.8rem;min-width:0;flex-shrink:0;width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .bar-track{flex:1;height:16px;min-width:40px;background:var(--navy-input);border-radius:4px;overflow:hidden;display:block}
+    .bar-fill{display:block;height:100%;min-width:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:4px}
+    .bar-count { font-size:.72rem; color:var(--grey-mid); width:auto; text-align:right; flex-shrink:0 }
+
+    /* group winners */
+    .gw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+    .gw{background:var(--navy);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px}
+    .gw-letter{font-family:'Bebas Neue',sans-serif;color:var(--red);font-size:.95rem;margin-bottom:6px}
+    .gw-team{display:flex;align-items:center;gap:7px}
+    .gw-team img{width:22px;border-radius:2px}
+    .gw-team .nm{font-size:.8rem;font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .gw-team .pc{font-size:.72rem;color:var(--gold);font-weight:700}
+
+    /* participants */
+    .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+    .filters input,.filters select{background:var(--navy-input);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--white);font-family:'Inter',sans-serif;font-size:.85rem;padding:9px 12px;outline:none}
+    .filters input:focus,.filters select:focus{border-color:var(--gold)}
+    .plist{display:flex;flex-direction:column;gap:1px}
+    .prow{display:flex;align-items:center;gap:12px;padding:10px 12px;border-bottom:1px solid var(--border);font-size:.85rem}
+    .prow:hover{background:rgba(255,255,255,.03)}
+    .prow .rank{font-family:'Bebas Neue',sans-serif;color:var(--grey-mid);width:28px;font-size:1rem}
+    .prow .who{flex:1;font-weight:600}
+    .prow .ctry{color:var(--grey-mid);font-size:.74rem}
+    .prow .lang-pill{font-size:.62rem;border:1px solid var(--border);border-radius:10px;padding:1px 7px;color:var(--grey-light);text-transform:uppercase}
+    .prow a.view{color:var(--gold);text-decoration:none;font-weight:600;font-size:.8rem}
+    .prow a.view:hover{text-decoration:underline}
+
+    .empty{text-align:center;padding:60px 20px;color:var(--grey-mid)}
+    .empty .big{font-size:2.4rem;margin-bottom:14px}
+    .empty code{background:var(--navy-card);padding:2px 6px;border-radius:4px;font-size:.82rem}
+    .spinner{width:34px;height:34px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .75s linear infinite;margin:50px auto}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* --- Leaderboard Card Polish --- */
+    #app {
+      padding: 32px 20px 80px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .sec {
+      background: var(--navy-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+    }
+    .sec h3 {
+      margin-bottom: 20px !important; /* Forces the gap between question and first entry */
+      color: var(--gold);
+    }
+    .bar-row {
+      margin-bottom: 12px; /* Adds spacing between the entries themselves */
+    }
+    @media(max-width:720px){
+      .summary{grid-template-columns:1fr}
+      .bar-name{width:90px}
+    }
+    @media(max-width:600px){
+      .site-header { flex-direction: column; align-items: stretch; padding: 16px; gap: 14px; }
+      .header-top-mobile { width: 100%; }
+      .header-titles h1 { font-size: 1.35rem; }
+      #hdr-sub { display: none; }
+      .lang-toggle-desktop { display: none; }
+      .lang-dropdown-mobile { display: block; }
+      
+      .header-right { flex-direction: column; align-items: stretch; width: 100%; gap: 12px; }
+      .header-nav-row { width: 100%; gap: 10px; justify-content: space-between; }
+      .nav-link { flex: 1; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <!-- Row 1 on Mobile: Logo/Title (Left) + Dropdown (Right) -->
+  <div class="header-top-mobile">
+    <div class="header-left">
+      <div class="header-logo">🏆</div>
+      <div class="header-titles">
+        <a href="/" style="text-decoration: none; color: inherit;">
+          <h1 style="margin: 0; line-height: 1;">WORLD CUP 2026 <span id="hdr-board">LEADERBOARD</span></h1>
+        </a>
+        <p id="hdr-sub">Consensus &amp; standings</p>
+      </div>
+    </div>
+    
+    <!-- Mobile Dropdown toggle (hidden on desktop) -->
+    <div class="lang-dropdown-mobile">
+      <button class="lang-dropdown-btn" id="lang-btn-mobile-toggle">
+        <span id="curr-lang-text">EN</span><span style="font-size: 0.6rem; color: var(--grey-mid);">▼</span>
+      </button>
+      <div class="lang-dropdown-content" id="lang-menu-mobile">
+        <button class="lang-option" data-lang="en">English (EN)</button>
+        <button class="lang-option" data-lang="pt">Português (PT)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2 on Mobile (Nav Buttons) -->
+  <div class="header-right">
+    <div class="header-nav-row">
+      <a class="nav-link" href="/standings.html" id="nav-standings">Standings</a>
+      <a class="nav-link" href="/faq.html">FAQ</a>
+      <a class="nav-link" href="/"><span id="nav-form-label">Make a pick</span></a>
+    </div>
+    
+    <!-- Desktop flags toggle (hidden on mobile) -->
+    <div class="lang-toggle-desktop" id="lang-toggle-desktop">
+      <button class="lang-btn" data-lang="en" title="English"><img src="https://flagcdn.com/w40/gb.png" alt="EN"><span>EN</span></button>
+      <button class="lang-btn" data-lang="pt" title="Português"><img src="https://flagcdn.com/w40/br.png" alt="PT"><span>PT</span></button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap" id="app">
+  <div class="spinner"></div>
+</div>
+
+<script src="i18n.js"></script>
+<script src="scoring.js"></script>
+<script>
+let teamsData = {}, results = [], answerKey = null;
+
+async function init() {
+  try {
+    teamsData = await fetch('/data/teams.json').then(r => r.ok ? r.json() : {});
+  } catch (e) { teamsData = {}; }
+  try {
+    answerKey = await fetch('/data/answer_key.json').then(r => r.ok ? r.json() : null);
+  } catch (e) { answerKey = null; }
+  try {
+    const r = await fetch('/api/results');
+    const data = await r.json();
+    results = (data && data.submissions) || [];
+  } catch (e) {
+    results = [];
+  }
+  setupLang();
+  render();
+  onLangChange(() => { applyChrome(); render(); });
+}
+
+function setupLang() {
+  document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+  
+  const langMenuMobile = document.querySelector('.lang-dropdown-mobile');
+  const langBtnMobileToggle = document.getElementById('lang-btn-mobile-toggle');
+  const currLangTextLabel = document.getElementById('curr-lang-text');
+
+  if (langBtnMobileToggle) {
+    langBtnMobileToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      langMenuMobile.classList.toggle('open');
+    });
+    document.body.addEventListener('click', () => langMenuMobile.classList.remove('open'));
+    
+    document.querySelectorAll('#lang-menu-mobile .lang-option').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const lang = this.getAttribute('data-lang');
+        setLang(lang);
+        if (currLangTextLabel) currLangTextLabel.textContent = lang.toUpperCase();
+      });
+    });
+    if (currLangTextLabel) currLangTextLabel.textContent = (localStorage.getItem('wc_lang') || 'en').toUpperCase();
+  }
+  applyChrome();
+}
+function applyChrome() {
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === getLang()));
+  document.getElementById('hdr-board').textContent = t('nav_board').toUpperCase();
+  document.getElementById('hdr-sub').textContent = t('lb_subtitle');
+  document.getElementById('nav-form-label').textContent = t('nav_form');
+  const ns = document.getElementById('nav-standings');
+  if (ns) ns.textContent = t('nav_standings');
+}
+
+function computeScores() {
+  if (!answerKey || typeof keyHasData !== 'function' || !keyHasData(answerKey)) return null;
+  const key = answerKey.answers || answerKey;
+  return results.filter(e => !e.hidden)            // hidden entries don't appear in the ranking
+                .map(e => ({ e, s: scoreEntry(e.answers, key) }))
+                .sort((a, b) => b.s.total - a.s.total);
+}
+
+// ── helpers ──────────────────────────────────────────────
+const flagUrl = iso2 => iso2 ? `https://flagcdn.com/w40/${iso2}.png` : null;
+function teamFlag(name){ const t=teamsData[name]; return t&&t.iso2?`<img src="${flagUrl(t.iso2)}" onerror="this.style.display='none'">`:''; }
+
+function tally(getVal) {
+  const m = new Map();
+  results.forEach(e => { const v = getVal(e); if (v) m.set(v, (m.get(v)||0)+1); });
+  return [...m.entries()].sort((a,b)=>b[1]-a[1]);
+}
+
+// Rebuild a share link so each participant's full read-only picks are viewable.
+function b64u(str){ return btoa(unescape(encodeURIComponent(str))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); }
+function viewUrl(e){
+  if (e.slug) return '/p/' + e.slug;   // pretty short link
+  // fallback for any pre-slug rows: self-contained hash
+  const a = {...e.answers}; const q8 = a.q8 || {}; delete a.q8;
+  const payload = { v:1, n:e.display_name, c:e.country, l:e.lang, q8, a };
+  return 'index.html#s=' + b64u(JSON.stringify(payload));
+}
+
+// ── render ───────────────────────────────────────────────
+function render() {
+  const app = document.getElementById('app');
+  if (!results.length) {
+    app.innerHTML = `<div class="empty">
+      <p>${t('lb_empty')}</p>
+      <p style="margin-top:8px;font-size:.82rem">${t('lb_empty_hint')}</p></div>`;
+    return;
+  }
+
+  const total = results.length;
+  app.innerHTML = '';
+
+  // ── summary: entries + consensus champion ──
+  const champTally = tally(e => e.answers.q1);
+  const champ = champTally[0];
+  const summary = document.createElement('div');
+  summary.className = 'summary';
+  summary.innerHTML = `
+    <div class="stat-card">
+      <div class="stat-num">${total}</div>
+      <div class="stat-label">${t('lb_entries')}</div>
+    </div>
+    <div class="champ-card">
+      <div class="ttl">${t('lb_champ')}</div>
+      <div class="champ-row">
+        ${champ ? teamFlag(champ[0]) : ''}
+        <div>
+          <div class="champ-name">${champ ? teamLabel(champ[0]) : '—'}</div>
+          <div class="champ-pct">${champ ? Math.round(champ[1]/total*100)+'% · '+champ[1]+'/'+total : ''}</div>
+        </div>
+      </div>
+    </div>`;
+  app.appendChild(summary);
+
+  // ── link to the live group standings ──
+  const stLink = document.createElement('a');
+  stLink.href = '/standings.html';
+  stLink.style.cssText = 'display:inline-block;color:var(--gold);font-weight:600;font-size:.85rem;text-decoration:none;margin-bottom:18px';
+  stLink.textContent = t('lb_view_standings');
+  app.appendChild(stLink);
+
+  // ── live scores (only once the answer key has graded outcomes) ──
+  const scored = computeScores();
+  if (scored) {
+    const sec = section('', t('lb_scores'));
+    const body = sec.querySelector('.section-body');
+    body.innerHTML = `<div style="font-size:.74rem;color:var(--grey-mid);margin-bottom:12px">${t('lb_provisional')}</div>`;
+    const list = document.createElement('div'); list.className = 'plist';
+    list.innerHTML = scored.map((row, i) => `
+      <div class="prow">
+        <span class="rank">${i + 1}</span>
+        <span class="who">${row.e.display_name || 'anon'}</span>
+        <span class="ctry">${row.e.country === 'United States' ? '🇺🇸' : '🌎'}</span>
+        <span style="color:var(--gold);font-weight:700;white-space:nowrap">${row.s.total} ${t('lb_pts_short')}</span>
+        <a class="view" href="${viewUrl(row.e)}">${t('lb_view')}</a>
+      </div>`).join('');
+    body.appendChild(list);
+    app.appendChild(sec);
+  }
+
+  // ── popular picks (marquee questions) ──
+  const marquee = [
+    ['q1', t('q1')], ['q2', t('q2')], ['q17_player', t('q17')],
+    ['q18_player', t('q18')], ['q5', t('q5')], ['q6', t('q6')],
+  ];
+  const popSec = section('⭐', t('lb_popular'));
+  const grid = document.createElement('div'); grid.className = 'pop-grid';
+  marquee.forEach(([key, label]) => {
+    const top = tally(e => e.answers[key])[0];
+    const isTeam = !key.includes('player');
+    const card = document.createElement('div'); card.className = 'pop-card';
+    card.innerHTML = `<div class="pop-q">${label}</div>
+      <div class="pop-pick">${top && isTeam ? teamFlag(top[0]) : ''}
+        <span class="nm">${top ? (isTeam ? teamLabel(top[0]) : top[0]) : '—'}</span>
+        <span class="pc">${top ? Math.round(top[1]/total*100)+'%' : ''}</span></div>`;
+    grid.appendChild(card);
+  });
+  popSec.querySelector('.section-body').appendChild(grid);
+  app.appendChild(popSec);
+
+  // ── consensus group winners ──
+  const gwSec = section('🗂️', t('lb_groups_consensus'));
+  const gwGrid = document.createElement('div'); gwGrid.className = 'gw-grid';
+  'ABCDEFGHIJKL'.split('').forEach(letter => {
+    const top = tally(e => e.answers.q8 && e.answers.q8[letter] && e.answers.q8[letter][0])[0];
+    const gw = document.createElement('div'); gw.className = 'gw';
+    gw.innerHTML = `<div class="gw-letter">${t('group_word')} ${letter}</div>
+      <div class="gw-team">${top ? teamFlag(top[0]) : ''}
+        <span class="nm">${top ? teamLabel(top[0]) : '—'}</span>
+        <span class="pc">${top ? Math.round(top[1]/total*100)+'%' : ''}</span></div>`;
+    gwGrid.appendChild(gw);
+  });
+  gwSec.querySelector('.section-body').appendChild(gwGrid);
+  app.appendChild(gwSec);
+
+  // ── full breakdown (every question, top options) ──
+  const QS = [
+    ['q1',1,'team'],['q2',2,'team'],['q3a','3','team'],['q3b','3','team'],
+    ['q4',4,'team'],['q5',5,'team'],['q6',6,'team'],['q7',7,'team'],
+    ['q9',9,'band'],['q10',10,'yesno'],['q11',11,'band'],['q13',12,'band'],
+    ['q12',13,'band'],['q14',14,'band'],['q15',15,'band'],['q16',16,'band'],
+    ['q17_player',17,'player'],['q18_player',18,'player'],['q19_player',19,'player'],
+    ['q20_player',20,'player'],['q21_player',21,'player'],['q22_player',22,'player'],
+  ];
+  const bSec = section('', t('lb_breakdown'));
+  const bBody = bSec.querySelector('.section-body');
+  const barHTML = (val, cnt, type) => {
+    const pct = Math.round(cnt / total * 100);
+    const isTeam = type === 'team';
+    const disp = isTeam ? teamLabel(val) : type === 'band' ? tBand(val) : type === 'yesno' ? t(val.toLowerCase()) : val;
+    return `<div class="bar">${isTeam ? teamFlag(val) : ''}
+        <span class="bar-name" title="${disp}">${disp}</span>
+        <span class="bar-track"><span class="bar-fill" style="width:${pct}%"></span></span>
+        <span class="bar-count">${cnt} · ${pct}%</span></div>`;
+  };
+  QS.forEach(([key, n, type]) => {
+    const labelKey = key.replace('_player','').replace('q3a','q3').replace('q3b','q3');
+    const allRows = tally(e => e.answers[key]);
+    if (!allRows.length) return;
+    const top = allRows.slice(0, 5), rest = allRows.slice(5);
+    const blk = document.createElement('div'); blk.className = 'qblock';
+    blk.innerHTML = `<div class="qtitle"><span class="qn">${n}</span><span>${t(labelKey)}</span></div>`
+      + top.map(([v, c]) => barHTML(v, c, type)).join('')
+      + (rest.length
+          ? `<div class="more" style="display:none">${rest.map(([v, c]) => barHTML(v, c, type)).join('')}</div>
+             <button class="showmore" type="button">${t('lb_showall')} (${rest.length})</button>`
+          : '');
+    bBody.appendChild(blk);
+  });
+  bBody.querySelectorAll('.showmore').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const more = btn.previousElementSibling;
+      const open = more.style.display === 'block';
+      more.style.display = open ? 'none' : 'block';
+      btn.textContent = open ? `${t('lb_showall')} (${more.children.length})` : t('lb_showless');
+    });
+  });
+  app.appendChild(bSec);
+
+  // ── participants (hidden entries excluded from the list, still counted in stats) ──
+  const visible = results.filter(e => !e.hidden);
+  const hiddenCount = results.length - visible.length;
+  const pSec = section('', t('lb_participants') + ` (${visible.length})`);
+  const pBody = pSec.querySelector('.section-body');
+  pBody.innerHTML = `<div class="filters">
+      <input type="text" id="p-search" placeholder="${t('lb_search')}">
+      <select id="p-country">
+        <option value="">${t('lb_all')}</option>
+        <option value="United States">${t('country_us')}</option>
+        <option value="Outside the United States">${t('country_non_us')}</option>
+      </select>
+    </div>
+    ${hiddenCount ? `<div style="font-size:.74rem;color:var(--grey-mid);margin-bottom:10px">🔒 ${hiddenCount} ${t('lb_hidden')}</div>` : ''}
+    <div class="plist" id="plist"></div>`;
+  const listEl = pBody.querySelector('#plist');
+  function renderList() {
+    const q = (pBody.querySelector('#p-search').value || '').toLowerCase();
+    const c = pBody.querySelector('#p-country').value;
+    const filtered = visible.filter(e =>
+      (!q || (e.display_name||'').toLowerCase().includes(q)) && (!c || e.country === c));
+    listEl.innerHTML = filtered.map((e, i) => `
+      <div class="prow">
+        <span class="rank">${i+1}</span>
+        <span class="who">${e.display_name || 'anon'}</span>
+        <span class="ctry">${e.country === 'United States' ? '🇺🇸' : '🌎'}</span>
+        <span class="lang-pill">${e.lang || 'en'}</span>
+        <a class="view" href="${viewUrl(e)}">${t('lb_view')}</a>
+      </div>`).join('') || `<div style="color:var(--grey-mid);padding:14px">${t('lb_empty')}</div>`;
+  }
+  pBody.querySelector('#p-search').addEventListener('input', renderList);
+  pBody.querySelector('#p-country').addEventListener('change', renderList);
+  renderList();
+  app.appendChild(pSec);
+}
+
+function section(icon, title) {
+  const s = document.createElement('div');
+  s.className = 'section';
+  s.innerHTML = `<div class="section-head"><span class="lb-accent"></span><h2>${title}</h2></div><div class="section-body"></div>`;
+  return s;
+}
+
+init();
+</script>
+</body>
+</html>

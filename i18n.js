@@ -1,0 +1,472 @@
+/* ============================================================================
+ * World Cup 2026 Pick-'Ems — shared i18n layer
+ * ----------------------------------------------------------------------------
+ * Include this on EVERY page BEFORE the page script:
+ *     <script src="i18n.js"></script>
+ *
+ * Usage in page code:
+ *     t('sec_players')          -> translated UI string (falls back to English)
+ *     teamLabel('Brazil')       -> 'Brasil' in PT, 'Brazil' in EN  (value stays English)
+ *     tBand('Under 11s')        -> translated band-option label
+ *     setLang('pt')             -> switch language + fire re-render listeners
+ *     onLangChange(fn)          -> register a callback (usually your renderPage)
+ *
+ * RULE for future pages: store canonical ENGLISH values in form state / payloads.
+ * Only the *display* is translated. This keeps scoring + the Sheet language-agnostic.
+ * ========================================================================== */
+
+const I18N = {
+  en: {
+    // header / chrome
+    subtitle:        'USA · Canada · Mexico · 2026',
+    countdown_label: 'Locks at kickoff',
+    countdown_locked:'LOCKED',
+
+    // section titles
+    sec_identity: 'YOUR IDENTITY',
+    sec_champ:    "CHAMPIONSHIP & FINAL FOUR",
+    sec_regional: 'DEEP-RUN & REGIONAL',
+    sec_groups:   'GROUP STAGE PREDICTIONS',
+    sec_props:    'TOURNAMENT-WIDE PROPS',
+    sec_players:  'PLAYERS',
+
+    // section badges
+    badge_group:    'Group stage',
+    badge_knockout: 'Knockout',
+    badge_whole:    'Whole tournament',
+
+    // identity
+    f_name:        'Full Name',
+    f_name_ph:     'First and last name',
+    f_email:       'Email',
+    f_country:     'Where are you based?',
+    country_select:'Select…',
+    country_us:    'United States',
+    country_non_us:'Outside the United States',
+
+    // questions
+    q1:  'World Cup winner',
+    q2:  'Runner-up (beaten finalist)',
+    q3:  'The two losing semifinalists',
+    q3_pts: '6 pts each',
+    q3a_ph: 'Semifinalist 1…',
+    q3b_ph: 'Semifinalist 2…',
+    q4:  'Best-finishing host nation (furthest round reached)',
+    q5:  'Furthest-advancing African (CAF) team',
+    q6:  'Furthest-advancing Asian (AFC) team',
+    q7:  '"Cinderella" — furthest-advancing 3rd-place qualifier',
+    q7_sub: 'Filtered to the bottom 24 FIFA-ranked teams among the 48 qualified.',
+    q8_note_a: 'Q8 · Drag teams to rank 1–4 in each group.',
+    q8_note_b: '+2 per team correctly placed in the top 2 (order-agnostic), +2 bonus for perfect 1–4 order. Max',
+    q8_note_c: '6 pts × 12 = 72 pts',
+    q9:  'Total goals scored in the group stage',
+    q10: 'Will there be a hat-trick in the group stage?',
+    q11: 'Total goals in the whole tournament',
+    q12: 'Knockout matches decided by penalty shootout',
+    q13: 'Knockout matches that go to extra time',
+    q14: 'Added-time goals — scored after 90:00 or after 120:00',
+    q15: 'Longest-range goal of the tournament (meters, FotMob/Opta)',
+    q16: 'Fastest goal of the tournament',
+    q17: 'Golden Ball — best player of the tournament',
+    q18: 'Golden Boot — top scorer',
+    q19: 'Young Player of the tournament',
+    q19_sub: 'Under 23 at the opening match — born after June 11, 2003.',
+    q20: 'Golden Glove — best goalkeeper',
+    q20_sub: 'Filtered to goalkeepers (position GK or shirt #1).',
+    q21: 'Bold pick — any player to score in the final',
+    q22: 'Most goals after the group stage',
+    q22_sub: 'The leading scorer once every team has played its 3 group-stage matches.',
+
+    // band context lines
+    q9_meta:  '2022 averaged 2.69 goals per game. With 16 more teams, the group stage grows from 48 to 72 matches.',
+    q11_meta: '2022 set the all-time record of 172 goals in 64 matches. 2026 expands to 104 matches — 40 more.',
+    q12_meta: '2022 had a record-tying 5 shootouts in 16 knockout matches. 2026 doubles to 32 knockout matches.',
+    q13_meta: '2022 saw 5 of 16 knockout matches reach extra time. 2026 doubles to 32 knockout matches.',
+    q14_meta: 'Goals scored after 90:00 (end of regulation) or after 120:00 (end of extra time), across all 104 matches. Rare — usually at most one per game.',
+    q15_meta: 'Straight-line distance from the spot of the shot to the goal, as measured by Opta/FotMob.',
+    q16_meta: 'World Cup record: 11 seconds (Hakan Şükür, 2002). The fastest goal almost always lands inside the first 90 seconds.',
+
+    // Plain-language goal of each prop question (always visible)
+    q9_goal:  'Total goals scored across all 72 group-stage matches.',
+    q11_goal: 'Total goals scored across all 104 matches of the tournament.',
+    q12_goal: 'How many of the 32 knockout matches are decided by a penalty shootout.',
+    q13_goal: 'How many of the 32 knockout matches go to extra time.',
+    q14_goal: 'Goals scored after 90:00, or after 120:00 in extra time, across all 104 matches.',
+    q15_goal: "Distance of the tournament's longest-range goal, in meters (Opta/FotMob).",
+    q16_goal: "How fast the tournament's quickest goal is scored, in seconds.",
+
+    // Info-eye scoring help by question type
+    help_band:  'Pick the range you think the real number lands in. Full points if the answer is inside your band — half points if it lands in a band right next to yours.',
+    help_team:  'All-or-nothing: you earn the points only for the exact correct team.',
+    help_player:'All-or-nothing: you earn the points only for the exact correct player.',
+    help_yesno: 'Full points for the correct Yes / No answer.',
+    help_groups:'Per group: +2 for each team you place in the real top two (any order), +2 more if all four are in the exact 1–4 order. Up to 6 points per group.',
+
+    // group fixtures
+    group_word:   'Group',
+    group_tap:    'tap for fixtures ↗',
+    zone_advance: 'Advance',
+    zone_playoff: 'Best-3rd race',
+    zone_out:     'Out',
+    zone_legend:  '1–2 advance · 3rd may still qualify (8 best third-placed teams) · 4th out',
+    fixtures:     'Fixtures',
+    teams_matches:'teams · 6 matches',
+    matchday:     'Matchday',
+    fixtures_tbd: 'Dates and venues appear once schedule data is loaded.',
+
+    // team modal
+    last_games:   'LAST INTERNATIONAL GAMES',
+    last5:        'Last 5:',
+    host_nation:  'Host nation',
+    no_form:      'No match data loaded.',
+    th_date:      'Date', th_opp: 'Opponent', th_score: 'Score', th_comp: 'Competition',
+
+    // pickers
+    pick_team:    'Select team…',
+    pick_player:  'Select player…',
+    pick_first:   '← Select team first',
+    no_roster:    'No roster data available for this team.',
+    no_eligible:  'No eligible players for this question on this team.',
+
+    // bands
+    band_full:    'Full',
+    band_half:    'Half',
+    pts:          'pts',
+    band_under:   'Under',
+    band_over:    'Over',
+
+    // sidebar
+    sidebar_title:'Team Reference',
+    sort_rank:    'Rank',
+    sort_conf:    'Conf',
+    sort_az:      'A–Z',
+    fab_teams:    'TEAMS',
+
+    // yes/no
+    yes: 'Yes', no: 'No',
+
+    // submit
+    submit_note_a:'Submissions lock at opening kickoff:',
+    submit_note_b:'June 11, 2026 · 3:00 PM ET',
+    submit_note_c:'Once submitted your picks cannot be changed.',
+    submit_btn:   'SUBMIT MY PICKS',
+    submit_ing:   'SUBMITTING…',
+    submit_done:  '✓ PICKS SUBMITTED — GOOD LUCK!',
+    submit_locked:'SUBMISSIONS CLOSED',
+    err_title:    '⚠ Please review before submitting:',
+    err_override: 'Submit anyway, leaving these blank →',
+    err_email:    'Email address looks invalid (missing @).',
+    err_dup:      'Q1–Q3: a team appears more than once in your Final Four.',
+    err_groups:   'Groups did not fully load — please refresh.',
+    err_blanks:   'Still blank:',
+    toast_done:   '🎉 Picks locked in. Good luck!',
+    toast_dev:    'Dev mode: full payload logged to the browser console.',
+    toast_fail:   'Submission failed — check your connection and try again.',
+    required_all: 'Answer every question before locking in. Still missing:',
+    confirm_title:'Lock in your picks?',
+    confirm_body: "You can't edit after this — you'd have to start a brand-new entry.",
+    confirm_yes:  'Confirm & lock',
+    confirm_back: 'Go back',
+    share_heading:'Locked in! Share your picks:',
+    copy_link:    'Copy link',
+    copy_done:    'Copied!',
+    view_my:      'View my picks →',
+    picks_label:  'picks',
+    locked_view:  'Locked entry · read-only',
+    make_own:     '+ Make your own',
+    notfound:     "That entry couldn't be found.",
+    go_home:      'Go to the form →',
+    hide_label:   'Hide my entry from the public leaderboard',
+    hide_hint:    'Your share link still works and your picks still count in the stats.',
+    help_email:   'Only used so you can edit your bracket later. Never shown publicly, never shared.',
+    q10_sub:      'A hat-trick is one player scoring three goals in a single match.',
+    entries_closed:'Entries are closed — the cap was reached.',
+    bad_code:     'Wrong entry code.',
+    save_warn:    "Couldn't reach the server. Your link still works — share it so you're counted.",
+
+    // leaderboard
+    nav_form:     'Make a pick',
+    nav_board:    'Leaderboard',
+    lb_subtitle:  'Consensus & standings',
+    lb_entries:   'entries',
+    lb_champ:     'Consensus champion',
+    lb_popular:   'Popular picks',
+    lb_groups_consensus: 'Consensus group winners',
+    lb_breakdown: 'Full breakdown',
+    lb_participants:'Participants',
+    lb_view:      'View →',
+    lb_empty:     'No entries yet.',
+    lb_empty_hint:'Run the backend (npm run dev) and lock in an entry — or check that /api/results is reachable.',
+    lb_loading:   'Loading…',
+    lb_search:    'Search name…',
+    lb_all:       'All',
+    lb_pickrate:  'picked by',
+
+    // standings page
+    nav_standings:'Standings',
+    st_title:     'LIVE STANDINGS',
+    st_sub:       'Group tables, updated as results come in',
+    st_updated:   'Updated',
+    st_matches:   'matches played',
+    st_team:      'Team',
+    st_not_started:"The tournament hasn't kicked off yet — tables fill in as matches are played.",
+    col_pld:'Pld', col_w:'W', col_d:'D', col_l:'L', col_gf:'GF', col_ga:'GA', col_gd:'GD', col_pts:'Pts',
+    lb_scores:    'Live scores',
+    lb_provisional:'Provisional — updated as results come in',
+    lb_pts_short: 'pts',
+    lb_view_standings:'View live group standings →',
+    lb_hidden:    'hidden from this list',
+    lb_showall:   'Show all',
+    lb_showless:  'Show less',
+  },
+
+  pt: {
+    subtitle:        'EUA · Canadá · México · 2026',
+    countdown_label: 'Trava no apito inicial',
+    countdown_locked:'TRAVADO',
+
+    sec_identity: 'SUA IDENTIDADE',
+    sec_champ:    'CAMPEÃO E SEMIFINAIS',
+    sec_regional: 'CAMPANHA & REGIONAIS',
+    sec_groups:   'PALPITES DA FASE DE GRUPOS',
+    sec_props:    'APOSTAS DO TORNEIO',
+    sec_players:  'JOGADORES',
+
+    badge_group:    'Fase de grupos',
+    badge_knockout: 'Mata-mata',
+    badge_whole:    'Torneio inteiro',
+
+    f_name:        'Nome completo',
+    f_name_ph:     'Nome e sobrenome',
+    f_email:       'E-mail',
+    f_country:     'Onde você mora?',
+    country_select:'Selecione…',
+    country_us:    'Estados Unidos',
+    country_non_us:'Fora dos Estados Unidos',
+
+    q1:  'Campeão da Copa do Mundo',
+    q2:  'Vice-campeão (finalista derrotado)',
+    q3:  'Os dois semifinalistas eliminados',
+    q3_pts: '6 pts cada',
+    q3a_ph: 'Semifinalista 1…',
+    q3b_ph: 'Semifinalista 2…',
+    q4:  'Melhor campanha entre os anfitriões (fase mais avançada)',
+    q5:  'Seleção africana (CAF) que for mais longe',
+    q6:  'Seleção asiática (AFC) que for mais longe',
+    q7:  '"Zebra" — melhor campanha entre os classificados em 3º lugar',
+    q7_sub: 'Filtrado para as 24 seleções de menor ranking FIFA entre as 48 classificadas.',
+    q8_note_a: 'Q8 · Arraste as seleções para ordenar de 1 a 4 em cada grupo.',
+    q8_note_b: '+2 por seleção colocada corretamente entre as 2 primeiras (sem ordem), +2 de bônus pela ordem 1–4 perfeita. Máx.',
+    q8_note_c: '6 pts × 12 = 72 pts',
+    q9:  'Total de gols na fase de grupos',
+    q10: 'Haverá um hat-trick na fase de grupos?',
+    q11: 'Total de gols em todo o torneio',
+    q12: 'Jogos do mata-mata decididos nos pênaltis',
+    q13: 'Jogos do mata-mata que vão à prorrogação',
+    q14: 'Gols nos acréscimos — marcados após 90:00 ou após 120:00',
+    q15: 'Gol de maior distância do torneio (metros, FotMob/Opta)',
+    q16: 'Gol mais rápido do torneio',
+    q17: 'Bola de Ouro — melhor jogador do torneio',
+    q18: 'Chuteira de Ouro — artilheiro',
+    q19: 'Melhor jogador jovem do torneio',
+    q19_sub: 'Menos de 23 anos no jogo de abertura — nascido após 11 de junho de 2003.',
+    q20: 'Luva de Ouro — melhor goleiro',
+    q20_sub: 'Filtrado para goleiros (posição GK ou camisa 1).',
+    q21: 'Palpite ousado — qualquer jogador para marcar na final',
+    q22: 'Mais gols após a fase de grupos',
+    q22_sub: 'O artilheiro depois que cada seleção jogar seus 3 jogos da fase de grupos.',
+
+    q9_meta:  'Em 2022 a média foi de 2,69 gols por jogo. Com mais 16 seleções, a fase de grupos cresce de 48 para 72 jogos.',
+    q11_meta: 'Em 2022 foi batido o recorde histórico de 172 gols em 64 jogos. 2026 tem 104 jogos — 40 a mais.',
+    q12_meta: 'Em 2022 houve 5 disputas de pênaltis (recorde) em 16 jogos de mata-mata. 2026 dobra para 32 jogos.',
+    q13_meta: 'Em 2022, 5 de 16 jogos do mata-mata foram à prorrogação. 2026 dobra para 32 jogos de mata-mata.',
+    q14_meta: 'Gols marcados após 90:00 (fim do tempo normal) ou após 120:00 (fim da prorrogação), em todos os 104 jogos. Raro — normalmente no máximo um por jogo.',
+    q15_meta: 'Distância em linha reta do ponto do chute até o gol, medida pela Opta/FotMob.',
+    q16_meta: 'Recorde da Copa: 11 segundos (Hakan Şükür, 2002). O gol mais rápido quase sempre sai nos primeiros 90 segundos.',
+
+    q9_goal:  'Total de gols em todos os 72 jogos da fase de grupos.',
+    q11_goal: 'Total de gols em todos os 104 jogos do torneio.',
+    q12_goal: 'Quantos dos 32 jogos de mata-mata são decididos nos pênaltis.',
+    q13_goal: 'Quantos dos 32 jogos de mata-mata vão à prorrogação.',
+    q14_goal: 'Gols marcados após 90:00, ou após 120:00 na prorrogação, em todos os 104 jogos.',
+    q15_goal: 'Distância do gol de maior alcance do torneio, em metros (Opta/FotMob).',
+    q16_goal: 'Quão rápido sai o gol mais veloz do torneio, em segundos.',
+
+    help_band:  'Escolha a faixa onde você acha que o número real vai cair. Pontuação cheia se a resposta estiver na sua faixa — metade se cair numa faixa vizinha.',
+    help_team:  'Tudo ou nada: você ganha os pontos apenas pela seleção exata correta.',
+    help_player:'Tudo ou nada: você ganha os pontos apenas pelo jogador exato correto.',
+    help_yesno: 'Pontuação cheia pela resposta Sim / Não correta.',
+    help_groups:'Por grupo: +2 para cada seleção entre os 2 primeiros reais (qualquer ordem), +2 se os quatro estiverem na ordem exata 1–4. Até 6 pontos por grupo.',
+
+    group_word:   'Grupo',
+    group_tap:    'toque para os jogos ↗',
+    zone_advance: 'Avançam',
+    zone_playoff: 'Disputa de 3º',
+    zone_out:     'Fora',
+    zone_legend:  '1º–2º avançam · 3º ainda pode se classificar (8 melhores terceiros) · 4º fora',
+    fixtures:     'Jogos',
+    teams_matches:'seleções · 6 jogos',
+    matchday:     'Rodada',
+    fixtures_tbd: 'Datas e locais aparecem quando os dados do calendário forem carregados.',
+
+    last_games:   'ÚLTIMOS JOGOS INTERNACIONAIS',
+    last5:        'Últimos 5:',
+    host_nation:  'País-sede',
+    no_form:      'Nenhum dado de jogo carregado.',
+    th_date:      'Data', th_opp: 'Adversário', th_score: 'Placar', th_comp: 'Competição',
+
+    pick_team:    'Selecione a seleção…',
+    pick_player:  'Selecione o jogador…',
+    pick_first:   '← Selecione a seleção primeiro',
+    no_roster:    'Sem dados de elenco para esta seleção.',
+    no_eligible:  'Nenhum jogador elegível para esta pergunta nesta seleção.',
+
+    band_full:    'Cheio',
+    band_half:    'Metade',
+    pts:          'pts',
+    band_under:   'Menos de',
+    band_over:    'Mais de',
+
+    sidebar_title:'Seleções',
+    sort_rank:    'Ranking',
+    sort_conf:    'Conf',
+    sort_az:      'A–Z',
+    fab_teams:    'SELEÇÕES',
+
+    yes: 'Sim', no: 'Não',
+
+    submit_note_a:'As respostas travam no apito inicial:',
+    submit_note_b:'11 de junho de 2026 · 16:00 (Brasília)',
+    submit_note_c:'Após enviar, seus palpites não podem ser alterados.',
+    submit_btn:   'ENVIAR MEUS PALPITES',
+    submit_ing:   'ENVIANDO…',
+    submit_done:  '✓ PALPITES ENVIADOS — BOA SORTE!',
+    submit_locked:'ENVIOS ENCERRADOS',
+    err_title:    '⚠ Revise antes de enviar:',
+    err_override: 'Enviar mesmo assim, deixando em branco →',
+    err_email:    'O e-mail parece inválido (falta @).',
+    err_dup:      'Q1–Q3: uma seleção aparece mais de uma vez entre suas 4 semifinalistas.',
+    err_groups:   'Os grupos não carregaram — atualize a página.',
+    err_blanks:   'Ainda em branco:',
+    toast_done:   '🎉 Palpites confirmados. Boa sorte!',
+    toast_dev:    'Modo dev: payload completo no console do navegador.',
+    toast_fail:   'Falha no envio — verifique sua conexão e tente novamente.',
+    required_all: 'Responda todas as perguntas antes de confirmar. Ainda faltam:',
+    confirm_title:'Confirmar seus palpites?',
+    confirm_body: 'Você não poderá editar depois — teria que começar um novo palpite.',
+    confirm_yes:  'Confirmar e travar',
+    confirm_back: 'Voltar',
+    share_heading:'Confirmado! Compartilhe seus palpites:',
+    copy_link:    'Copiar link',
+    copy_done:    'Copiado!',
+    view_my:      'Ver meus palpites →',
+    picks_label:  'palpites',
+    locked_view:  'Palpite travado · somente leitura',
+    make_own:     '+ Faça o seu',
+    notfound:     'Esse palpite não foi encontrado.',
+    go_home:      'Ir para o formulário →',
+    hide_label:   'Ocultar meu palpite do placar público',
+    hide_hint:    'Seu link continua funcionando e seus palpites ainda contam nas estatísticas.',
+    help_email:   'Usado apenas para você editar seu palpite depois. Nunca aparece em público nem é compartilhado.',
+    q10_sub:      'Um hat-trick é quando um jogador marca três gols na mesma partida.',
+    entries_closed:'As inscrições foram encerradas — o limite foi atingido.',
+    bad_code:     'Código de entrada incorreto.',
+    save_warn:    'Não foi possível contatar o servidor. Seu link funciona — compartilhe para entrar no placar.',
+
+    // leaderboard
+    nav_form:     'Fazer palpite',
+    nav_board:    'Placar',
+    lb_subtitle:  'Consenso e classificação',
+    lb_entries:   'palpites',
+    lb_champ:     'Campeão do consenso',
+    lb_popular:   'Palpites populares',
+    lb_groups_consensus: 'Vencedores de grupo (consenso)',
+    lb_breakdown: 'Detalhes por pergunta',
+    lb_participants:'Participantes',
+    lb_view:      'Ver →',
+    lb_empty:     'Nenhum palpite ainda.',
+    lb_empty_hint:'Rode o backend (npm run dev) e registre um palpite — ou verifique se /api/results está acessível.',
+    lb_loading:   'Carregando…',
+    lb_search:    'Buscar nome…',
+    lb_all:       'Todos',
+    lb_pickrate:  'escolhido por',
+
+    // standings page
+    nav_standings:'Classificação',
+    st_title:     'CLASSIFICAÇÃO AO VIVO',
+    st_sub:       'Tabelas dos grupos, atualizadas conforme os resultados',
+    st_updated:   'Atualizado',
+    st_matches:   'jogos disputados',
+    st_team:      'Seleção',
+    st_not_started:'O torneio ainda não começou — as tabelas se preenchem conforme os jogos.',
+    col_pld:'J', col_w:'V', col_d:'E', col_l:'D', col_gf:'GP', col_ga:'GC', col_gd:'SG', col_pts:'Pts',
+    lb_scores:    'Pontuação ao vivo',
+    lb_provisional:'Provisória — atualizada conforme os resultados',
+    lb_pts_short: 'pts',
+    lb_view_standings:'Ver classificação dos grupos ao vivo →',
+    lb_hidden:    'ocultos desta lista',
+    lb_showall:   'Ver todos',
+    lb_showless:  'Ver menos',
+  },
+};
+
+// Country names — canonical English key -> Portuguese display.
+// Anything not listed falls back to its English name.
+const TEAM_PT = {
+  'United States':'Estados Unidos', 'Mexico':'México', 'Canada':'Canadá',
+  'Costa Rica':'Costa Rica', 'Panama':'Panamá', 'Honduras':'Honduras',
+  'Jamaica':'Jamaica', 'El Salvador':'El Salvador', 'Curaçao':'Curaçao', 'Haiti':'Haiti',
+  'Brazil':'Brasil', 'Argentina':'Argentina', 'Uruguay':'Uruguai', 'Colombia':'Colômbia',
+  'Ecuador':'Equador', 'Paraguay':'Paraguai', 'Chile':'Chile', 'Peru':'Peru',
+  'Bolivia':'Bolívia', 'Venezuela':'Venezuela',
+  'England':'Inglaterra', 'France':'França', 'Spain':'Espanha', 'Germany':'Alemanha',
+  'Portugal':'Portugal', 'Netherlands':'Países Baixos', 'Belgium':'Bélgica', 'Croatia':'Croácia',
+  'Switzerland':'Suíça', 'Denmark':'Dinamarca', 'Poland':'Polônia', 'Serbia':'Sérvia',
+  'Austria':'Áustria', 'Ukraine':'Ucrânia', 'Sweden':'Suécia', 'Norway':'Noruega',
+  'Türkiye':'Turquia', 'Czechia':'Tchéquia', 'Scotland':'Escócia', 'Wales':'País de Gales',
+  'Italy':'Itália', 'Greece':'Grécia', 'Republic of Ireland':'Irlanda',
+  'Bosnia and Herzegovina':'Bósnia e Herzegovina',
+  'Morocco':'Marrocos', 'Senegal':'Senegal', 'Nigeria':'Nigéria', 'Cameroon':'Camarões',
+  'Ghana':'Gana', 'Egypt':'Egito', 'Algeria':'Argélia', 'Tunisia':'Tunísia',
+  'Ivory Coast':'Costa do Marfim', 'Mali':'Mali', 'South Africa':'África do Sul',
+  'Cape Verde':'Cabo Verde', 'DR Congo':'RD Congo',
+  'Japan':'Japão', 'South Korea':'Coreia do Sul', 'Australia':'Austrália', 'Iran':'Irã',
+  'Saudi Arabia':'Arábia Saudita', 'Qatar':'Catar', 'Iraq':'Iraque',
+  'Uzbekistan':'Uzbequistão', 'Jordan':'Jordânia',
+  'New Zealand':'Nova Zelândia',
+};
+
+let currentLang = (typeof localStorage !== 'undefined' && localStorage.getItem('wc_lang')) || 'en';
+
+function t(key) {
+  return (I18N[currentLang] && I18N[currentLang][key]) || I18N.en[key] || key;
+}
+
+function teamLabel(name) {
+  return currentLang === 'pt' ? (TEAM_PT[name] || name) : name;
+}
+
+// Translate a band-option label while keeping numbers intact.
+function tBand(opt) {
+  if (currentLang !== 'pt') return opt;
+  return opt.replace(/^Under /, t('band_under') + ' ').replace(/^Over /, t('band_over') + ' ');
+}
+
+const _langListeners = [];
+function onLangChange(fn) { _langListeners.push(fn); }
+
+function setLang(lang) {
+  if (!I18N[lang]) return;
+  setLangSilent(lang);
+  _langListeners.forEach(fn => fn(lang));
+}
+
+// Change language WITHOUT firing re-render listeners (use before first render).
+function setLangSilent(lang) {
+  if (!I18N[lang]) return;
+  currentLang = lang;
+  try { localStorage.setItem('wc_lang', lang); } catch (e) {}
+  document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
+}
+
+function getLang() { return currentLang; }

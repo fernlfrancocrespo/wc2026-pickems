@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>World Cup 2026 Pick-'Ems · Live Standings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--navy:#0D1B2A;--navy-card:#1A2D40;--navy-input:#0F2235;--red:#C8102E;--gold:#C9A84C;--gold-light:#E8C66A;--white:#fff;--grey-light:#B8C5D0;--grey-mid:#6B8099;--border:rgba(255,255,255,0.08);--radius:12px;--green:#22c55e}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh}
+    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--navy)}::-webkit-scrollbar-thumb{background:var(--navy-card);border-radius:3px}
+    a{color:inherit}
+    .site-header{background:linear-gradient(120deg,#080f18,#1a0812 50%,#080f18);border-bottom:2px solid var(--gold);padding:18px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .header-left{display:flex;align-items:center;gap:14px}
+    .header-logo{width:6px;height:38px;border-radius:3px;background:var(--gold)}
+    .header-titles h1{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:3px;line-height:1}
+    .header-titles h1 span{color:var(--gold)}
+    .header-titles p{font-size:.7rem;color:var(--grey-mid);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+    .header-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .nav-link{display:flex;align-items:center;gap:6px;color:var(--grey-light);text-decoration:none;font-size:.78rem;font-weight:600;padding:7px 12px;border:1px solid var(--border);border-radius:8px;transition:all .15s;white-space:nowrap}
+    .nav-link:hover{color:var(--gold);border-color:var(--gold)}
+    .nav-link.cta{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+    .lang-toggle{display:flex;gap:4px;background:rgba(255,255,255,.05);border-radius:8px;padding:3px}
+    .lang-btn{display:flex;align-items:center;gap:5px;background:transparent;border:none;cursor:pointer;padding:5px 9px;border-radius:6px;color:var(--grey-light);font-family:'Inter',sans-serif;font-size:.72rem;font-weight:700;transition:all .15s}
+    .lang-btn img{width:20px;border-radius:2px;display:block}.lang-btn.active{background:var(--gold);color:var(--navy)}
+    .wrap{max-width:1100px;margin:0 auto;padding:26px 18px 70px}
+    .topline{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+    .pagetitle{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:2px}
+    .updated{font-size:.74rem;color:var(--grey-mid)}
+    .pagesub{color:var(--grey-mid);font-size:.86rem;margin-bottom:8px}
+    .legend{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:18px;font-size:.72rem;color:var(--grey-mid)}
+    .legend span{display:inline-flex;align-items:center;gap:5px}
+    .zdot{width:9px;height:9px;border-radius:2px;display:inline-block}
+    .zadv{background:var(--green)}.zplay{background:var(--gold)}.zout{background:rgba(200,16,46,.7)}
+    .notice{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.3);border-radius:10px;padding:12px 14px;font-size:.82rem;color:var(--grey-light);margin-bottom:18px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+    .gcard{background:var(--navy-card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+    .ghead{padding:11px 15px;background:linear-gradient(90deg,rgba(200,16,46,.45),rgba(200,16,46,.05));border-bottom:1px solid var(--border);font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:1px}
+    table{width:100%;border-collapse:collapse;font-size:.8rem}
+    th{font-size:.6rem;text-transform:uppercase;letter-spacing:.4px;color:var(--grey-mid);font-weight:700;padding:7px 4px;text-align:center}
+    th.team,td.team{text-align:left;padding-left:12px}
+    td{padding:8px 4px;text-align:center;border-top:1px solid var(--border)}
+    .pos{color:var(--grey-mid);width:22px;font-family:'Bebas Neue',sans-serif;font-size:.95rem}
+    .team{display:flex;align-items:center;gap:8px}
+    .team img{width:22px;border-radius:2px;flex-shrink:0}
+    .team .nm{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .pts{font-weight:700;color:var(--gold)}
+    tr.adv td.pos{color:var(--green)} tr.adv{background:rgba(34,197,94,.05)}
+    tr.play td.pos{color:var(--gold)} tr.play{background:rgba(201,168,76,.05)}
+    tr.out td.nm,tr.out td .nm{color:var(--grey-light)}
+    tr .barcell{box-shadow:inset 3px 0 0 transparent}
+    tr.adv .barcell{box-shadow:inset 3px 0 0 var(--green)}
+    tr.play .barcell{box-shadow:inset 3px 0 0 var(--gold)}
+    tr.out .barcell{box-shadow:inset 3px 0 0 rgba(200,16,46,.6)}
+    .spinner{width:34px;height:34px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .75s linear infinite;margin:50px auto}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @media(max-width:600px){
+      .site-header{padding:14px 16px}.header-titles h1{font-size:1.4rem}
+      .header-right{width:100%;justify-content:space-between}.lang-btn span{display:none}
+      .grid{grid-template-columns:1fr}
+      th.gf,td.gf,th.ga,td.ga{display:none}
+    }
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-left">
+    <div class="header-logo"></div>
+    <div class="header-titles">
+      <a href="/" style="text-decoration:none;color:inherit"><h1>WORLD CUP 2026 <span id="hdr-tag">STANDINGS</span></h1></a>
+      <p id="hdr-sub">Live group tables</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <a class="nav-link" href="/leaderboard.html" id="nav-board">Leaderboard</a>
+    <a class="nav-link" href="/faq.html" id="nav-faq">FAQ</a>
+    <a class="nav-link cta" href="/" id="nav-form">Make a pick</a>
+    <div class="lang-toggle" id="lang-toggle">
+      <button class="lang-btn" data-lang="en" title="English"><img src="https://flagcdn.com/w40/gb.png" alt="EN"><span>EN</span></button>
+      <button class="lang-btn" data-lang="pt" title="Português"><img src="https://flagcdn.com/w40/br.png" alt="PT"><span>PT</span></button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap" id="app"><div class="spinner"></div></div>
+
+<script src="i18n.js"></script>
+<script>
+let teamsData = {}, live = null;
+
+async function init(){
+  try { teamsData = await fetch('/data/teams.json').then(r=>r.ok?r.json():{}); } catch(e){ teamsData={}; }
+  try { live = await fetch('/data/live.json').then(r=>r.ok?r.json():null); } catch(e){ live=null; }
+  document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
+  onLangChange(()=>{applyChrome();render();});
+  applyChrome(); render();
+}
+function applyChrome(){
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===getLang()));
+  document.getElementById('hdr-tag').textContent = t('nav_standings').toUpperCase();
+  document.getElementById('hdr-sub').textContent = t('st_sub');
+  document.getElementById('nav-board').textContent = t('nav_board');
+  document.getElementById('nav-form').textContent = t('nav_form');
+}
+const flagUrl=i=>i?`https://flagcdn.com/w40/${i}.png`:null;
+function flagFor(name){ const t=teamsData[name]; const i=t&&t.iso2; return i?`<img src="${flagUrl(i)}" onerror="this.style.display='none'">`:''; }
+
+function render(){
+  const app=document.getElementById('app');
+  if(!live||!live.groups){ app.innerHTML=`<div class="notice">${t('st_not_started')}</div>`; return; }
+  const zoneClass=['adv','adv','play','out'];
+  const cols=[['pld','col_pld'],['w','col_w'],['d','col_d'],['l','col_l'],['gf','col_gf'],['ga','col_ga'],['gd','col_gd'],['pts','col_pts']];
+  let html=`<div class="topline"><div class="pagetitle">${t('st_title')}</div>
+    <div class="updated">${t('st_updated')}: ${live.updated ? new Date(live.updated).toLocaleString() : '—'} · ${live.matches_played||0} ${t('st_matches')}</div></div>
+    <div class="pagesub">${t('st_sub')}</div>
+    <div class="legend"><span><i class="zdot zadv"></i>${t('zone_advance')}</span><span><i class="zdot zplay"></i>${t('zone_playoff')}</span><span><i class="zdot zout"></i>${t('zone_out')}</span></div>`;
+  if((live.matches_played||0)===0) html+=`<div class="notice">${t('st_not_started')}</div>`;
+  html+='<div class="grid">';
+  Object.keys(live.groups).sort().forEach(letter=>{
+    const rows=live.groups[letter];
+    html+=`<div class="gcard"><div class="ghead">${t('group_word')} ${letter}</div><table>
+      <thead><tr><th></th><th class="team">${t('st_team')}</th>${cols.map(([k,key])=>`<th class="${k}">${t(key)}</th>`).join('')}</tr></thead><tbody>`;
+    rows.forEach((r,i)=>{
+      const z=zoneClass[i]||'out';
+      const gd=(r.gd>0?'+':'')+r.gd;
+      html+=`<tr class="${z}"><td class="pos barcell">${i+1}</td>
+        <td class="team"><span class="team">${flagFor(r.team)}<span class="nm">${teamLabel(r.team)}</span></span></td>
+        ${cols.map(([k])=>`<td class="${k}${k==='pts'?' pts':''}">${k==='gd'?gd:r[k]}</td>`).join('')}</tr>`;
+    });
+    html+='</tbody></table></div>';
+  });
+  html+='</div>';
+  app.innerHTML=html;
+}
+init();
+</script>
+</body>
+</html>

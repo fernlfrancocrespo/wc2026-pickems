@@ -1,0 +1,30 @@
+{
+  "updated": null,
+  "final": false,
+  "note": "Host-maintained truth for grading pick-ems. Fill values in as outcomes are known; nulls are 'not graded yet'. q8 = real final group order per letter. q3a/q3b = the two losing semifinalists (order-agnostic).",
+  "answers": {
+    "q1": null,
+    "q2": null,
+    "q3a": null,
+    "q3b": null,
+    "q4": null,
+    "q5": null,
+    "q6": null,
+    "q7": null,
+    "q8": {},
+    "q9": null,
+    "q10": null,
+    "q11": null,
+    "q12": null,
+    "q13": null,
+    "q14": null,
+    "q15": null,
+    "q16": null,
+    "q17_player": null,
+    "q18_player": null,
+    "q19_player": null,
+    "q20_player": null,
+    "q21_player": null,
+    "q22_player": null
+  }
+}

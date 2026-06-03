@@ -1,0 +1,4418 @@
+{
+  "Algeria": [
+    {
+      "result": "D",
+      "date": "March 31st, 2026",
+      "location": "Italy",
+      "competition": "Friendly",
+      "opponent": "Uruguay",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54444"
+    },
+    {
+      "result": "W",
+      "date": "March 27th, 2026",
+      "location": "Italy",
+      "competition": "Friendly",
+      "opponent": "Guatemala",
+      "score": "7-0",
+      "match_url": "https://www.international-football.net/match-details?id=54339"
+    },
+    {
+      "result": "L",
+      "date": "January 10th, 2026",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Nigeria",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54313"
+    },
+    {
+      "result": "W",
+      "date": "January 6th, 2026",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Dem. Rep. of Congo",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54316"
+    },
+    {
+      "result": "W",
+      "date": "December 31st, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Equatorial Guinea",
+      "score": "3-1",
+      "match_url": "https://www.international-football.net/match-details?id=54265"
+    },
+    {
+      "result": "W",
+      "date": "December 28th, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Burkina Faso",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54277"
+    },
+    {
+      "result": "W",
+      "date": "December 24th, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Sudan",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=54289"
+    },
+    {
+      "result": "D",
+      "date": "December 12th, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "United Arab Emirates",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54211"
+    },
+    {
+      "result": "W",
+      "date": "December 9th, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Iraq",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54215"
+    },
+    {
+      "result": "W",
+      "date": "December 6th, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Bahrain",
+      "score": "5-1",
+      "match_url": "https://www.international-football.net/match-details?id=54223"
+    }
+  ],
+  "Argentina": [
+    {
+      "result": "W",
+      "date": "March 31st, 2026",
+      "location": "Argentina",
+      "competition": "Friendly",
+      "opponent": "Zambia",
+      "score": "5-0",
+      "match_url": "https://www.international-football.net/match-details?id=54489"
+    },
+    {
+      "result": "W",
+      "date": "March 27th, 2026",
+      "location": "Argentina",
+      "competition": "Friendly",
+      "opponent": "Mauritania",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54421"
+    },
+    {
+      "result": "W",
+      "date": "November 14th, 2025",
+      "location": "Angola",
+      "competition": "Friendly",
+      "opponent": "Angola",
+      "score": "0-2",
+      "match_url": "https://www.international-football.net/match-details?id=54129"
+    },
+    {
+      "result": "W",
+      "date": "October 14th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Puerto Rico",
+      "score": "6-0",
+      "match_url": "https://www.international-football.net/match-details?id=54082"
+    },
+    {
+      "result": "W",
+      "date": "October 10th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Venezuela",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=53881"
+    },
+    {
+      "result": "L",
+      "date": "September 9th, 2025",
+      "location": "Ecuador",
+      "competition": "World Cup qualifier",
+      "opponent": "Ecuador",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=53943"
+    },
+    {
+      "result": "W",
+      "date": "September 4th, 2025",
+      "location": "Argentina",
+      "competition": "World Cup qualifier",
+      "opponent": "Venezuela",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=53732"
+    },
+    {
+      "result": "D",
+      "date": "June 10th, 2025",
+      "location": "Argentina",
+      "competition": "World Cup qualifier",
+      "opponent": "Colombia",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=53650"
+    },
+    {
+      "result": "W",
+      "date": "June 5th, 2025",
+      "location": "Chile",
+      "competition": "World Cup qualifier",
+      "opponent": "Chile",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=53568"
+    },
+    {
+      "result": "W",
+      "date": "March 25th, 2025",
+      "location": "Argentina",
+      "competition": "World Cup qualifier",
+      "opponent": "Brazil",
+      "score": "4-1",
+      "match_url": "https://www.international-football.net/match-details?id=53367"
+    }
+  ],
+  "Australia": [
+    {
+      "result": "L",
+      "date": "May 30th, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Mexico",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54509"
+    },
+    {
+      "result": "W",
+      "date": "March 31st, 2026",
+      "location": "Australia",
+      "competition": "FIFA Series",
+      "opponent": "Curaçao",
+      "score": "5-1",
+      "match_url": "https://www.international-football.net/match-details?id=54441"
+    },
+    {
+      "result": "W",
+      "date": "March 27th, 2026",
+      "location": "Australia",
+      "competition": "FIFA Series",
+      "opponent": "Cameroon",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54328"
+    },
+    {
+      "result": "L",
+      "date": "November 18th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Colombia",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=54260"
+    },
+    {
+      "result": "L",
+      "date": "November 14th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Venezuela",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54142"
+    },
+    {
+      "result": "L",
+      "date": "October 14th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "United States",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54085"
+    },
+    {
+      "result": "W",
+      "date": "October 10th, 2025",
+      "location": "Canada",
+      "competition": "Friendly",
+      "opponent": "Canada",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=53883"
+    },
+    {
+      "result": "W",
+      "date": "September 9th, 2025",
+      "location": "New Zealand",
+      "competition": "Friendly",
+      "opponent": "New Zealand",
+      "score": "1-3",
+      "match_url": "https://www.international-football.net/match-details?id=53978"
+    },
+    {
+      "result": "W",
+      "date": "September 5th, 2025",
+      "location": "Australia",
+      "competition": "Friendly",
+      "opponent": "New Zealand",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=53729"
+    },
+    {
+      "result": "W",
+      "date": "June 10th, 2025",
+      "location": "Saudi Arabia",
+      "competition": "World Cup qualifier",
+      "opponent": "Saudi Arabia",
+      "score": "1-2",
+      "match_url": "https://www.international-football.net/match-details?id=53593"
+    }
+  ],
+  "Austria": [
+    {
+      "result": "W",
+      "date": "March 31st, 2026",
+      "location": "Austria",
+      "competition": "Friendly",
+      "opponent": "South Korea",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54445"
+    },
+    {
+      "result": "W",
+      "date": "March 27th, 2026",
+      "location": "Austria",
+      "competition": "Friendly",
+      "opponent": "Ghana",
+      "score": "5-1",
+      "match_url": "https://www.international-football.net/match-details?id=54340"
+    },
+    {
+      "result": "D",
+      "date": "November 18th, 2025",
+      "location": "Austria",
+      "competition": "World Cup qualifier",
+      "opponent": "Bosnia and Herzegovina",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54150"
+    },
+    {
+      "result": "W",
+      "date": "November 15th, 2025",
+      "location": "Cyprus",
+      "competition": "World Cup qualifier",
+      "opponent": "Cyprus",
+      "score": "0-2",
+      "match_url": "https://www.international-football.net/match-details?id=54096"
+    },
+    {
+      "result": "L",
+      "date": "October 12th, 2025",
+      "location": "Romania",
+      "competition": "World Cup qualifier",
+      "opponent": "Romania",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=53837"
+    },
+    {
+      "result": "W",
+      "date": "October 9th, 2025",
+      "location": "Austria",
+      "competition": "World Cup qualifier",
+      "opponent": "San Marino",
+      "score": "10-0",
+      "match_url": "https://www.international-football.net/match-details?id=53892"
+    },
+    {
+      "result": "W",
+      "date": "September 9th, 2025",
+      "location": "Bosnia & Herzegovina",
+      "competition": "World Cup qualifier",
+      "opponent": "Bosnia and Herzegovina",
+      "score": "1-2",
+      "match_url": "https://www.international-football.net/match-details?id=53953"
+    },
+    {
+      "result": "W",
+      "date": "September 6th, 2025",
+      "location": "Austria",
+      "competition": "World Cup qualifier",
+      "opponent": "Cyprus",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54022"
+    },
+    {
+      "result": "W",
+      "date": "June 10th, 2025",
+      "location": "San Marino",
+      "competition": "World Cup qualifier",
+      "opponent": "San Marino",
+      "score": "0-4",
+      "match_url": "https://www.international-football.net/match-details?id=53585"
+    },
+    {
+      "result": "W",
+      "date": "June 7th, 2025",
+      "location": "Austria",
+      "competition": "World Cup qualifier",
+      "opponent": "Romania",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=53522"
+    }
+  ],
+  "Belgium": [
+    {
+      "result": "D",
+      "date": "March 31st, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Mexico",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54490"
+    },
+    {
+      "result": "W",
+      "date": "March 28th, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "United States",
+      "score": "2-5",
+      "match_url": "https://www.international-football.net/match-details?id=54419"
+    },
+    {
+      "result": "W",
+      "date": "November 18th, 2025",
+      "location": "Belgium",
+      "competition": "World Cup qualifier",
+      "opponent": "Liechtenstein",
+      "score": "7-0",
+      "match_url": "https://www.international-football.net/match-details?id=54152"
+    },
+    {
+      "result": "D",
+      "date": "November 15th, 2025",
+      "location": "Kazakhstan",
+      "competition": "World Cup qualifier",
+      "opponent": "Kazakhstan",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54100"
+    },
+    {
+      "result": "W",
+      "date": "October 13th, 2025",
+      "location": "Wales",
+      "competition": "World Cup qualifier",
+      "opponent": "Wales",
+      "score": "2-4",
+      "match_url": "https://www.international-football.net/match-details?id=53821"
+    },
+    {
+      "result": "D",
+      "date": "October 10th, 2025",
+      "location": "Belgium",
+      "competition": "World Cup qualifier",
+      "opponent": "North Macedonia",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=53864"
+    },
+    {
+      "result": "W",
+      "date": "September 7th, 2025",
+      "location": "Belgium",
+      "competition": "World Cup qualifier",
+      "opponent": "Kazakhstan",
+      "score": "6-0",
+      "match_url": "https://www.international-football.net/match-details?id=54009"
+    },
+    {
+      "result": "W",
+      "date": "September 4th, 2025",
+      "location": "Liechtenstein",
+      "competition": "World Cup qualifier",
+      "opponent": "Liechtenstein",
+      "score": "0-6",
+      "match_url": "https://www.international-football.net/match-details?id=53742"
+    },
+    {
+      "result": "W",
+      "date": "June 9th, 2025",
+      "location": "Belgium",
+      "competition": "World Cup qualifier",
+      "opponent": "Wales",
+      "score": "4-3",
+      "match_url": "https://www.international-football.net/match-details?id=53626"
+    },
+    {
+      "result": "D",
+      "date": "June 6th, 2025",
+      "location": "North Macedonia",
+      "competition": "World Cup qualifier",
+      "opponent": "North Macedonia",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=53548"
+    }
+  ],
+  "Bosnia and Herzegovina": [
+    {
+      "result": "D",
+      "date": "May 29th, 2026",
+      "location": "Bosnia & Herzegovina",
+      "competition": "Friendly",
+      "opponent": "North Macedonia",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54512"
+    },
+    {
+      "result": "D",
+      "date": "March 31st, 2026",
+      "location": "Bosnia & Herzegovina",
+      "competition": "World Cup qualifier",
+      "opponent": "Italy",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54485"
+    },
+    {
+      "result": "D",
+      "date": "March 26th, 2026",
+      "location": "Wales",
+      "competition": "World Cup qualifier",
+      "opponent": "Wales",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54371"
+    },
+    {
+      "result": "D",
+      "date": "November 18th, 2025",
+      "location": "Austria",
+      "competition": "World Cup qualifier",
+      "opponent": "Austria",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54150"
+    },
+    {
+      "result": "W",
+      "date": "November 15th, 2025",
+      "location": "Bosnia & Herzegovina",
+      "competition": "World Cup qualifier",
+      "opponent": "Romania",
+      "score": "3-1",
+      "match_url": "https://www.international-football.net/match-details?id=54095"
+    },
+    {
+      "result": "W",
+      "date": "October 12th, 2025",
+      "location": "Malta",
+      "competition": "Friendly",
+      "opponent": "Malta",
+      "score": "1-4",
+      "match_url": "https://www.international-football.net/match-details?id=53847"
+    },
+    {
+      "result": "D",
+      "date": "October 9th, 2025",
+      "location": "Cyprus",
+      "competition": "World Cup qualifier",
+      "opponent": "Cyprus",
+      "score": "2-2",
+      "match_url": "https://www.international-football.net/match-details?id=53893"
+    },
+    {
+      "result": "L",
+      "date": "September 9th, 2025",
+      "location": "Bosnia & Herzegovina",
+      "competition": "World Cup qualifier",
+      "opponent": "Austria",
+      "score": "1-2",
+      "match_url": "https://www.international-football.net/match-details?id=53953"
+    },
+    {
+      "result": "W",
+      "date": "September 6th, 2025",
+      "location": "San Marino",
+      "competition": "World Cup qualifier",
+      "opponent": "San Marino",
+      "score": "0-6",
+      "match_url": "https://www.international-football.net/match-details?id=54026"
+    },
+    {
+      "result": "L",
+      "date": "June 10th, 2025",
+      "location": "Slovenia",
+      "competition": "Friendly",
+      "opponent": "Slovenia",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=53623"
+    }
+  ],
+  "Brazil": [
+    {
+      "result": "W",
+      "date": "May 31st, 2026",
+      "location": "Brazil",
+      "competition": "Friendly",
+      "opponent": "Panama",
+      "score": "6-2",
+      "match_url": "https://www.international-football.net/match-details?id=54497"
+    },
+    {
+      "result": "W",
+      "date": "March 31st, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Croatia",
+      "score": "3-1",
+      "match_url": "https://www.international-football.net/match-details?id=54491"
+    },
+    {
+      "result": "L",
+      "date": "March 26th, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "France",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54381"
+    },
+    {
+      "result": "D",
+      "date": "November 18th, 2025",
+      "location": "France",
+      "competition": "Friendly",
+      "opponent": "Tunisia",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54172"
+    },
+    {
+      "result": "W",
+      "date": "November 15th, 2025",
+      "location": "England",
+      "competition": "Friendly",
+      "opponent": "Senegal",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54107"
+    },
+    {
+      "result": "L",
+      "date": "October 14th, 2025",
+      "location": "Japan",
+      "competition": "Friendly",
+      "opponent": "Japan",
+      "score": "3-2",
+      "match_url": "https://www.international-football.net/match-details?id=53808"
+    },
+    {
+      "result": "W",
+      "date": "October 10th, 2025",
+      "location": "South Korea",
+      "competition": "Friendly",
+      "opponent": "South Korea",
+      "score": "0-5",
+      "match_url": "https://www.international-football.net/match-details?id=53887"
+    },
+    {
+      "result": "L",
+      "date": "September 9th, 2025",
+      "location": "Bolivia",
+      "competition": "World Cup qualifier",
+      "opponent": "Bolivia",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=53941"
+    },
+    {
+      "result": "W",
+      "date": "September 4th, 2025",
+      "location": "Brazil",
+      "competition": "World Cup qualifier",
+      "opponent": "Chile",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=53733"
+    },
+    {
+      "result": "W",
+      "date": "June 10th, 2025",
+      "location": "Brazil",
+      "competition": "World Cup qualifier",
+      "opponent": "Paraguay",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=53666"
+    }
+  ],
+  "Canada": [
+    {
+      "result": "D",
+      "date": "March 31st, 2026",
+      "location": "Canada",
+      "competition": "Friendly tournament",
+      "opponent": "Tunisia",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54493"
+    },
+    {
+      "result": "D",
+      "date": "March 28th, 2026",
+      "location": "Canada",
+      "competition": "Friendly tournament",
+      "opponent": "Iceland",
+      "score": "2-2",
+      "match_url": "https://www.international-football.net/match-details?id=54410"
+    },
+    {
+      "result": "W",
+      "date": "January 17th, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Guatemala",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54309"
+    },
+    {
+      "result": "W",
+      "date": "November 18th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Venezuela",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54259"
+    },
+    {
+      "result": "D",
+      "date": "November 13th, 2025",
+      "location": "Canada",
+      "competition": "Friendly",
+      "opponent": "Ecuador",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54149"
+    },
+    {
+      "result": "D",
+      "date": "October 14th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Colombia",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54083"
+    },
+    {
+      "result": "L",
+      "date": "October 10th, 2025",
+      "location": "Canada",
+      "competition": "Friendly",
+      "opponent": "Australia",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=53883"
+    },
+    {
+      "result": "W",
+      "date": "September 9th, 2025",
+      "location": "Wales",
+      "competition": "Friendly",
+      "opponent": "Wales",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=53982"
+    },
+    {
+      "result": "W",
+      "date": "September 5th, 2025",
+      "location": "Romania",
+      "competition": "Friendly",
+      "opponent": "Romania",
+      "score": "0-3",
+      "match_url": "https://www.international-football.net/match-details?id=53731"
+    },
+    {
+      "result": "D",
+      "date": "June 29th, 2025",
+      "location": "the United States",
+      "competition": "CONCACAF Gold Cup",
+      "opponent": "Guatemala",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=53678"
+    }
+  ],
+  "Cape Verde": [
+    {
+      "result": "W",
+      "date": "May 31st, 2026",
+      "location": "Portugal",
+      "competition": "Friendly",
+      "opponent": "Serbia",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=54498"
+    },
+    {
+      "result": "D",
+      "date": "March 30th, 2026",
+      "location": "New Zealand",
+      "competition": "FIFA Series",
+      "opponent": "Finland",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54473"
+    },
+    {
+      "result": "L",
+      "date": "March 27th, 2026",
+      "location": "New Zealand",
+      "competition": "FIFA Series",
+      "opponent": "Chile",
+      "score": "4-2",
+      "match_url": "https://www.international-football.net/match-details?id=54331"
+    },
+    {
+      "result": "D",
+      "date": "November 17th, 2025",
+      "location": "the United Arab Emirates",
+      "competition": "Friendly tournament",
+      "opponent": "Egypt",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54197"
+    },
+    {
+      "result": "D",
+      "date": "November 13th, 2025",
+      "location": "the United Arab Emirates",
+      "competition": "Friendly tournament",
+      "opponent": "Iran",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54047"
+    },
+    {
+      "result": "W",
+      "date": "October 13th, 2025",
+      "location": "Cape Verde",
+      "competition": "World Cup qualifier",
+      "opponent": "Eswatini",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=53823"
+    },
+    {
+      "result": "D",
+      "date": "October 8th, 2025",
+      "location": "Libya",
+      "competition": "World Cup qualifier",
+      "opponent": "Libya",
+      "score": "3-3",
+      "match_url": "https://www.international-football.net/match-details?id=53928"
+    },
+    {
+      "result": "W",
+      "date": "September 9th, 2025",
+      "location": "Cape Verde",
+      "competition": "World Cup qualifier",
+      "opponent": "Cameroon",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=53962"
+    },
+    {
+      "result": "W",
+      "date": "September 4th, 2025",
+      "location": "Mauritius",
+      "competition": "World Cup qualifier",
+      "opponent": "Mauritius",
+      "score": "0-2",
+      "match_url": "https://www.international-football.net/match-details?id=53754"
+    },
+    {
+      "result": "D",
+      "date": "June 8th, 2025",
+      "location": "Georgia",
+      "competition": "Friendly",
+      "opponent": "Georgia",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=53577"
+    }
+  ],
+  "Colombia": [
+    {
+      "result": "L",
+      "date": "March 29th, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "France",
+      "score": "3-1",
+      "match_url": "https://www.international-football.net/match-details?id=54403"
+    },
+    {
+      "result": "L",
+      "date": "March 26th, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Croatia",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54379"
+    },
+    {
+      "result": "W",
+      "date": "November 18th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Australia",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=54260"
+    },
+    {
+      "result": "W",
+      "date": "November 15th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "New Zealand",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54110"
+    },
+    {
+      "result": "D",
+      "date": "October 14th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Canada",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54083"
+    },
+    {
+      "result": "W",
+      "date": "October 11th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Mexico",
+      "score": "4-0",
+      "match_url": "https://www.international-football.net/match-details?id=53859"
+    },
+    {
+      "result": "W",
+      "date": "September 9th, 2025",
+      "location": "Venezuela",
+      "competition": "World Cup qualifier",
+      "opponent": "Venezuela",
+      "score": "3-6",
+      "match_url": "https://www.international-football.net/match-details?id=53945"
+    },
+    {
+      "result": "W",
+      "date": "September 4th, 2025",
+      "location": "Colombia",
+      "competition": "World Cup qualifier",
+      "opponent": "Bolivia",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=53734"
+    },
+    {
+      "result": "D",
+      "date": "June 10th, 2025",
+      "location": "Argentina",
+      "competition": "World Cup qualifier",
+      "opponent": "Argentina",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=53650"
+    },
+    {
+      "result": "D",
+      "date": "June 6th, 2025",
+      "location": "Colombia",
+      "competition": "World Cup qualifier",
+      "opponent": "Peru",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=53537"
+    }
+  ],
+  "Croatia": [
+    {
+      "result": "L",
+      "date": "March 31st, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Brazil",
+      "score": "3-1",
+      "match_url": "https://www.international-football.net/match-details?id=54491"
+    },
+    {
+      "result": "W",
+      "date": "March 26th, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Colombia",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54379"
+    },
+    {
+      "result": "W",
+      "date": "November 17th, 2025",
+      "location": "Montenegro",
+      "competition": "World Cup qualifier",
+      "opponent": "Montenegro",
+      "score": "2-3",
+      "match_url": "https://www.international-football.net/match-details?id=54192"
+    },
+    {
+      "result": "W",
+      "date": "November 14th, 2025",
+      "location": "Croatia",
+      "competition": "World Cup qualifier",
+      "opponent": "Faroe Islands",
+      "score": "3-1",
+      "match_url": "https://www.international-football.net/match-details?id=54123"
+    },
+    {
+      "result": "W",
+      "date": "October 12th, 2025",
+      "location": "Croatia",
+      "competition": "World Cup qualifier",
+      "opponent": "Gibraltar",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=53832"
+    },
+    {
+      "result": "D",
+      "date": "October 9th, 2025",
+      "location": "the Czech Republic",
+      "competition": "World Cup qualifier",
+      "opponent": "Czechia",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=53894"
+    },
+    {
+      "result": "W",
+      "date": "September 8th, 2025",
+      "location": "Croatia",
+      "competition": "World Cup qualifier",
+      "opponent": "Montenegro",
+      "score": "4-0",
+      "match_url": "https://www.international-football.net/match-details?id=53985"
+    },
+    {
+      "result": "W",
+      "date": "September 5th, 2025",
+      "location": "Faroe Islands",
+      "competition": "World Cup qualifier",
+      "opponent": "Faroe Islands",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=53704"
+    },
+    {
+      "result": "W",
+      "date": "June 9th, 2025",
+      "location": "Croatia",
+      "competition": "World Cup qualifier",
+      "opponent": "Czechia",
+      "score": "5-1",
+      "match_url": "https://www.international-football.net/match-details?id=53627"
+    },
+    {
+      "result": "W",
+      "date": "June 6th, 2025",
+      "location": "Portugal",
+      "competition": "World Cup qualifier",
+      "opponent": "Gibraltar",
+      "score": "7-0",
+      "match_url": "https://www.international-football.net/match-details?id=53545"
+    }
+  ],
+  "Curaçao": [
+    {
+      "result": "L",
+      "date": "May 30th, 2026",
+      "location": "Scotland",
+      "competition": "Friendly",
+      "opponent": "Scotland",
+      "score": "4-1",
+      "match_url": "https://www.international-football.net/match-details?id=54510"
+    },
+    {
+      "result": "L",
+      "date": "March 31st, 2026",
+      "location": "Australia",
+      "competition": "FIFA Series",
+      "opponent": "Australia",
+      "score": "5-1",
+      "match_url": "https://www.international-football.net/match-details?id=54441"
+    },
+    {
+      "result": "L",
+      "date": "March 27th, 2026",
+      "location": "Australia",
+      "competition": "FIFA Series",
+      "opponent": "China",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54332"
+    },
+    {
+      "result": "D",
+      "date": "November 18th, 2025",
+      "location": "Jamaica",
+      "competition": "World Cup qualifier",
+      "opponent": "Jamaica",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54255"
+    },
+    {
+      "result": "W",
+      "date": "November 13th, 2025",
+      "location": "Bermuda",
+      "competition": "World Cup qualifier",
+      "opponent": "Bermuda",
+      "score": "0-7",
+      "match_url": "https://www.international-football.net/match-details?id=54143"
+    },
+    {
+      "result": "D",
+      "date": "October 14th, 2025",
+      "location": "Curaçao",
+      "competition": "World Cup qualifier",
+      "opponent": "Trinidad and Tobago",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54065"
+    },
+    {
+      "result": "W",
+      "date": "October 10th, 2025",
+      "location": "Curaçao",
+      "competition": "World Cup qualifier",
+      "opponent": "Jamaica",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=53861"
+    },
+    {
+      "result": "W",
+      "date": "September 9th, 2025",
+      "location": "Curaçao",
+      "competition": "World Cup qualifier",
+      "opponent": "Bermuda",
+      "score": "3-2",
+      "match_url": "https://www.international-football.net/match-details?id=53947"
+    },
+    {
+      "result": "D",
+      "date": "September 5th, 2025",
+      "location": "Trinidad & Tobago",
+      "competition": "World Cup qualifier",
+      "opponent": "Trinidad and Tobago",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=53702"
+    },
+    {
+      "result": "L",
+      "date": "June 24th, 2025",
+      "location": "the United States",
+      "competition": "CONCACAF Gold Cup",
+      "opponent": "Honduras",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=53684"
+    }
+  ],
+  "Czechia": [
+    {
+      "result": "W",
+      "date": "May 31st, 2026",
+      "location": "the Czech Republic",
+      "competition": "Friendly",
+      "opponent": "Kosovo",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54499"
+    },
+    {
+      "result": "D",
+      "date": "March 31st, 2026",
+      "location": "the Czech Republic",
+      "competition": "World Cup qualifier",
+      "opponent": "Denmark",
+      "score": "2-2",
+      "match_url": "https://www.international-football.net/match-details?id=54486"
+    },
+    {
+      "result": "D",
+      "date": "March 26th, 2026",
+      "location": "the Czech Republic",
+      "competition": "World Cup qualifier",
+      "opponent": "Ireland",
+      "score": "2-2",
+      "match_url": "https://www.international-football.net/match-details?id=54364"
+    },
+    {
+      "result": "W",
+      "date": "November 17th, 2025",
+      "location": "the Czech Republic",
+      "competition": "World Cup qualifier",
+      "opponent": "Gibraltar",
+      "score": "6-0",
+      "match_url": "https://www.international-football.net/match-details?id=54189"
+    },
+    {
+      "result": "W",
+      "date": "November 13th, 2025",
+      "location": "the Czech Republic",
+      "competition": "Friendly",
+      "opponent": "San Marino",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54048"
+    },
+    {
+      "result": "L",
+      "date": "October 12th, 2025",
+      "location": "Faroe Islands",
+      "competition": "World Cup qualifier",
+      "opponent": "Faroe Islands",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=53834"
+    },
+    {
+      "result": "D",
+      "date": "October 9th, 2025",
+      "location": "the Czech Republic",
+      "competition": "World Cup qualifier",
+      "opponent": "Croatia",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=53894"
+    },
+    {
+      "result": "D",
+      "date": "September 8th, 2025",
+      "location": "the Czech Republic",
+      "competition": "Friendly",
+      "opponent": "Saudi Arabia",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54004"
+    },
+    {
+      "result": "W",
+      "date": "September 5th, 2025",
+      "location": "Montenegro",
+      "competition": "World Cup qualifier",
+      "opponent": "Montenegro",
+      "score": "0-2",
+      "match_url": "https://www.international-football.net/match-details?id=53710"
+    },
+    {
+      "result": "L",
+      "date": "June 9th, 2025",
+      "location": "Croatia",
+      "competition": "World Cup qualifier",
+      "opponent": "Croatia",
+      "score": "5-1",
+      "match_url": "https://www.international-football.net/match-details?id=53627"
+    }
+  ],
+  "DR Congo": [
+    {
+      "result": "W",
+      "date": "March 31st, 2026",
+      "location": "Mexico",
+      "competition": "World Cup qualifier",
+      "opponent": "Jamaica",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54487"
+    },
+    {
+      "result": "W",
+      "date": "March 25th, 2026",
+      "location": "Mexico",
+      "competition": "Friendly",
+      "opponent": "Bermuda",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54389"
+    },
+    {
+      "result": "L",
+      "date": "January 6th, 2026",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Algeria",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54316"
+    },
+    {
+      "result": "W",
+      "date": "December 30th, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Botswana",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=54269"
+    },
+    {
+      "result": "D",
+      "date": "December 27th, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Senegal",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54282"
+    },
+    {
+      "result": "W",
+      "date": "December 23rd, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Benin",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54293"
+    },
+    {
+      "result": "W",
+      "date": "December 16th, 2025",
+      "location": "Spain",
+      "competition": "Friendly",
+      "opponent": "Zambia",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54207"
+    },
+    {
+      "result": "D",
+      "date": "November 16th, 2025",
+      "location": "Morocco",
+      "competition": "World Cup qualifier",
+      "opponent": "Nigeria",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54094"
+    },
+    {
+      "result": "W",
+      "date": "November 13th, 2025",
+      "location": "Morocco",
+      "competition": "World Cup qualifier",
+      "opponent": "Cameroon",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54041"
+    },
+    {
+      "result": "W",
+      "date": "October 14th, 2025",
+      "location": "the Dem. Rep. of Congo",
+      "competition": "World Cup qualifier",
+      "opponent": "Sudan",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54076"
+    }
+  ],
+  "Ecuador": [
+    {
+      "result": "W",
+      "date": "May 30th, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Saudi Arabia",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54508"
+    },
+    {
+      "result": "D",
+      "date": "March 31st, 2026",
+      "location": "the Netherlands",
+      "competition": "Friendly",
+      "opponent": "Netherlands",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54460"
+    },
+    {
+      "result": "D",
+      "date": "March 27th, 2026",
+      "location": "Spain",
+      "competition": "Friendly",
+      "opponent": "Morocco",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54343"
+    },
+    {
+      "result": "W",
+      "date": "November 18th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "New Zealand",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54262"
+    },
+    {
+      "result": "D",
+      "date": "November 13th, 2025",
+      "location": "Canada",
+      "competition": "Friendly",
+      "opponent": "Canada",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54149"
+    },
+    {
+      "result": "D",
+      "date": "October 14th, 2025",
+      "location": "Mexico",
+      "competition": "Friendly",
+      "opponent": "Mexico",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54084"
+    },
+    {
+      "result": "D",
+      "date": "October 10th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "United States",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=53888"
+    },
+    {
+      "result": "W",
+      "date": "September 9th, 2025",
+      "location": "Ecuador",
+      "competition": "World Cup qualifier",
+      "opponent": "Argentina",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=53943"
+    },
+    {
+      "result": "D",
+      "date": "September 4th, 2025",
+      "location": "Paraguay",
+      "competition": "World Cup qualifier",
+      "opponent": "Paraguay",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=53735"
+    },
+    {
+      "result": "D",
+      "date": "June 10th, 2025",
+      "location": "Peru",
+      "competition": "World Cup qualifier",
+      "opponent": "Peru",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=53667"
+    }
+  ],
+  "Egypt": [
+    {
+      "result": "W",
+      "date": "May 28th, 2026",
+      "location": "Egypt",
+      "competition": "Friendly",
+      "opponent": "Russia",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54516"
+    },
+    {
+      "result": "D",
+      "date": "March 31st, 2026",
+      "location": "Spain",
+      "competition": "Friendly",
+      "opponent": "Spain",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54495"
+    },
+    {
+      "result": "W",
+      "date": "March 27th, 2026",
+      "location": "Saudi Arabia",
+      "competition": "Friendly",
+      "opponent": "Saudi Arabia",
+      "score": "0-4",
+      "match_url": "https://www.international-football.net/match-details?id=54352"
+    },
+    {
+      "result": "D",
+      "date": "January 17th, 2026",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Nigeria",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54308"
+    },
+    {
+      "result": "L",
+      "date": "January 14th, 2026",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Senegal",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54311"
+    },
+    {
+      "result": "W",
+      "date": "January 10th, 2026",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Ivory Coast",
+      "score": "3-2",
+      "match_url": "https://www.international-football.net/match-details?id=54312"
+    },
+    {
+      "result": "W",
+      "date": "January 5th, 2026",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Benin",
+      "score": "3-1",
+      "match_url": "https://www.international-football.net/match-details?id=54318"
+    },
+    {
+      "result": "D",
+      "date": "December 29th, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Angola",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54273"
+    },
+    {
+      "result": "W",
+      "date": "December 26th, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "South Africa",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54287"
+    },
+    {
+      "result": "W",
+      "date": "December 22nd, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Zimbabwe",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54297"
+    }
+  ],
+  "England": [
+    {
+      "result": "L",
+      "date": "March 31st, 2026",
+      "location": "England",
+      "competition": "Friendly",
+      "opponent": "Japan",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=54449"
+    },
+    {
+      "result": "D",
+      "date": "March 27th, 2026",
+      "location": "England",
+      "competition": "Friendly",
+      "opponent": "Uruguay",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54344"
+    },
+    {
+      "result": "W",
+      "date": "November 16th, 2025",
+      "location": "Albania",
+      "competition": "World Cup qualifier",
+      "opponent": "Albania",
+      "score": "0-2",
+      "match_url": "https://www.international-football.net/match-details?id=54086"
+    },
+    {
+      "result": "W",
+      "date": "November 13th, 2025",
+      "location": "England",
+      "competition": "World Cup qualifier",
+      "opponent": "Serbia",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54036"
+    },
+    {
+      "result": "W",
+      "date": "October 14th, 2025",
+      "location": "Latvia",
+      "competition": "World Cup qualifier",
+      "opponent": "Latvia",
+      "score": "0-5",
+      "match_url": "https://www.international-football.net/match-details?id=54072"
+    },
+    {
+      "result": "W",
+      "date": "October 9th, 2025",
+      "location": "England",
+      "competition": "Friendly",
+      "opponent": "Wales",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=53917"
+    },
+    {
+      "result": "W",
+      "date": "September 9th, 2025",
+      "location": "Serbia",
+      "competition": "World Cup qualifier",
+      "opponent": "Serbia",
+      "score": "0-5",
+      "match_url": "https://www.international-football.net/match-details?id=53958"
+    },
+    {
+      "result": "W",
+      "date": "September 6th, 2025",
+      "location": "England",
+      "competition": "World Cup qualifier",
+      "opponent": "Andorra",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54023"
+    },
+    {
+      "result": "L",
+      "date": "June 10th, 2025",
+      "location": "England",
+      "competition": "Friendly",
+      "opponent": "Senegal",
+      "score": "1-3",
+      "match_url": "https://www.international-football.net/match-details?id=53616"
+    },
+    {
+      "result": "W",
+      "date": "June 7th, 2025",
+      "location": "Spain",
+      "competition": "World Cup qualifier",
+      "opponent": "Andorra",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=53524"
+    }
+  ],
+  "France": [
+    {
+      "result": "W",
+      "date": "March 29th, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Colombia",
+      "score": "3-1",
+      "match_url": "https://www.international-football.net/match-details?id=54403"
+    },
+    {
+      "result": "W",
+      "date": "March 26th, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Brazil",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54381"
+    },
+    {
+      "result": "W",
+      "date": "November 16th, 2025",
+      "location": "Azerbaijan",
+      "competition": "World Cup qualifier",
+      "opponent": "Azerbaijan",
+      "score": "1-3",
+      "match_url": "https://www.international-football.net/match-details?id=54087"
+    },
+    {
+      "result": "W",
+      "date": "November 13th, 2025",
+      "location": "France",
+      "competition": "World Cup qualifier",
+      "opponent": "Ukraine",
+      "score": "4-0",
+      "match_url": "https://www.international-football.net/match-details?id=54037"
+    },
+    {
+      "result": "D",
+      "date": "October 13th, 2025",
+      "location": "Iceland",
+      "competition": "World Cup qualifier",
+      "opponent": "Iceland",
+      "score": "2-2",
+      "match_url": "https://www.international-football.net/match-details?id=53814"
+    },
+    {
+      "result": "W",
+      "date": "October 10th, 2025",
+      "location": "France",
+      "competition": "World Cup qualifier",
+      "opponent": "Azerbaijan",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=53865"
+    },
+    {
+      "result": "W",
+      "date": "September 9th, 2025",
+      "location": "France",
+      "competition": "World Cup qualifier",
+      "opponent": "Iceland",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=53955"
+    },
+    {
+      "result": "W",
+      "date": "September 5th, 2025",
+      "location": "Poland",
+      "competition": "World Cup qualifier",
+      "opponent": "Ukraine",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=53705"
+    },
+    {
+      "result": "W",
+      "date": "June 8th, 2025",
+      "location": "Germany",
+      "competition": "UEFA Nations League A",
+      "opponent": "Germany",
+      "score": "0-2",
+      "match_url": "https://www.international-football.net/match-details?id=53572"
+    },
+    {
+      "result": "L",
+      "date": "June 5th, 2025",
+      "location": "Germany",
+      "competition": "UEFA Nations League A",
+      "opponent": "Spain",
+      "score": "5-4",
+      "match_url": "https://www.international-football.net/match-details?id=53483"
+    }
+  ],
+  "Germany": [
+    {
+      "result": "W",
+      "date": "May 31st, 2026",
+      "location": "Germany",
+      "competition": "Friendly",
+      "opponent": "Finland",
+      "score": "4-0",
+      "match_url": "https://www.international-football.net/match-details?id=54500"
+    },
+    {
+      "result": "W",
+      "date": "March 30th, 2026",
+      "location": "Germany",
+      "competition": "Friendly",
+      "opponent": "Ghana",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54482"
+    },
+    {
+      "result": "W",
+      "date": "March 27th, 2026",
+      "location": "Switzerland",
+      "competition": "Friendly",
+      "opponent": "Switzerland",
+      "score": "3-4",
+      "match_url": "https://www.international-football.net/match-details?id=54355"
+    },
+    {
+      "result": "W",
+      "date": "November 17th, 2025",
+      "location": "Germany",
+      "competition": "World Cup qualifier",
+      "opponent": "Slovakia",
+      "score": "6-0",
+      "match_url": "https://www.international-football.net/match-details?id=54190"
+    },
+    {
+      "result": "W",
+      "date": "November 14th, 2025",
+      "location": "Luxembourg",
+      "competition": "World Cup qualifier",
+      "opponent": "Luxembourg",
+      "score": "0-2",
+      "match_url": "https://www.international-football.net/match-details?id=54126"
+    },
+    {
+      "result": "W",
+      "date": "October 13th, 2025",
+      "location": "Northern Ireland",
+      "competition": "World Cup qualifier",
+      "opponent": "Northern Ireland",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=53816"
+    },
+    {
+      "result": "W",
+      "date": "October 10th, 2025",
+      "location": "Germany",
+      "competition": "World Cup qualifier",
+      "opponent": "Luxembourg",
+      "score": "4-0",
+      "match_url": "https://www.international-football.net/match-details?id=53866"
+    },
+    {
+      "result": "W",
+      "date": "September 7th, 2025",
+      "location": "Germany",
+      "competition": "World Cup qualifier",
+      "opponent": "Northern Ireland",
+      "score": "3-1",
+      "match_url": "https://www.international-football.net/match-details?id=54010"
+    },
+    {
+      "result": "L",
+      "date": "September 4th, 2025",
+      "location": "Slovakia",
+      "competition": "World Cup qualifier",
+      "opponent": "Slovakia",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=53746"
+    },
+    {
+      "result": "L",
+      "date": "June 8th, 2025",
+      "location": "Germany",
+      "competition": "UEFA Nations League A",
+      "opponent": "France",
+      "score": "0-2",
+      "match_url": "https://www.international-football.net/match-details?id=53572"
+    }
+  ],
+  "Ghana": [
+    {
+      "result": "L",
+      "date": "May 22nd, 2026",
+      "location": "Mexico",
+      "competition": "Friendly",
+      "opponent": "Mexico",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54521"
+    },
+    {
+      "result": "L",
+      "date": "March 30th, 2026",
+      "location": "Germany",
+      "competition": "Friendly",
+      "opponent": "Germany",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54482"
+    },
+    {
+      "result": "L",
+      "date": "March 27th, 2026",
+      "location": "Austria",
+      "competition": "Friendly",
+      "opponent": "Austria",
+      "score": "5-1",
+      "match_url": "https://www.international-football.net/match-details?id=54340"
+    },
+    {
+      "result": "L",
+      "date": "November 18th, 2025",
+      "location": "South Korea",
+      "competition": "Friendly",
+      "opponent": "South Korea",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54188"
+    },
+    {
+      "result": "L",
+      "date": "November 14th, 2025",
+      "location": "Japan",
+      "competition": "Friendly",
+      "opponent": "Japan",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54134"
+    },
+    {
+      "result": "W",
+      "date": "October 12th, 2025",
+      "location": "Ghana",
+      "competition": "World Cup qualifier",
+      "opponent": "Comoros",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=53843"
+    },
+    {
+      "result": "W",
+      "date": "October 8th, 2025",
+      "location": "Morocco",
+      "competition": "World Cup qualifier",
+      "opponent": "Central African Republic",
+      "score": "5-0",
+      "match_url": "https://www.international-football.net/match-details?id=53927"
+    },
+    {
+      "result": "W",
+      "date": "September 8th, 2025",
+      "location": "Ghana",
+      "competition": "World Cup qualifier",
+      "opponent": "Mali",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=53994"
+    },
+    {
+      "result": "D",
+      "date": "September 4th, 2025",
+      "location": "Chad",
+      "competition": "World Cup qualifier",
+      "opponent": "Chad",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=53750"
+    },
+    {
+      "result": "W",
+      "date": "May 31st, 2025",
+      "location": "England",
+      "competition": "Friendly tournament",
+      "opponent": "Trinidad and Tobago",
+      "score": "4-0",
+      "match_url": "https://www.international-football.net/match-details?id=53471"
+    }
+  ],
+  "Haiti": [
+    {
+      "result": "D",
+      "date": "March 31st, 2026",
+      "location": "Canada",
+      "competition": "Friendly tournament",
+      "opponent": "Iceland",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54451"
+    },
+    {
+      "result": "L",
+      "date": "March 28th, 2026",
+      "location": "Canada",
+      "competition": "Friendly tournament",
+      "opponent": "Tunisia",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54418"
+    },
+    {
+      "result": "W",
+      "date": "November 18th, 2025",
+      "location": "Curaçao",
+      "competition": "World Cup qualifier",
+      "opponent": "Nicaragua",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54254"
+    },
+    {
+      "result": "W",
+      "date": "November 13th, 2025",
+      "location": "Curaçao",
+      "competition": "World Cup qualifier",
+      "opponent": "Costa Rica",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54145"
+    },
+    {
+      "result": "L",
+      "date": "October 13th, 2025",
+      "location": "Honduras",
+      "competition": "World Cup qualifier",
+      "opponent": "Honduras",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=53813"
+    },
+    {
+      "result": "W",
+      "date": "October 9th, 2025",
+      "location": "Nicaragua",
+      "competition": "World Cup qualifier",
+      "opponent": "Nicaragua",
+      "score": "0-3",
+      "match_url": "https://www.international-football.net/match-details?id=53890"
+    },
+    {
+      "result": "D",
+      "date": "September 9th, 2025",
+      "location": "Costa Rica",
+      "competition": "World Cup qualifier",
+      "opponent": "Costa Rica",
+      "score": "3-3",
+      "match_url": "https://www.international-football.net/match-details?id=53946"
+    },
+    {
+      "result": "D",
+      "date": "September 5th, 2025",
+      "location": "Curaçao",
+      "competition": "World Cup qualifier",
+      "opponent": "Honduras",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=53701"
+    },
+    {
+      "result": "L",
+      "date": "June 22nd, 2025",
+      "location": "the United States",
+      "competition": "CONCACAF Gold Cup",
+      "opponent": "United States",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=53689"
+    },
+    {
+      "result": "D",
+      "date": "June 19th, 2025",
+      "location": "the United States",
+      "competition": "CONCACAF Gold Cup",
+      "opponent": "Trinidad and Tobago",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=53694"
+    }
+  ],
+  "Iran": [
+    {
+      "result": "W",
+      "date": "May 29th, 2026",
+      "location": "Turkey",
+      "competition": "Friendly",
+      "opponent": "Gambia",
+      "score": "3-1",
+      "match_url": "https://www.international-football.net/match-details?id=54513"
+    },
+    {
+      "result": "W",
+      "date": "March 31st, 2026",
+      "location": "Turkey",
+      "competition": "Al-Nashama Tournament",
+      "opponent": "Costa Rica",
+      "score": "0-5",
+      "match_url": "https://www.international-football.net/match-details?id=54448"
+    },
+    {
+      "result": "L",
+      "date": "March 27th, 2026",
+      "location": "Turkey",
+      "competition": "Al-Nashama Tournament",
+      "opponent": "Nigeria",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54350"
+    },
+    {
+      "result": "D",
+      "date": "November 18th, 2025",
+      "location": "the United Arab Emirates",
+      "competition": "Friendly tournament",
+      "opponent": "Uzbekistan",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54179"
+    },
+    {
+      "result": "D",
+      "date": "November 13th, 2025",
+      "location": "the United Arab Emirates",
+      "competition": "Friendly tournament",
+      "opponent": "Cape Verde",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54047"
+    },
+    {
+      "result": "W",
+      "date": "October 14th, 2025",
+      "location": "the United Arab Emirates",
+      "competition": "Friendly",
+      "opponent": "Tanzania",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=53807"
+    },
+    {
+      "result": "L",
+      "date": "October 10th, 2025",
+      "location": "Russia",
+      "competition": "Friendly",
+      "opponent": "Russia",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=53886"
+    },
+    {
+      "result": "L",
+      "date": "September 8th, 2025",
+      "location": "Uzbekistan",
+      "competition": "Central Asian Nations Cup",
+      "opponent": "Uzbekistan",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54003"
+    },
+    {
+      "result": "D",
+      "date": "September 4th, 2025",
+      "location": "Tajikistan",
+      "competition": "Central Asian Nations Cup",
+      "opponent": "Tajikistan",
+      "score": "2-2",
+      "match_url": "https://www.international-football.net/match-details?id=53757"
+    },
+    {
+      "result": "W",
+      "date": "September 1st, 2025",
+      "location": "Tajikistan",
+      "competition": "Central Asian Nations Cup",
+      "opponent": "India",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=53770"
+    }
+  ],
+  "Iraq": [
+    {
+      "result": "W",
+      "date": "May 29th, 2026",
+      "location": "Spain",
+      "competition": "Friendly",
+      "opponent": "Andorra",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54514"
+    },
+    {
+      "result": "W",
+      "date": "March 31st, 2026",
+      "location": "Mexico",
+      "competition": "World Cup qualifier",
+      "opponent": "Bolivia",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54488"
+    },
+    {
+      "result": "L",
+      "date": "December 12th, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Jordan",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54212"
+    },
+    {
+      "result": "L",
+      "date": "December 9th, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Algeria",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54215"
+    },
+    {
+      "result": "W",
+      "date": "December 6th, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Sudan",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54225"
+    },
+    {
+      "result": "W",
+      "date": "December 3rd, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Bahrain",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54232"
+    },
+    {
+      "result": "W",
+      "date": "November 18th, 2025",
+      "location": "Iraq",
+      "competition": "World Cup qualifier",
+      "opponent": "United Arab Emirates",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54160"
+    },
+    {
+      "result": "D",
+      "date": "November 13th, 2025",
+      "location": "the United Arab Emirates",
+      "competition": "World Cup qualifier",
+      "opponent": "United Arab Emirates",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54043"
+    },
+    {
+      "result": "D",
+      "date": "October 14th, 2025",
+      "location": "Saudi Arabia",
+      "competition": "World Cup qualifier",
+      "opponent": "Saudi Arabia",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54081"
+    },
+    {
+      "result": "W",
+      "date": "October 11th, 2025",
+      "location": "Saudi Arabia",
+      "competition": "World Cup qualifier",
+      "opponent": "Indonesia",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=53856"
+    }
+  ],
+  "Ivory Coast": [
+    {
+      "result": "W",
+      "date": "March 31st, 2026",
+      "location": "England",
+      "competition": "Friendly",
+      "opponent": "Scotland",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54455"
+    },
+    {
+      "result": "W",
+      "date": "March 28th, 2026",
+      "location": "England",
+      "competition": "Friendly",
+      "opponent": "South Korea",
+      "score": "4-0",
+      "match_url": "https://www.international-football.net/match-details?id=54412"
+    },
+    {
+      "result": "L",
+      "date": "January 10th, 2026",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Egypt",
+      "score": "3-2",
+      "match_url": "https://www.international-football.net/match-details?id=54312"
+    },
+    {
+      "result": "W",
+      "date": "January 6th, 2026",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Burkina Faso",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=54317"
+    },
+    {
+      "result": "W",
+      "date": "December 31st, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Gabon",
+      "score": "3-2",
+      "match_url": "https://www.international-football.net/match-details?id=54268"
+    },
+    {
+      "result": "D",
+      "date": "December 28th, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Cameroon",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54278"
+    },
+    {
+      "result": "W",
+      "date": "December 24th, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Mozambique",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54292"
+    },
+    {
+      "result": "W",
+      "date": "November 18th, 2025",
+      "location": "Oman",
+      "competition": "Friendly",
+      "opponent": "Oman",
+      "score": "0-2",
+      "match_url": "https://www.international-football.net/match-details?id=54184"
+    },
+    {
+      "result": "L",
+      "date": "November 14th, 2025",
+      "location": "Saudi Arabia",
+      "competition": "Friendly",
+      "opponent": "Saudi Arabia",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54137"
+    },
+    {
+      "result": "W",
+      "date": "October 14th, 2025",
+      "location": "Ivory Coast",
+      "competition": "World Cup qualifier",
+      "opponent": "Kenya",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=54078"
+    }
+  ],
+  "Japan": [
+    {
+      "result": "W",
+      "date": "May 31st, 2026",
+      "location": "Japan",
+      "competition": "Friendly",
+      "opponent": "Iceland",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54501"
+    },
+    {
+      "result": "W",
+      "date": "March 31st, 2026",
+      "location": "England",
+      "competition": "Friendly",
+      "opponent": "England",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=54449"
+    },
+    {
+      "result": "W",
+      "date": "March 28th, 2026",
+      "location": "Scotland",
+      "competition": "Friendly",
+      "opponent": "Scotland",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=54416"
+    },
+    {
+      "result": "W",
+      "date": "November 18th, 2025",
+      "location": "Japan",
+      "competition": "Friendly",
+      "opponent": "Bolivia",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=54180"
+    },
+    {
+      "result": "W",
+      "date": "November 14th, 2025",
+      "location": "Japan",
+      "competition": "Friendly",
+      "opponent": "Ghana",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54134"
+    },
+    {
+      "result": "W",
+      "date": "October 14th, 2025",
+      "location": "Japan",
+      "competition": "Friendly",
+      "opponent": "Brazil",
+      "score": "3-2",
+      "match_url": "https://www.international-football.net/match-details?id=53808"
+    },
+    {
+      "result": "D",
+      "date": "October 10th, 2025",
+      "location": "Japan",
+      "competition": "Friendly",
+      "opponent": "Paraguay",
+      "score": "2-2",
+      "match_url": "https://www.international-football.net/match-details?id=53885"
+    },
+    {
+      "result": "L",
+      "date": "September 9th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "United States",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=53981"
+    },
+    {
+      "result": "D",
+      "date": "September 6th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Mexico",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54028"
+    },
+    {
+      "result": "W",
+      "date": "July 15th, 2025",
+      "location": "South Korea",
+      "competition": "East Asian Championship",
+      "opponent": "South Korea",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=53781"
+    }
+  ],
+  "Jordan": [
+    {
+      "result": "L",
+      "date": "May 31st, 2026",
+      "location": "Switzerland",
+      "competition": "Friendly",
+      "opponent": "Switzerland",
+      "score": "4-1",
+      "match_url": "https://www.international-football.net/match-details?id=54504"
+    },
+    {
+      "result": "D",
+      "date": "March 31st, 2026",
+      "location": "Turkey",
+      "competition": "Al-Nashama Tournament",
+      "opponent": "Nigeria",
+      "score": "2-2",
+      "match_url": "https://www.international-football.net/match-details?id=54456"
+    },
+    {
+      "result": "D",
+      "date": "March 27th, 2026",
+      "location": "Turkey",
+      "competition": "Al-Nashama Tournament",
+      "opponent": "Costa Rica",
+      "score": "2-2",
+      "match_url": "https://www.international-football.net/match-details?id=54342"
+    },
+    {
+      "result": "L",
+      "date": "December 18th, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Morocco",
+      "score": "3-2",
+      "match_url": "https://www.international-football.net/match-details?id=54203"
+    },
+    {
+      "result": "W",
+      "date": "December 15th, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Saudi Arabia",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54209"
+    },
+    {
+      "result": "W",
+      "date": "December 12th, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Iraq",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54212"
+    },
+    {
+      "result": "W",
+      "date": "December 9th, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Egypt",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=54217"
+    },
+    {
+      "result": "W",
+      "date": "December 6th, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Kuwait",
+      "score": "3-1",
+      "match_url": "https://www.international-football.net/match-details?id=54226"
+    },
+    {
+      "result": "W",
+      "date": "December 3rd, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "United Arab Emirates",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54233"
+    },
+    {
+      "result": "D",
+      "date": "November 18th, 2025",
+      "location": "Tunisia",
+      "competition": "Friendly",
+      "opponent": "Mali",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54181"
+    }
+  ],
+  "Mexico": [
+    {
+      "result": "W",
+      "date": "May 30th, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Australia",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54509"
+    },
+    {
+      "result": "W",
+      "date": "May 22nd, 2026",
+      "location": "Mexico",
+      "competition": "Friendly",
+      "opponent": "Ghana",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54521"
+    },
+    {
+      "result": "D",
+      "date": "March 31st, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Belgium",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54490"
+    },
+    {
+      "result": "D",
+      "date": "March 28th, 2026",
+      "location": "Mexico",
+      "competition": "Friendly",
+      "opponent": "Portugal",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54414"
+    },
+    {
+      "result": "W",
+      "date": "February 25th, 2026",
+      "location": "Mexico",
+      "competition": "Friendly",
+      "opponent": "Iceland",
+      "score": "4-0",
+      "match_url": "https://www.international-football.net/match-details?id=54392"
+    },
+    {
+      "result": "W",
+      "date": "January 25th, 2026",
+      "location": "Bolivia",
+      "competition": "Friendly",
+      "opponent": "Bolivia",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=54303"
+    },
+    {
+      "result": "W",
+      "date": "January 22nd, 2026",
+      "location": "Panama",
+      "competition": "Friendly",
+      "opponent": "Panama",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=54304"
+    },
+    {
+      "result": "L",
+      "date": "November 18th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Paraguay",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54263"
+    },
+    {
+      "result": "D",
+      "date": "November 15th, 2025",
+      "location": "Mexico",
+      "competition": "Friendly",
+      "opponent": "Uruguay",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54117"
+    },
+    {
+      "result": "D",
+      "date": "October 14th, 2025",
+      "location": "Mexico",
+      "competition": "Friendly",
+      "opponent": "Ecuador",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54084"
+    }
+  ],
+  "Morocco": [
+    {
+      "result": "W",
+      "date": "May 26th, 2026",
+      "location": "Morocco",
+      "competition": "Friendly",
+      "opponent": "Burundi",
+      "score": "5-0",
+      "match_url": "https://www.international-football.net/match-details?id=54519"
+    },
+    {
+      "result": "W",
+      "date": "March 31st, 2026",
+      "location": "France",
+      "competition": "Friendly",
+      "opponent": "Paraguay",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54459"
+    },
+    {
+      "result": "D",
+      "date": "March 27th, 2026",
+      "location": "Spain",
+      "competition": "Friendly",
+      "opponent": "Ecuador",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54343"
+    },
+    {
+      "result": "L",
+      "date": "January 18th, 2026",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Senegal",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=54307"
+    },
+    {
+      "result": "D",
+      "date": "January 14th, 2026",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Nigeria",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54310"
+    },
+    {
+      "result": "W",
+      "date": "January 9th, 2026",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Cameroon",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54314"
+    },
+    {
+      "result": "W",
+      "date": "January 4th, 2026",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Tanzania",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54321"
+    },
+    {
+      "result": "W",
+      "date": "December 29th, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Zambia",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=54275"
+    },
+    {
+      "result": "D",
+      "date": "December 26th, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Mali",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54288"
+    },
+    {
+      "result": "W",
+      "date": "December 21st, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Comoros",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54300"
+    }
+  ],
+  "Netherlands": [
+    {
+      "result": "D",
+      "date": "March 31st, 2026",
+      "location": "the Netherlands",
+      "competition": "Friendly",
+      "opponent": "Ecuador",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54460"
+    },
+    {
+      "result": "W",
+      "date": "March 27th, 2026",
+      "location": "the Netherlands",
+      "competition": "Friendly",
+      "opponent": "Norway",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54349"
+    },
+    {
+      "result": "W",
+      "date": "November 17th, 2025",
+      "location": "the Netherlands",
+      "competition": "World Cup qualifier",
+      "opponent": "Lithuania",
+      "score": "4-0",
+      "match_url": "https://www.international-football.net/match-details?id=54193"
+    },
+    {
+      "result": "D",
+      "date": "November 14th, 2025",
+      "location": "Poland",
+      "competition": "World Cup qualifier",
+      "opponent": "Poland",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54127"
+    },
+    {
+      "result": "W",
+      "date": "October 12th, 2025",
+      "location": "the Netherlands",
+      "competition": "World Cup qualifier",
+      "opponent": "Finland",
+      "score": "4-0",
+      "match_url": "https://www.international-football.net/match-details?id=53836"
+    },
+    {
+      "result": "W",
+      "date": "October 9th, 2025",
+      "location": "Malta",
+      "competition": "World Cup qualifier",
+      "opponent": "Malta",
+      "score": "0-4",
+      "match_url": "https://www.international-football.net/match-details?id=53898"
+    },
+    {
+      "result": "W",
+      "date": "September 7th, 2025",
+      "location": "Lithuania",
+      "competition": "World Cup qualifier",
+      "opponent": "Lithuania",
+      "score": "2-3",
+      "match_url": "https://www.international-football.net/match-details?id=54011"
+    },
+    {
+      "result": "D",
+      "date": "September 4th, 2025",
+      "location": "the Netherlands",
+      "competition": "World Cup qualifier",
+      "opponent": "Poland",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=53745"
+    },
+    {
+      "result": "W",
+      "date": "June 10th, 2025",
+      "location": "the Netherlands",
+      "competition": "World Cup qualifier",
+      "opponent": "Malta",
+      "score": "8-0",
+      "match_url": "https://www.international-football.net/match-details?id=53583"
+    },
+    {
+      "result": "W",
+      "date": "June 7th, 2025",
+      "location": "Finland",
+      "competition": "World Cup qualifier",
+      "opponent": "Finland",
+      "score": "0-2",
+      "match_url": "https://www.international-football.net/match-details?id=53525"
+    }
+  ],
+  "New Zealand": [
+    {
+      "result": "W",
+      "date": "March 30th, 2026",
+      "location": "New Zealand",
+      "competition": "FIFA Series",
+      "opponent": "Chile",
+      "score": "4-1",
+      "match_url": "https://www.international-football.net/match-details?id=54477"
+    },
+    {
+      "result": "L",
+      "date": "March 27th, 2026",
+      "location": "New Zealand",
+      "competition": "FIFA Series",
+      "opponent": "Finland",
+      "score": "0-2",
+      "match_url": "https://www.international-football.net/match-details?id=54335"
+    },
+    {
+      "result": "L",
+      "date": "November 18th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Ecuador",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54262"
+    },
+    {
+      "result": "L",
+      "date": "November 15th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Colombia",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54110"
+    },
+    {
+      "result": "D",
+      "date": "October 14th, 2025",
+      "location": "Norway",
+      "competition": "Friendly",
+      "opponent": "Norway",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=53809"
+    },
+    {
+      "result": "L",
+      "date": "October 9th, 2025",
+      "location": "Poland",
+      "competition": "Friendly",
+      "opponent": "Poland",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=53919"
+    },
+    {
+      "result": "L",
+      "date": "September 9th, 2025",
+      "location": "New Zealand",
+      "competition": "Friendly",
+      "opponent": "Australia",
+      "score": "1-3",
+      "match_url": "https://www.international-football.net/match-details?id=53978"
+    },
+    {
+      "result": "L",
+      "date": "September 5th, 2025",
+      "location": "Australia",
+      "competition": "Friendly",
+      "opponent": "Australia",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=53729"
+    },
+    {
+      "result": "L",
+      "date": "June 10th, 2025",
+      "location": "Canada",
+      "competition": "Friendly tournament",
+      "opponent": "Ukraine",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=53649"
+    },
+    {
+      "result": "W",
+      "date": "June 7th, 2025",
+      "location": "Canada",
+      "competition": "Friendly tournament",
+      "opponent": "Ivory Coast",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=53580"
+    }
+  ],
+  "Norway": [
+    {
+      "result": "D",
+      "date": "March 31st, 2026",
+      "location": "Norway",
+      "competition": "Friendly",
+      "opponent": "Switzerland",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54461"
+    },
+    {
+      "result": "L",
+      "date": "March 27th, 2026",
+      "location": "the Netherlands",
+      "competition": "Friendly",
+      "opponent": "Netherlands",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54349"
+    },
+    {
+      "result": "W",
+      "date": "November 16th, 2025",
+      "location": "Italy",
+      "competition": "World Cup qualifier",
+      "opponent": "Italy",
+      "score": "1-4",
+      "match_url": "https://www.international-football.net/match-details?id=54089"
+    },
+    {
+      "result": "W",
+      "date": "November 13th, 2025",
+      "location": "Norway",
+      "competition": "World Cup qualifier",
+      "opponent": "Estonia",
+      "score": "4-1",
+      "match_url": "https://www.international-football.net/match-details?id=54040"
+    },
+    {
+      "result": "D",
+      "date": "October 14th, 2025",
+      "location": "Norway",
+      "competition": "Friendly",
+      "opponent": "New Zealand",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=53809"
+    },
+    {
+      "result": "W",
+      "date": "October 11th, 2025",
+      "location": "Norway",
+      "competition": "World Cup qualifier",
+      "opponent": "Israel",
+      "score": "5-0",
+      "match_url": "https://www.international-football.net/match-details?id=53852"
+    },
+    {
+      "result": "W",
+      "date": "September 9th, 2025",
+      "location": "Norway",
+      "competition": "World Cup qualifier",
+      "opponent": "Moldova",
+      "score": "11-1",
+      "match_url": "https://www.international-football.net/match-details?id=53957"
+    },
+    {
+      "result": "W",
+      "date": "September 4th, 2025",
+      "location": "Norway",
+      "competition": "Friendly",
+      "opponent": "Finland",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=53762"
+    },
+    {
+      "result": "W",
+      "date": "June 9th, 2025",
+      "location": "Estonia",
+      "competition": "World Cup qualifier",
+      "opponent": "Estonia",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=53628"
+    },
+    {
+      "result": "W",
+      "date": "June 6th, 2025",
+      "location": "Norway",
+      "competition": "World Cup qualifier",
+      "opponent": "Italy",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=53549"
+    }
+  ],
+  "Panama": [
+    {
+      "result": "L",
+      "date": "May 31st, 2026",
+      "location": "Brazil",
+      "competition": "Friendly",
+      "opponent": "Brazil",
+      "score": "6-2",
+      "match_url": "https://www.international-football.net/match-details?id=54497"
+    },
+    {
+      "result": "W",
+      "date": "March 31st, 2026",
+      "location": "South Africa",
+      "competition": "Friendly",
+      "opponent": "South Africa",
+      "score": "1-2",
+      "match_url": "https://www.international-football.net/match-details?id=54466"
+    },
+    {
+      "result": "D",
+      "date": "March 27th, 2026",
+      "location": "South Africa",
+      "competition": "Friendly",
+      "opponent": "South Africa",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54353"
+    },
+    {
+      "result": "L",
+      "date": "January 22nd, 2026",
+      "location": "Panama",
+      "competition": "Friendly",
+      "opponent": "Mexico",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=54304"
+    },
+    {
+      "result": "D",
+      "date": "January 18th, 2026",
+      "location": "Bolivia",
+      "competition": "Friendly",
+      "opponent": "Bolivia",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54305"
+    },
+    {
+      "result": "W",
+      "date": "November 18th, 2025",
+      "location": "Panama",
+      "competition": "World Cup qualifier",
+      "opponent": "El Salvador",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=54256"
+    },
+    {
+      "result": "W",
+      "date": "November 13th, 2025",
+      "location": "Guatemala",
+      "competition": "World Cup qualifier",
+      "opponent": "Guatemala",
+      "score": "2-3",
+      "match_url": "https://www.international-football.net/match-details?id=54144"
+    },
+    {
+      "result": "D",
+      "date": "October 14th, 2025",
+      "location": "Panama",
+      "competition": "World Cup qualifier",
+      "opponent": "Suriname",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54068"
+    },
+    {
+      "result": "W",
+      "date": "October 10th, 2025",
+      "location": "El Salvador",
+      "competition": "World Cup qualifier",
+      "opponent": "El Salvador",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=53862"
+    },
+    {
+      "result": "D",
+      "date": "September 8th, 2025",
+      "location": "Panama",
+      "competition": "World Cup qualifier",
+      "opponent": "Guatemala",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=53984"
+    }
+  ],
+  "Paraguay": [
+    {
+      "result": "L",
+      "date": "March 31st, 2026",
+      "location": "France",
+      "competition": "Friendly",
+      "opponent": "Morocco",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54459"
+    },
+    {
+      "result": "W",
+      "date": "March 27th, 2026",
+      "location": "Greece",
+      "competition": "Friendly",
+      "opponent": "Greece",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=54345"
+    },
+    {
+      "result": "W",
+      "date": "November 18th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Mexico",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54263"
+    },
+    {
+      "result": "L",
+      "date": "November 15th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "United States",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54122"
+    },
+    {
+      "result": "L",
+      "date": "October 14th, 2025",
+      "location": "South Korea",
+      "competition": "Friendly",
+      "opponent": "South Korea",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=53811"
+    },
+    {
+      "result": "D",
+      "date": "October 10th, 2025",
+      "location": "Japan",
+      "competition": "Friendly",
+      "opponent": "Japan",
+      "score": "2-2",
+      "match_url": "https://www.international-football.net/match-details?id=53885"
+    },
+    {
+      "result": "W",
+      "date": "September 9th, 2025",
+      "location": "Peru",
+      "competition": "World Cup qualifier",
+      "opponent": "Peru",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=53944"
+    },
+    {
+      "result": "D",
+      "date": "September 4th, 2025",
+      "location": "Paraguay",
+      "competition": "World Cup qualifier",
+      "opponent": "Ecuador",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=53735"
+    },
+    {
+      "result": "L",
+      "date": "June 10th, 2025",
+      "location": "Brazil",
+      "competition": "World Cup qualifier",
+      "opponent": "Brazil",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=53666"
+    },
+    {
+      "result": "W",
+      "date": "June 5th, 2025",
+      "location": "Paraguay",
+      "competition": "World Cup qualifier",
+      "opponent": "Uruguay",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=53570"
+    }
+  ],
+  "Portugal": [
+    {
+      "result": "W",
+      "date": "March 31st, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "United States",
+      "score": "0-2",
+      "match_url": "https://www.international-football.net/match-details?id=54496"
+    },
+    {
+      "result": "D",
+      "date": "March 28th, 2026",
+      "location": "Mexico",
+      "competition": "Friendly",
+      "opponent": "Mexico",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54414"
+    },
+    {
+      "result": "W",
+      "date": "November 16th, 2025",
+      "location": "Portugal",
+      "competition": "World Cup qualifier",
+      "opponent": "Armenia",
+      "score": "9-1",
+      "match_url": "https://www.international-football.net/match-details?id=54091"
+    },
+    {
+      "result": "L",
+      "date": "November 13th, 2025",
+      "location": "Ireland",
+      "competition": "World Cup qualifier",
+      "opponent": "Ireland",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54038"
+    },
+    {
+      "result": "D",
+      "date": "October 14th, 2025",
+      "location": "Portugal",
+      "competition": "World Cup qualifier",
+      "opponent": "Hungary",
+      "score": "2-2",
+      "match_url": "https://www.international-football.net/match-details?id=54073"
+    },
+    {
+      "result": "W",
+      "date": "October 11th, 2025",
+      "location": "Portugal",
+      "competition": "World Cup qualifier",
+      "opponent": "Ireland",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=53853"
+    },
+    {
+      "result": "W",
+      "date": "September 9th, 2025",
+      "location": "Hungary",
+      "competition": "World Cup qualifier",
+      "opponent": "Hungary",
+      "score": "2-3",
+      "match_url": "https://www.international-football.net/match-details?id=53956"
+    },
+    {
+      "result": "W",
+      "date": "September 6th, 2025",
+      "location": "Armenia",
+      "competition": "World Cup qualifier",
+      "opponent": "Armenia",
+      "score": "0-5",
+      "match_url": "https://www.international-football.net/match-details?id=54021"
+    },
+    {
+      "result": "D",
+      "date": "June 8th, 2025",
+      "location": "Germany",
+      "competition": "UEFA Nations League A",
+      "opponent": "Spain",
+      "score": "2-2",
+      "match_url": "https://www.international-football.net/match-details?id=53573"
+    },
+    {
+      "result": "W",
+      "date": "June 4th, 2025",
+      "location": "Germany",
+      "competition": "UEFA Nations League A",
+      "opponent": "Germany",
+      "score": "1-2",
+      "match_url": "https://www.international-football.net/match-details?id=53509"
+    }
+  ],
+  "Qatar": [
+    {
+      "result": "L",
+      "date": "May 28th, 2026",
+      "location": "Ireland",
+      "competition": "Friendly",
+      "opponent": "Ireland",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54517"
+    },
+    {
+      "result": "L",
+      "date": "December 7th, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Tunisia",
+      "score": "0-3",
+      "match_url": "https://www.international-football.net/match-details?id=54222"
+    },
+    {
+      "result": "D",
+      "date": "December 4th, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Syria",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54230"
+    },
+    {
+      "result": "L",
+      "date": "December 1st, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Palestine",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=54237"
+    },
+    {
+      "result": "L",
+      "date": "November 17th, 2025",
+      "location": "Qatar",
+      "competition": "Friendly",
+      "opponent": "Zimbabwe",
+      "score": "1-2",
+      "match_url": "https://www.international-football.net/match-details?id=54202"
+    },
+    {
+      "result": "W",
+      "date": "October 14th, 2025",
+      "location": "Qatar",
+      "competition": "World Cup qualifier",
+      "opponent": "United Arab Emirates",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=53793"
+    },
+    {
+      "result": "D",
+      "date": "October 8th, 2025",
+      "location": "Qatar",
+      "competition": "World Cup qualifier",
+      "opponent": "Oman",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=53933"
+    },
+    {
+      "result": "L",
+      "date": "September 7th, 2025",
+      "location": "Qatar",
+      "competition": "Friendly",
+      "opponent": "Russia",
+      "score": "1-4",
+      "match_url": "https://www.international-football.net/match-details?id=54020"
+    },
+    {
+      "result": "D",
+      "date": "September 3rd, 2025",
+      "location": "Qatar",
+      "competition": "Friendly",
+      "opponent": "Bahrain",
+      "score": "2-2",
+      "match_url": "https://www.international-football.net/match-details?id=53767"
+    },
+    {
+      "result": "L",
+      "date": "August 24th, 2025",
+      "location": "Qatar",
+      "competition": "Friendly",
+      "opponent": "Lebanon",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=53776"
+    }
+  ],
+  "Saudi Arabia": [
+    {
+      "result": "L",
+      "date": "May 30th, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Ecuador",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54508"
+    },
+    {
+      "result": "L",
+      "date": "March 31st, 2026",
+      "location": "Serbia",
+      "competition": "Friendly",
+      "opponent": "Serbia",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54464"
+    },
+    {
+      "result": "L",
+      "date": "March 27th, 2026",
+      "location": "Saudi Arabia",
+      "competition": "Friendly",
+      "opponent": "Egypt",
+      "score": "0-4",
+      "match_url": "https://www.international-football.net/match-details?id=54352"
+    },
+    {
+      "result": "D",
+      "date": "December 18th, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "United Arab Emirates",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54204"
+    },
+    {
+      "result": "L",
+      "date": "December 15th, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Jordan",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54209"
+    },
+    {
+      "result": "W",
+      "date": "December 11th, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Palestine",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54214"
+    },
+    {
+      "result": "L",
+      "date": "December 8th, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Morocco",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54219"
+    },
+    {
+      "result": "W",
+      "date": "December 5th, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Comoros",
+      "score": "3-1",
+      "match_url": "https://www.international-football.net/match-details?id=54228"
+    },
+    {
+      "result": "W",
+      "date": "December 2nd, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Oman",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54236"
+    },
+    {
+      "result": "L",
+      "date": "November 18th, 2025",
+      "location": "Saudi Arabia",
+      "competition": "Friendly",
+      "opponent": "Algeria",
+      "score": "0-2",
+      "match_url": "https://www.international-football.net/match-details?id=54186"
+    }
+  ],
+  "Scotland": [
+    {
+      "result": "W",
+      "date": "May 30th, 2026",
+      "location": "Scotland",
+      "competition": "Friendly",
+      "opponent": "Curaçao",
+      "score": "4-1",
+      "match_url": "https://www.international-football.net/match-details?id=54510"
+    },
+    {
+      "result": "L",
+      "date": "March 31st, 2026",
+      "location": "England",
+      "competition": "Friendly",
+      "opponent": "Ivory Coast",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54455"
+    },
+    {
+      "result": "L",
+      "date": "March 28th, 2026",
+      "location": "Scotland",
+      "competition": "Friendly",
+      "opponent": "Japan",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=54416"
+    },
+    {
+      "result": "W",
+      "date": "November 18th, 2025",
+      "location": "Scotland",
+      "competition": "World Cup qualifier",
+      "opponent": "Denmark",
+      "score": "4-2",
+      "match_url": "https://www.international-football.net/match-details?id=54156"
+    },
+    {
+      "result": "L",
+      "date": "November 15th, 2025",
+      "location": "Greece",
+      "competition": "World Cup qualifier",
+      "opponent": "Greece",
+      "score": "3-2",
+      "match_url": "https://www.international-football.net/match-details?id=54099"
+    },
+    {
+      "result": "W",
+      "date": "October 12th, 2025",
+      "location": "Scotland",
+      "competition": "World Cup qualifier",
+      "opponent": "Belarus",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=53839"
+    },
+    {
+      "result": "W",
+      "date": "October 9th, 2025",
+      "location": "Scotland",
+      "competition": "World Cup qualifier",
+      "opponent": "Greece",
+      "score": "3-1",
+      "match_url": "https://www.international-football.net/match-details?id=53899"
+    },
+    {
+      "result": "W",
+      "date": "September 8th, 2025",
+      "location": "Hungary",
+      "competition": "World Cup qualifier",
+      "opponent": "Belarus",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=53990"
+    },
+    {
+      "result": "D",
+      "date": "September 5th, 2025",
+      "location": "Denmark",
+      "competition": "World Cup qualifier",
+      "opponent": "Denmark",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=53703"
+    },
+    {
+      "result": "W",
+      "date": "June 9th, 2025",
+      "location": "Liechtenstein",
+      "competition": "Friendly",
+      "opponent": "Liechtenstein",
+      "score": "0-4",
+      "match_url": "https://www.international-football.net/match-details?id=53638"
+    }
+  ],
+  "Senegal": [
+    {
+      "result": "L",
+      "date": "May 31st, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "United States",
+      "score": "3-2",
+      "match_url": "https://www.international-football.net/match-details?id=54505"
+    },
+    {
+      "result": "W",
+      "date": "March 31st, 2026",
+      "location": "Senegal",
+      "competition": "Friendly",
+      "opponent": "Gambia",
+      "score": "3-1",
+      "match_url": "https://www.international-football.net/match-details?id=54494"
+    },
+    {
+      "result": "W",
+      "date": "March 28th, 2026",
+      "location": "France",
+      "competition": "Friendly",
+      "opponent": "Peru",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54417"
+    },
+    {
+      "result": "W",
+      "date": "January 18th, 2026",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Morocco",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=54307"
+    },
+    {
+      "result": "W",
+      "date": "January 14th, 2026",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Egypt",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54311"
+    },
+    {
+      "result": "W",
+      "date": "January 9th, 2026",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Mali",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54315"
+    },
+    {
+      "result": "W",
+      "date": "January 3rd, 2026",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Sudan",
+      "score": "3-1",
+      "match_url": "https://www.international-football.net/match-details?id=54323"
+    },
+    {
+      "result": "W",
+      "date": "December 30th, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Benin",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=54271"
+    },
+    {
+      "result": "D",
+      "date": "December 27th, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Dem. Rep. of Congo",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54282"
+    },
+    {
+      "result": "W",
+      "date": "December 23rd, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Botswana",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=54295"
+    }
+  ],
+  "South Africa": [
+    {
+      "result": "D",
+      "date": "May 29th, 2026",
+      "location": "South Africa",
+      "competition": "Friendly",
+      "opponent": "Nicaragua",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54515"
+    },
+    {
+      "result": "L",
+      "date": "March 31st, 2026",
+      "location": "South Africa",
+      "competition": "Friendly",
+      "opponent": "Panama",
+      "score": "1-2",
+      "match_url": "https://www.international-football.net/match-details?id=54466"
+    },
+    {
+      "result": "D",
+      "date": "March 27th, 2026",
+      "location": "South Africa",
+      "competition": "Friendly",
+      "opponent": "Panama",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54353"
+    },
+    {
+      "result": "L",
+      "date": "January 4th, 2026",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Cameroon",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54320"
+    },
+    {
+      "result": "W",
+      "date": "December 29th, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Zimbabwe",
+      "score": "3-2",
+      "match_url": "https://www.international-football.net/match-details?id=54276"
+    },
+    {
+      "result": "L",
+      "date": "December 26th, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Egypt",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54287"
+    },
+    {
+      "result": "W",
+      "date": "December 22nd, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Angola",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54299"
+    },
+    {
+      "result": "W",
+      "date": "November 15th, 2025",
+      "location": "South Africa",
+      "competition": "Friendly",
+      "opponent": "Zambia",
+      "score": "3-1",
+      "match_url": "https://www.international-football.net/match-details?id=54121"
+    },
+    {
+      "result": "W",
+      "date": "October 14th, 2025",
+      "location": "South Africa",
+      "competition": "World Cup qualifier",
+      "opponent": "Rwanda",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=53792"
+    },
+    {
+      "result": "D",
+      "date": "October 10th, 2025",
+      "location": "South Africa",
+      "competition": "World Cup qualifier",
+      "opponent": "Zimbabwe",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=53877"
+    }
+  ],
+  "South Korea": [
+    {
+      "result": "W",
+      "date": "May 30th, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Trinidad and Tobago",
+      "score": "5-0",
+      "match_url": "https://www.international-football.net/match-details?id=54511"
+    },
+    {
+      "result": "L",
+      "date": "March 31st, 2026",
+      "location": "Austria",
+      "competition": "Friendly",
+      "opponent": "Austria",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54445"
+    },
+    {
+      "result": "L",
+      "date": "March 28th, 2026",
+      "location": "England",
+      "competition": "Friendly",
+      "opponent": "Ivory Coast",
+      "score": "4-0",
+      "match_url": "https://www.international-football.net/match-details?id=54412"
+    },
+    {
+      "result": "W",
+      "date": "November 18th, 2025",
+      "location": "South Korea",
+      "competition": "Friendly",
+      "opponent": "Ghana",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54188"
+    },
+    {
+      "result": "W",
+      "date": "November 14th, 2025",
+      "location": "South Korea",
+      "competition": "Friendly",
+      "opponent": "Bolivia",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54138"
+    },
+    {
+      "result": "W",
+      "date": "October 14th, 2025",
+      "location": "South Korea",
+      "competition": "Friendly",
+      "opponent": "Paraguay",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=53811"
+    },
+    {
+      "result": "L",
+      "date": "October 10th, 2025",
+      "location": "South Korea",
+      "competition": "Friendly",
+      "opponent": "Brazil",
+      "score": "0-5",
+      "match_url": "https://www.international-football.net/match-details?id=53887"
+    },
+    {
+      "result": "D",
+      "date": "September 9th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Mexico",
+      "score": "2-2",
+      "match_url": "https://www.international-football.net/match-details?id=53977"
+    },
+    {
+      "result": "W",
+      "date": "September 6th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "United States",
+      "score": "0-2",
+      "match_url": "https://www.international-football.net/match-details?id=54031"
+    },
+    {
+      "result": "L",
+      "date": "July 15th, 2025",
+      "location": "South Korea",
+      "competition": "East Asian Championship",
+      "opponent": "Japan",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=53781"
+    }
+  ],
+  "Spain": [
+    {
+      "result": "D",
+      "date": "March 31st, 2026",
+      "location": "Spain",
+      "competition": "Friendly",
+      "opponent": "Egypt",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54495"
+    },
+    {
+      "result": "W",
+      "date": "March 27th, 2026",
+      "location": "Spain",
+      "competition": "Friendly",
+      "opponent": "Serbia",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=54354"
+    },
+    {
+      "result": "D",
+      "date": "November 18th, 2025",
+      "location": "Spain",
+      "competition": "World Cup qualifier",
+      "opponent": "Türkiye",
+      "score": "2-2",
+      "match_url": "https://www.international-football.net/match-details?id=54157"
+    },
+    {
+      "result": "W",
+      "date": "November 15th, 2025",
+      "location": "Georgia",
+      "competition": "World Cup qualifier",
+      "opponent": "Georgia",
+      "score": "0-4",
+      "match_url": "https://www.international-football.net/match-details?id=54098"
+    },
+    {
+      "result": "W",
+      "date": "October 14th, 2025",
+      "location": "Spain",
+      "competition": "World Cup qualifier",
+      "opponent": "Bulgaria",
+      "score": "4-0",
+      "match_url": "https://www.international-football.net/match-details?id=54074"
+    },
+    {
+      "result": "W",
+      "date": "October 11th, 2025",
+      "location": "Spain",
+      "competition": "World Cup qualifier",
+      "opponent": "Georgia",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=53855"
+    },
+    {
+      "result": "W",
+      "date": "September 7th, 2025",
+      "location": "Turkey",
+      "competition": "World Cup qualifier",
+      "opponent": "Türkiye",
+      "score": "0-6",
+      "match_url": "https://www.international-football.net/match-details?id=54015"
+    },
+    {
+      "result": "W",
+      "date": "September 4th, 2025",
+      "location": "Bulgaria",
+      "competition": "World Cup qualifier",
+      "opponent": "Bulgaria",
+      "score": "0-3",
+      "match_url": "https://www.international-football.net/match-details?id=53739"
+    },
+    {
+      "result": "D",
+      "date": "June 8th, 2025",
+      "location": "Germany",
+      "competition": "UEFA Nations League A",
+      "opponent": "Portugal",
+      "score": "2-2",
+      "match_url": "https://www.international-football.net/match-details?id=53573"
+    },
+    {
+      "result": "W",
+      "date": "June 5th, 2025",
+      "location": "Germany",
+      "competition": "UEFA Nations League A",
+      "opponent": "France",
+      "score": "5-4",
+      "match_url": "https://www.international-football.net/match-details?id=53483"
+    }
+  ],
+  "Sweden": [
+    {
+      "result": "W",
+      "date": "March 31st, 2026",
+      "location": "Sweden",
+      "competition": "World Cup qualifier",
+      "opponent": "Poland",
+      "score": "3-2",
+      "match_url": "https://www.international-football.net/match-details?id=54423"
+    },
+    {
+      "result": "W",
+      "date": "March 26th, 2026",
+      "location": "Spain",
+      "competition": "World Cup qualifier",
+      "opponent": "Ukraine",
+      "score": "3-1",
+      "match_url": "https://www.international-football.net/match-details?id=54369"
+    },
+    {
+      "result": "D",
+      "date": "November 18th, 2025",
+      "location": "Sweden",
+      "competition": "World Cup qualifier",
+      "opponent": "Slovenia",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54158"
+    },
+    {
+      "result": "L",
+      "date": "November 15th, 2025",
+      "location": "Switzerland",
+      "competition": "World Cup qualifier",
+      "opponent": "Switzerland",
+      "score": "4-1",
+      "match_url": "https://www.international-football.net/match-details?id=54103"
+    },
+    {
+      "result": "L",
+      "date": "October 13th, 2025",
+      "location": "Sweden",
+      "competition": "World Cup qualifier",
+      "opponent": "Kosovo",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=53819"
+    },
+    {
+      "result": "L",
+      "date": "October 10th, 2025",
+      "location": "Sweden",
+      "competition": "World Cup qualifier",
+      "opponent": "Switzerland",
+      "score": "0-2",
+      "match_url": "https://www.international-football.net/match-details?id=53871"
+    },
+    {
+      "result": "L",
+      "date": "September 8th, 2025",
+      "location": "Kosovo",
+      "competition": "World Cup qualifier",
+      "opponent": "Kosovo",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=53989"
+    },
+    {
+      "result": "D",
+      "date": "September 5th, 2025",
+      "location": "Slovenia",
+      "competition": "World Cup qualifier",
+      "opponent": "Slovenia",
+      "score": "2-2",
+      "match_url": "https://www.international-football.net/match-details?id=53711"
+    },
+    {
+      "result": "W",
+      "date": "June 10th, 2025",
+      "location": "Sweden",
+      "competition": "Friendly",
+      "opponent": "Algeria",
+      "score": "4-3",
+      "match_url": "https://www.international-football.net/match-details?id=53625"
+    },
+    {
+      "result": "W",
+      "date": "June 6th, 2025",
+      "location": "Hungary",
+      "competition": "Friendly",
+      "opponent": "Hungary",
+      "score": "0-2",
+      "match_url": "https://www.international-football.net/match-details?id=53558"
+    }
+  ],
+  "Switzerland": [
+    {
+      "result": "W",
+      "date": "May 31st, 2026",
+      "location": "Switzerland",
+      "competition": "Friendly",
+      "opponent": "Jordan",
+      "score": "4-1",
+      "match_url": "https://www.international-football.net/match-details?id=54504"
+    },
+    {
+      "result": "D",
+      "date": "March 31st, 2026",
+      "location": "Norway",
+      "competition": "Friendly",
+      "opponent": "Norway",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54461"
+    },
+    {
+      "result": "L",
+      "date": "March 27th, 2026",
+      "location": "Switzerland",
+      "competition": "Friendly",
+      "opponent": "Germany",
+      "score": "3-4",
+      "match_url": "https://www.international-football.net/match-details?id=54355"
+    },
+    {
+      "result": "D",
+      "date": "November 18th, 2025",
+      "location": "Kosovo",
+      "competition": "World Cup qualifier",
+      "opponent": "Kosovo",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54154"
+    },
+    {
+      "result": "W",
+      "date": "November 15th, 2025",
+      "location": "Switzerland",
+      "competition": "World Cup qualifier",
+      "opponent": "Sweden",
+      "score": "4-1",
+      "match_url": "https://www.international-football.net/match-details?id=54103"
+    },
+    {
+      "result": "D",
+      "date": "October 13th, 2025",
+      "location": "Slovenia",
+      "competition": "World Cup qualifier",
+      "opponent": "Slovenia",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=53818"
+    },
+    {
+      "result": "W",
+      "date": "October 10th, 2025",
+      "location": "Sweden",
+      "competition": "World Cup qualifier",
+      "opponent": "Sweden",
+      "score": "0-2",
+      "match_url": "https://www.international-football.net/match-details?id=53871"
+    },
+    {
+      "result": "W",
+      "date": "September 8th, 2025",
+      "location": "Switzerland",
+      "competition": "World Cup qualifier",
+      "opponent": "Slovenia",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=53991"
+    },
+    {
+      "result": "W",
+      "date": "September 5th, 2025",
+      "location": "Switzerland",
+      "competition": "World Cup qualifier",
+      "opponent": "Kosovo",
+      "score": "4-0",
+      "match_url": "https://www.international-football.net/match-details?id=53712"
+    },
+    {
+      "result": "W",
+      "date": "June 10th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "United States",
+      "score": "0-4",
+      "match_url": "https://www.international-football.net/match-details?id=53653"
+    }
+  ],
+  "Tunisia": [
+    {
+      "result": "D",
+      "date": "March 31st, 2026",
+      "location": "Canada",
+      "competition": "Friendly tournament",
+      "opponent": "Canada",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54493"
+    },
+    {
+      "result": "W",
+      "date": "March 28th, 2026",
+      "location": "Canada",
+      "competition": "Friendly tournament",
+      "opponent": "Haiti",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54418"
+    },
+    {
+      "result": "D",
+      "date": "January 3rd, 2026",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Mali",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54322"
+    },
+    {
+      "result": "D",
+      "date": "December 30th, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Tanzania",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54272"
+    },
+    {
+      "result": "L",
+      "date": "December 27th, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Nigeria",
+      "score": "3-2",
+      "match_url": "https://www.international-football.net/match-details?id=54283"
+    },
+    {
+      "result": "W",
+      "date": "December 23rd, 2025",
+      "location": "Morocco",
+      "competition": "Africa Cup of Nations",
+      "opponent": "Uganda",
+      "score": "3-1",
+      "match_url": "https://www.international-football.net/match-details?id=54296"
+    },
+    {
+      "result": "W",
+      "date": "December 18th, 2025",
+      "location": "Tunisia",
+      "competition": "Friendly",
+      "opponent": "Botswana",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54205"
+    },
+    {
+      "result": "W",
+      "date": "December 7th, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Qatar",
+      "score": "0-3",
+      "match_url": "https://www.international-football.net/match-details?id=54222"
+    },
+    {
+      "result": "D",
+      "date": "December 4th, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Palestine",
+      "score": "2-2",
+      "match_url": "https://www.international-football.net/match-details?id=54229"
+    },
+    {
+      "result": "L",
+      "date": "December 1st, 2025",
+      "location": "Qatar",
+      "competition": "Arab Cup",
+      "opponent": "Syria",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54238"
+    }
+  ],
+  "Türkiye": [
+    {
+      "result": "W",
+      "date": "March 31st, 2026",
+      "location": "Kosovo",
+      "competition": "World Cup qualifier",
+      "opponent": "Kosovo",
+      "score": "0-1",
+      "match_url": "https://www.international-football.net/match-details?id=54422"
+    },
+    {
+      "result": "W",
+      "date": "March 26th, 2026",
+      "location": "Turkey",
+      "competition": "World Cup qualifier",
+      "opponent": "Romania",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54370"
+    },
+    {
+      "result": "D",
+      "date": "November 18th, 2025",
+      "location": "Spain",
+      "competition": "World Cup qualifier",
+      "opponent": "Spain",
+      "score": "2-2",
+      "match_url": "https://www.international-football.net/match-details?id=54157"
+    },
+    {
+      "result": "W",
+      "date": "November 15th, 2025",
+      "location": "Turkey",
+      "competition": "World Cup qualifier",
+      "opponent": "Bulgaria",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54104"
+    },
+    {
+      "result": "W",
+      "date": "October 14th, 2025",
+      "location": "Turkey",
+      "competition": "World Cup qualifier",
+      "opponent": "Georgia",
+      "score": "4-1",
+      "match_url": "https://www.international-football.net/match-details?id=54075"
+    },
+    {
+      "result": "W",
+      "date": "October 11th, 2025",
+      "location": "Bulgaria",
+      "competition": "World Cup qualifier",
+      "opponent": "Bulgaria",
+      "score": "1-6",
+      "match_url": "https://www.international-football.net/match-details?id=53848"
+    },
+    {
+      "result": "L",
+      "date": "September 7th, 2025",
+      "location": "Turkey",
+      "competition": "World Cup qualifier",
+      "opponent": "Spain",
+      "score": "0-6",
+      "match_url": "https://www.international-football.net/match-details?id=54015"
+    },
+    {
+      "result": "W",
+      "date": "September 4th, 2025",
+      "location": "Georgia",
+      "competition": "World Cup qualifier",
+      "opponent": "Georgia",
+      "score": "2-3",
+      "match_url": "https://www.international-football.net/match-details?id=53740"
+    },
+    {
+      "result": "L",
+      "date": "June 10th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Mexico",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=53673"
+    },
+    {
+      "result": "W",
+      "date": "June 7th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "United States",
+      "score": "1-2",
+      "match_url": "https://www.international-football.net/match-details?id=53536"
+    }
+  ],
+  "United States": [
+    {
+      "result": "W",
+      "date": "May 31st, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Senegal",
+      "score": "3-2",
+      "match_url": "https://www.international-football.net/match-details?id=54505"
+    },
+    {
+      "result": "L",
+      "date": "March 31st, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Portugal",
+      "score": "0-2",
+      "match_url": "https://www.international-football.net/match-details?id=54496"
+    },
+    {
+      "result": "L",
+      "date": "March 28th, 2026",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Belgium",
+      "score": "2-5",
+      "match_url": "https://www.international-football.net/match-details?id=54419"
+    },
+    {
+      "result": "W",
+      "date": "November 18th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Uruguay",
+      "score": "5-1",
+      "match_url": "https://www.international-football.net/match-details?id=54264"
+    },
+    {
+      "result": "W",
+      "date": "November 15th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Paraguay",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54122"
+    },
+    {
+      "result": "W",
+      "date": "October 14th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Australia",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=54085"
+    },
+    {
+      "result": "D",
+      "date": "October 10th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Ecuador",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=53888"
+    },
+    {
+      "result": "W",
+      "date": "September 9th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "Japan",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=53981"
+    },
+    {
+      "result": "L",
+      "date": "September 6th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "South Korea",
+      "score": "0-2",
+      "match_url": "https://www.international-football.net/match-details?id=54031"
+    },
+    {
+      "result": "L",
+      "date": "July 6th, 2025",
+      "location": "the United States",
+      "competition": "CONCACAF Gold Cup",
+      "opponent": "Mexico",
+      "score": "1-2",
+      "match_url": "https://www.international-football.net/match-details?id=53675"
+    }
+  ],
+  "Uruguay": [
+    {
+      "result": "D",
+      "date": "March 31st, 2026",
+      "location": "Italy",
+      "competition": "Friendly",
+      "opponent": "Algeria",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54444"
+    },
+    {
+      "result": "D",
+      "date": "March 27th, 2026",
+      "location": "England",
+      "competition": "Friendly",
+      "opponent": "England",
+      "score": "1-1",
+      "match_url": "https://www.international-football.net/match-details?id=54344"
+    },
+    {
+      "result": "L",
+      "date": "November 18th, 2025",
+      "location": "the United States",
+      "competition": "Friendly",
+      "opponent": "United States",
+      "score": "5-1",
+      "match_url": "https://www.international-football.net/match-details?id=54264"
+    },
+    {
+      "result": "D",
+      "date": "November 15th, 2025",
+      "location": "Mexico",
+      "competition": "Friendly",
+      "opponent": "Mexico",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54117"
+    },
+    {
+      "result": "W",
+      "date": "October 13th, 2025",
+      "location": "Malaysia",
+      "competition": "Friendly",
+      "opponent": "Uzbekistan",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=53831"
+    },
+    {
+      "result": "W",
+      "date": "October 10th, 2025",
+      "location": "Malaysia",
+      "competition": "Friendly",
+      "opponent": "Dominican Republic",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=53889"
+    },
+    {
+      "result": "D",
+      "date": "September 9th, 2025",
+      "location": "Chile",
+      "competition": "World Cup qualifier",
+      "opponent": "Chile",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=53942"
+    },
+    {
+      "result": "W",
+      "date": "September 4th, 2025",
+      "location": "Uruguay",
+      "competition": "World Cup qualifier",
+      "opponent": "Peru",
+      "score": "3-0",
+      "match_url": "https://www.international-football.net/match-details?id=53736"
+    },
+    {
+      "result": "W",
+      "date": "June 10th, 2025",
+      "location": "Uruguay",
+      "competition": "World Cup qualifier",
+      "opponent": "Venezuela",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=53642"
+    },
+    {
+      "result": "L",
+      "date": "June 5th, 2025",
+      "location": "Paraguay",
+      "competition": "World Cup qualifier",
+      "opponent": "Paraguay",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=53570"
+    }
+  ],
+  "Uzbekistan": [
+    {
+      "result": "D",
+      "date": "March 30th, 2026",
+      "location": "Uzbekistan",
+      "competition": "FIFA Series",
+      "opponent": "Venezuela",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54480"
+    },
+    {
+      "result": "W",
+      "date": "March 27th, 2026",
+      "location": "Uzbekistan",
+      "competition": "FIFA Series",
+      "opponent": "Gabon",
+      "score": "3-1",
+      "match_url": "https://www.international-football.net/match-details?id=54337"
+    },
+    {
+      "result": "D",
+      "date": "January 26th, 2026",
+      "location": "the United Arab Emirates",
+      "competition": "Friendly",
+      "opponent": "China",
+      "score": "2-2",
+      "match_url": "https://www.international-football.net/match-details?id=54302"
+    },
+    {
+      "result": "D",
+      "date": "November 18th, 2025",
+      "location": "the United Arab Emirates",
+      "competition": "Friendly tournament",
+      "opponent": "Iran",
+      "score": "0-0",
+      "match_url": "https://www.international-football.net/match-details?id=54179"
+    },
+    {
+      "result": "W",
+      "date": "November 14th, 2025",
+      "location": "the United Arab Emirates",
+      "competition": "Friendly tournament",
+      "opponent": "Egypt",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=54141"
+    },
+    {
+      "result": "L",
+      "date": "October 13th, 2025",
+      "location": "Malaysia",
+      "competition": "Friendly",
+      "opponent": "Uruguay",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=53831"
+    },
+    {
+      "result": "W",
+      "date": "October 9th, 2025",
+      "location": "Uzbekistan",
+      "competition": "Friendly",
+      "opponent": "Kuwait",
+      "score": "2-0",
+      "match_url": "https://www.international-football.net/match-details?id=53921"
+    },
+    {
+      "result": "W",
+      "date": "September 8th, 2025",
+      "location": "Uzbekistan",
+      "competition": "Central Asian Nations Cup",
+      "opponent": "Iran",
+      "score": "1-0",
+      "match_url": "https://www.international-football.net/match-details?id=54003"
+    },
+    {
+      "result": "W",
+      "date": "September 5th, 2025",
+      "location": "Uzbekistan",
+      "competition": "Central Asian Nations Cup",
+      "opponent": "Kyrgyzstan",
+      "score": "4-0",
+      "match_url": "https://www.international-football.net/match-details?id=53728"
+    },
+    {
+      "result": "W",
+      "date": "September 2nd, 2025",
+      "location": "Uzbekistan",
+      "competition": "Central Asian Nations Cup",
+      "opponent": "Turkmenistan",
+      "score": "2-1",
+      "match_url": "https://www.international-football.net/match-details?id=53769"
+    }
+  ]
+}

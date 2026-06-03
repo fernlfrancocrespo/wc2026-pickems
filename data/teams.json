@@ -1,0 +1,866 @@
+{
+  "Algeria": {
+    "code": "ALG",
+    "iso2": "dz",
+    "flag_url": "https://flagcdn.com/w40/dz.png",
+    "confederation": "CAF",
+    "is_host": false,
+    "group": "J",
+    "fifa_rank": 29,
+    "recent_form": [
+      "D",
+      "W",
+      "L",
+      "W",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Argentina": {
+    "code": "ARG",
+    "iso2": "ar",
+    "flag_url": "https://flagcdn.com/w40/ar.png",
+    "confederation": "CONMEBOL",
+    "is_host": false,
+    "group": "J",
+    "fifa_rank": 3,
+    "recent_form": [
+      "W",
+      "W",
+      "W",
+      "W",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Australia": {
+    "code": "AUS",
+    "iso2": "au",
+    "flag_url": "https://flagcdn.com/w40/au.png",
+    "confederation": "AFC",
+    "is_host": false,
+    "group": "D",
+    "fifa_rank": 27,
+    "recent_form": [
+      "L",
+      "W",
+      "W",
+      "L",
+      "L"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Austria": {
+    "code": "AUT",
+    "iso2": "at",
+    "flag_url": "https://flagcdn.com/w40/at.png",
+    "confederation": "UEFA",
+    "is_host": false,
+    "group": "J",
+    "fifa_rank": 23,
+    "recent_form": [
+      "W",
+      "W",
+      "D",
+      "W",
+      "L"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Belgium": {
+    "code": "BEL",
+    "iso2": "be",
+    "flag_url": "https://flagcdn.com/w40/be.png",
+    "confederation": "UEFA",
+    "is_host": false,
+    "group": "G",
+    "fifa_rank": 9,
+    "recent_form": [
+      "D",
+      "W",
+      "W",
+      "D",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Bosnia and Herzegovina": {
+    "code": "BIH",
+    "iso2": "ba",
+    "flag_url": "https://flagcdn.com/w40/ba.png",
+    "confederation": "UEFA",
+    "is_host": false,
+    "group": "B",
+    "fifa_rank": 65,
+    "recent_form": [
+      "D",
+      "D",
+      "D",
+      "D",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Brazil": {
+    "code": "BRA",
+    "iso2": "br",
+    "flag_url": "https://flagcdn.com/w40/br.png",
+    "confederation": "CONMEBOL",
+    "is_host": false,
+    "group": "C",
+    "fifa_rank": 6,
+    "recent_form": [
+      "W",
+      "W",
+      "L",
+      "D",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Canada": {
+    "code": "CAN",
+    "iso2": "ca",
+    "flag_url": "https://flagcdn.com/w40/ca.png",
+    "confederation": "CONCACAF",
+    "is_host": true,
+    "group": "B",
+    "fifa_rank": 30,
+    "recent_form": [
+      "D",
+      "D",
+      "W",
+      "W",
+      "D"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Cape Verde": {
+    "code": "CPV",
+    "iso2": "cv",
+    "flag_url": "https://flagcdn.com/w40/cv.png",
+    "confederation": "CAF",
+    "is_host": false,
+    "group": "H",
+    "fifa_rank": null,
+    "recent_form": [
+      "W",
+      "D",
+      "L",
+      "D",
+      "D"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Colombia": {
+    "code": "COL",
+    "iso2": "co",
+    "flag_url": "https://flagcdn.com/w40/co.png",
+    "confederation": "CONMEBOL",
+    "is_host": false,
+    "group": "K",
+    "fifa_rank": 13,
+    "recent_form": [
+      "L",
+      "L",
+      "W",
+      "W",
+      "D"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Croatia": {
+    "code": "CRO",
+    "iso2": "hr",
+    "flag_url": "https://flagcdn.com/w40/hr.png",
+    "confederation": "UEFA",
+    "is_host": false,
+    "group": "L",
+    "fifa_rank": 11,
+    "recent_form": [
+      "L",
+      "W",
+      "W",
+      "W",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Curaçao": {
+    "code": "CUW",
+    "iso2": "cw",
+    "flag_url": "https://flagcdn.com/w40/cw.png",
+    "confederation": "CONCACAF",
+    "is_host": false,
+    "group": "E",
+    "fifa_rank": 82,
+    "recent_form": [
+      "L",
+      "L",
+      "L",
+      "D",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Czechia": {
+    "code": "CZE",
+    "iso2": "cz",
+    "flag_url": "https://flagcdn.com/w40/cz.png",
+    "confederation": "UEFA",
+    "is_host": false,
+    "group": "A",
+    "fifa_rank": 41,
+    "recent_form": [
+      "W",
+      "D",
+      "D",
+      "W",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "DR Congo": {
+    "code": "COD",
+    "iso2": "cd",
+    "flag_url": "https://flagcdn.com/w40/cd.png",
+    "confederation": "CAF",
+    "is_host": false,
+    "group": "K",
+    "fifa_rank": 46,
+    "recent_form": [
+      "W",
+      "W",
+      "L",
+      "W",
+      "D"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Ecuador": {
+    "code": "ECU",
+    "iso2": "ec",
+    "flag_url": "https://flagcdn.com/w40/ec.png",
+    "confederation": "CONMEBOL",
+    "is_host": false,
+    "group": "E",
+    "fifa_rank": 24,
+    "recent_form": [
+      "W",
+      "D",
+      "D",
+      "W",
+      "D"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Egypt": {
+    "code": "EGY",
+    "iso2": "eg",
+    "flag_url": "https://flagcdn.com/w40/eg.png",
+    "confederation": "CAF",
+    "is_host": false,
+    "group": "G",
+    "fifa_rank": 28,
+    "recent_form": [
+      "W",
+      "D",
+      "W",
+      "D",
+      "L"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "England": {
+    "code": "ENG",
+    "iso2": "gb-eng",
+    "flag_url": "https://flagcdn.com/w40/gb-eng.png",
+    "confederation": "UEFA",
+    "is_host": false,
+    "group": "L",
+    "fifa_rank": 4,
+    "recent_form": [
+      "L",
+      "D",
+      "W",
+      "W",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "France": {
+    "code": "FRA",
+    "iso2": "fr",
+    "flag_url": "https://flagcdn.com/w40/fr.png",
+    "confederation": "UEFA",
+    "is_host": false,
+    "group": "I",
+    "fifa_rank": 1,
+    "recent_form": [
+      "W",
+      "W",
+      "W",
+      "W",
+      "D"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Germany": {
+    "code": "GER",
+    "iso2": "de",
+    "flag_url": "https://flagcdn.com/w40/de.png",
+    "confederation": "UEFA",
+    "is_host": false,
+    "group": "E",
+    "fifa_rank": 10,
+    "recent_form": [
+      "W",
+      "W",
+      "W",
+      "W",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Ghana": {
+    "code": "GHA",
+    "iso2": "gh",
+    "flag_url": "https://flagcdn.com/w40/gh.png",
+    "confederation": "CAF",
+    "is_host": false,
+    "group": "L",
+    "fifa_rank": 73,
+    "recent_form": [
+      "L",
+      "L",
+      "L",
+      "L",
+      "L"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Haiti": {
+    "code": "HAI",
+    "iso2": "ht",
+    "flag_url": "https://flagcdn.com/w40/ht.png",
+    "confederation": "CONCACAF",
+    "is_host": false,
+    "group": "C",
+    "fifa_rank": 83,
+    "recent_form": [
+      "D",
+      "L",
+      "W",
+      "W",
+      "L"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Iran": {
+    "code": "IRN",
+    "iso2": "ir",
+    "flag_url": "https://flagcdn.com/w40/ir.png",
+    "confederation": "AFC",
+    "is_host": false,
+    "group": "G",
+    "fifa_rank": 21,
+    "recent_form": [
+      "W",
+      "W",
+      "L",
+      "D",
+      "D"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Iraq": {
+    "code": "IRQ",
+    "iso2": "iq",
+    "flag_url": "https://flagcdn.com/w40/iq.png",
+    "confederation": "AFC",
+    "is_host": false,
+    "group": "I",
+    "fifa_rank": 57,
+    "recent_form": [
+      "W",
+      "W",
+      "L",
+      "L",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Ivory Coast": {
+    "code": "CIV",
+    "iso2": "ci",
+    "flag_url": "https://flagcdn.com/w40/ci.png",
+    "confederation": "CAF",
+    "is_host": false,
+    "group": "E",
+    "fifa_rank": 34,
+    "recent_form": [
+      "W",
+      "W",
+      "L",
+      "W",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Japan": {
+    "code": "JPN",
+    "iso2": "jp",
+    "flag_url": "https://flagcdn.com/w40/jp.png",
+    "confederation": "AFC",
+    "is_host": false,
+    "group": "F",
+    "fifa_rank": 18,
+    "recent_form": [
+      "W",
+      "W",
+      "W",
+      "W",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Jordan": {
+    "code": "JOR",
+    "iso2": "jo",
+    "flag_url": "https://flagcdn.com/w40/jo.png",
+    "confederation": "AFC",
+    "is_host": false,
+    "group": "J",
+    "fifa_rank": 63,
+    "recent_form": [
+      "L",
+      "D",
+      "D",
+      "L",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Mexico": {
+    "code": "MEX",
+    "iso2": "mx",
+    "flag_url": "https://flagcdn.com/w40/mx.png",
+    "confederation": "CONCACAF",
+    "is_host": true,
+    "group": "A",
+    "fifa_rank": 15,
+    "recent_form": [
+      "W",
+      "W",
+      "D",
+      "D",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Morocco": {
+    "code": "MAR",
+    "iso2": "ma",
+    "flag_url": "https://flagcdn.com/w40/ma.png",
+    "confederation": "CAF",
+    "is_host": false,
+    "group": "C",
+    "fifa_rank": 8,
+    "recent_form": [
+      "W",
+      "W",
+      "D",
+      "L",
+      "D"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Netherlands": {
+    "code": "NED",
+    "iso2": "nl",
+    "flag_url": "https://flagcdn.com/w40/nl.png",
+    "confederation": "UEFA",
+    "is_host": false,
+    "group": "F",
+    "fifa_rank": 7,
+    "recent_form": [
+      "D",
+      "W",
+      "W",
+      "D",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "New Zealand": {
+    "code": "NZL",
+    "iso2": "nz",
+    "flag_url": "https://flagcdn.com/w40/nz.png",
+    "confederation": "OFC",
+    "is_host": false,
+    "group": "G",
+    "fifa_rank": 85,
+    "recent_form": [
+      "W",
+      "L",
+      "L",
+      "L",
+      "D"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Norway": {
+    "code": "NOR",
+    "iso2": "no",
+    "flag_url": "https://flagcdn.com/w40/no.png",
+    "confederation": "UEFA",
+    "is_host": false,
+    "group": "I",
+    "fifa_rank": 31,
+    "recent_form": [
+      "D",
+      "L",
+      "W",
+      "W",
+      "D"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Panama": {
+    "code": "PAN",
+    "iso2": "pa",
+    "flag_url": "https://flagcdn.com/w40/pa.png",
+    "confederation": "CONCACAF",
+    "is_host": false,
+    "group": "L",
+    "fifa_rank": 33,
+    "recent_form": [
+      "L",
+      "W",
+      "D",
+      "L",
+      "D"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Paraguay": {
+    "code": "PAR",
+    "iso2": "py",
+    "flag_url": "https://flagcdn.com/w40/py.png",
+    "confederation": "CONMEBOL",
+    "is_host": false,
+    "group": "D",
+    "fifa_rank": 40,
+    "recent_form": [
+      "L",
+      "W",
+      "W",
+      "L",
+      "L"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Portugal": {
+    "code": "POR",
+    "iso2": "pt",
+    "flag_url": "https://flagcdn.com/w40/pt.png",
+    "confederation": "UEFA",
+    "is_host": false,
+    "group": "K",
+    "fifa_rank": 5,
+    "recent_form": [
+      "W",
+      "D",
+      "W",
+      "L",
+      "D"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Qatar": {
+    "code": "QAT",
+    "iso2": "qa",
+    "flag_url": "https://flagcdn.com/w40/qa.png",
+    "confederation": "AFC",
+    "is_host": false,
+    "group": "B",
+    "fifa_rank": 55,
+    "recent_form": [
+      "L",
+      "L",
+      "D",
+      "L",
+      "L"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Saudi Arabia": {
+    "code": "KSA",
+    "iso2": "sa",
+    "flag_url": "https://flagcdn.com/w40/sa.png",
+    "confederation": "AFC",
+    "is_host": false,
+    "group": "H",
+    "fifa_rank": 61,
+    "recent_form": [
+      "L",
+      "L",
+      "L",
+      "D",
+      "L"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Scotland": {
+    "code": "SCO",
+    "iso2": "gb-sct",
+    "flag_url": "https://flagcdn.com/w40/gb-sct.png",
+    "confederation": "UEFA",
+    "is_host": false,
+    "group": "C",
+    "fifa_rank": 43,
+    "recent_form": [
+      "W",
+      "L",
+      "L",
+      "W",
+      "L"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Senegal": {
+    "code": "SEN",
+    "iso2": "sn",
+    "flag_url": "https://flagcdn.com/w40/sn.png",
+    "confederation": "CAF",
+    "is_host": false,
+    "group": "I",
+    "fifa_rank": 14,
+    "recent_form": [
+      "L",
+      "W",
+      "W",
+      "W",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "South Africa": {
+    "code": "RSA",
+    "iso2": "za",
+    "flag_url": "https://flagcdn.com/w40/za.png",
+    "confederation": "CAF",
+    "is_host": false,
+    "group": "A",
+    "fifa_rank": 60,
+    "recent_form": [
+      "D",
+      "L",
+      "D",
+      "L",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "South Korea": {
+    "code": "KOR",
+    "iso2": "kr",
+    "flag_url": "https://flagcdn.com/w40/kr.png",
+    "confederation": "AFC",
+    "is_host": false,
+    "group": "A",
+    "fifa_rank": 25,
+    "recent_form": [
+      "W",
+      "L",
+      "L",
+      "W",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Spain": {
+    "code": "ESP",
+    "iso2": "es",
+    "flag_url": "https://flagcdn.com/w40/es.png",
+    "confederation": "UEFA",
+    "is_host": false,
+    "group": "H",
+    "fifa_rank": 2,
+    "recent_form": [
+      "D",
+      "W",
+      "D",
+      "W",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Sweden": {
+    "code": "SWE",
+    "iso2": "se",
+    "flag_url": "https://flagcdn.com/w40/se.png",
+    "confederation": "UEFA",
+    "is_host": false,
+    "group": "F",
+    "fifa_rank": 38,
+    "recent_form": [
+      "W",
+      "W",
+      "D",
+      "L",
+      "L"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Switzerland": {
+    "code": "SUI",
+    "iso2": "ch",
+    "flag_url": "https://flagcdn.com/w40/ch.png",
+    "confederation": "UEFA",
+    "is_host": false,
+    "group": "B",
+    "fifa_rank": 19,
+    "recent_form": [
+      "W",
+      "D",
+      "L",
+      "D",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Tunisia": {
+    "code": "TUN",
+    "iso2": "tn",
+    "flag_url": "https://flagcdn.com/w40/tn.png",
+    "confederation": "CAF",
+    "is_host": false,
+    "group": "F",
+    "fifa_rank": 45,
+    "recent_form": [
+      "D",
+      "W",
+      "D",
+      "D",
+      "L"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Türkiye": {
+    "code": "TUR",
+    "iso2": "tr",
+    "flag_url": "https://flagcdn.com/w40/tr.png",
+    "confederation": "UEFA",
+    "is_host": false,
+    "group": "D",
+    "fifa_rank": 22,
+    "recent_form": [
+      "W",
+      "W",
+      "D",
+      "W",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "United States": {
+    "code": "USA",
+    "iso2": "us",
+    "flag_url": "https://flagcdn.com/w40/us.png",
+    "confederation": "CONCACAF",
+    "is_host": true,
+    "group": "D",
+    "fifa_rank": 16,
+    "recent_form": [
+      "W",
+      "L",
+      "L",
+      "W",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Uruguay": {
+    "code": "URU",
+    "iso2": "uy",
+    "flag_url": "https://flagcdn.com/w40/uy.png",
+    "confederation": "CONMEBOL",
+    "is_host": false,
+    "group": "H",
+    "fifa_rank": 17,
+    "recent_form": [
+      "D",
+      "D",
+      "L",
+      "D",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  },
+  "Uzbekistan": {
+    "code": "UZB",
+    "iso2": "uz",
+    "flag_url": "https://flagcdn.com/w40/uz.png",
+    "confederation": "AFC",
+    "is_host": false,
+    "group": "K",
+    "fifa_rank": 50,
+    "recent_form": [
+      "D",
+      "W",
+      "D",
+      "D",
+      "W"
+    ],
+    "goals_for": null,
+    "goals_against": null
+  }
+}
