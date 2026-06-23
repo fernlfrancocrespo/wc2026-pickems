@@ -82,6 +82,25 @@
 
     /* ── Question card ── */
     .q-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 14px 15px; display: flex; flex-direction: column; gap: 10px; }
+    /* ── VIEW_MODE scoring overlay ───────────────────────────────── */
+    .q-result { display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:.8rem; padding:8px 10px; border-radius:8px; border:1px solid var(--border); margin-top:2px; }
+    .q-result.hit { background:rgba(34,197,94,.10); border-color:rgba(34,197,94,.35); }
+    .q-result.partial { background:rgba(201,168,76,.10); border-color:rgba(201,168,76,.35); }
+    .q-result.miss { background:rgba(200,16,46,.08); border-color:rgba(200,16,46,.30); }
+    .q-result.pending { background:rgba(255,255,255,.03); color:var(--grey-mid); }
+    .q-result .qr-icon { font-weight:700; font-size:.95rem; }
+    .q-result.hit .qr-icon{color:var(--green)} .q-result.partial .qr-icon{color:var(--gold)} .q-result.miss .qr-icon{color:var(--red)}
+    .q-result .qr-ans { color:var(--grey-light); } .q-result .qr-ans b{color:var(--white)}
+    .q-result .qr-pts { margin-left:auto; font-weight:700; color:var(--white); white-space:nowrap; }
+    .qr-chip { font-size:.6rem; font-weight:700; letter-spacing:.4px; text-transform:uppercase; padding:2px 7px; border-radius:20px; }
+    .qr-chip.live { color:var(--gold); background:rgba(201,168,76,.12); border:1px solid rgba(201,168,76,.3); }
+    .qr-chip.locked { color:var(--green); background:rgba(34,197,94,.12); border:1px solid rgba(34,197,94,.3); }
+    .pcard .q-result { margin:0 13px 12px; }
+    /* score header on the view banner */
+    .score-head { display:flex; gap:18px; flex-wrap:wrap; align-items:baseline; margin-top:10px; padding-top:10px; border-top:1px solid var(--border); }
+    .score-head .sh-tot { font-family:'Bebas Neue',sans-serif; font-size:2.2rem; color:var(--gold); line-height:1; }
+    .score-head .sh-item .l { font-size:.62rem; text-transform:uppercase; letter-spacing:1px; color:var(--grey-mid); }
+    .score-head .sh-item .v { font-size:1.05rem; font-weight:700; }
     .q-head { display: flex; align-items: flex-start; gap: 10px; }
     .q-num { font-family: 'Bebas Neue', sans-serif; font-size: 1.05rem; color: var(--gold); min-width: 20px; line-height: 1.35; flex-shrink: 0; }
     .q-label { flex: 1; font-weight: 600; font-size: 0.9rem; line-height: 1.35; }
@@ -619,6 +638,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 <script src="/i18n.js?v=2"></script>
+<script src="/scoring.js?v=1"></script>
 <script>
 // ═══════════════════════════════════════ CONFIG
 const LOCK_TIME  = new Date('2026-06-11T19:00:00Z');
@@ -735,10 +755,11 @@ async function init() {
   renderPage();
   setupDrawer();
   startCountdown(); // keep the live timer on read-only /p/ pages too
+  if (VIEW_MODE) annotateScoring();   // overlay live scoring on a shared entry
 
   // Re-render the whole form on language switch. Builders are answers-aware,
   // so in-progress picks (selects, drag order, bands, players) are preserved.
-  onLangChange(() => { applyChrome(); renderPage(); setupDrawer(); });
+  onLangChange(() => { applyChrome(); renderPage(); setupDrawer(); if (VIEW_MODE) annotateScoring(); });
 }
 
 // ═══════════════════════════════════════ LANGUAGE CHROME
@@ -891,6 +912,7 @@ function teamsSorted(filter) {
 function buildTeamSelect(answerId, filter, placeholderKey = 'pick_team') {
   const wrap = document.createElement('div');
   wrap.className = 'team-picker';
+  wrap.dataset.qid = answerId;   // for VIEW_MODE scoring overlay
 
   const flag = document.createElement('img');
   flag.className = 'flag-preview';
@@ -932,6 +954,7 @@ function buildTeamSelect(answerId, filter, placeholderKey = 'pick_team') {
 function buildPlayerCard(num, labelText, pts, teamId, playerId, helpText, sub, playerFilter, gkFallback = false) {
   const card = document.createElement('div');
   card.className = 'pcard';
+  card.dataset.qid = playerId;   // for VIEW_MODE scoring overlay (e.g. q19_player)
 
   // Square photo (placeholder → real player photo on selection), cropped to the head.
   const photoBox = document.createElement('div');
@@ -1047,6 +1070,7 @@ function buildBandSelector(answerId, opts) {
 function buildBandQuestion(answerId) {
   const cfg = BANDS[answerId];
   const wrap = document.createElement('div');
+  wrap.dataset.qid = answerId;   // for VIEW_MODE scoring overlay
   wrap.appendChild(buildBandSelector(answerId, cfg.opts));
   const scoring = document.createElement('div');
   scoring.className = 'band-scoring';
@@ -1062,6 +1086,7 @@ function bandHelp(qKey) { return `${t('help_band')}  ${t(qKey + '_meta')}`; }
 function buildYesNo(answerId) {
   const wrap = document.createElement('div');
   wrap.className = 'yesno';
+  wrap.dataset.qid = answerId;   // for VIEW_MODE scoring overlay
   [['Yes','yes'], ['No','no']].forEach(([val, key]) => {
     const label = document.createElement('label');
     label.className = 'yesno-label';
@@ -1097,6 +1122,7 @@ function applyZones(ul) {
 
 function buildGroupSection() {
   const wrap = document.createElement('div');
+  wrap.dataset.qid = 'q8';   // for VIEW_MODE scoring overlay
 
   // Compact legend explaining the zones
   const legend = document.createElement('div');
@@ -1602,6 +1628,123 @@ document.addEventListener('click', (e) => {
   document.querySelectorAll('.q-info.show').forEach(el => { if (el !== eye) el.classList.remove('show'); });
   if (eye) { e.preventDefault(); e.stopPropagation(); eye.classList.toggle('show'); }
 });
+
+// ═══════════════════════════════════════ VIEW_MODE SCORING OVERLAY
+// On a shared /p/<slug> entry, overlay each question with the real (or current)
+// answer, whether this person got it, and the points. Decided outcomes show as
+// LOCKED; still-in-play ones as LIVE. Additive: if no key data, nothing changes.
+let SCORE_DATA = null; // cached { key, liveSet } so lang re-render needn't refetch
+
+async function loadScoreData() {
+  if (SCORE_DATA) return SCORE_DATA;
+  let ak = {}, ls = null, ball = null;
+  try { ak = (await (await fetch('/data/answer_key.json')).json()).answers || {}; } catch {}
+  try { ls = await (await fetch('/data/live_stats.json')).json(); } catch {}
+  try { ball = await (await fetch('/data/ball_stats.json')).json(); } catch {}
+  const key = JSON.parse(JSON.stringify(ak));
+  const live = new Set();
+  const setLive = (k, v, isLive) => { if (key[k] == null) { key[k] = v; if (isLive) live.add(k); } };
+  if (ls) {
+    const complete = !!ls.group_stage_complete;
+    key.q8 = key.q8 || {};
+    Object.entries(ls.groups || {}).forEach(([L, g]) => {
+      if (!key.q8[L]) { key.q8[L] = g.provisional_order; if (!complete) live.add('q8'); }
+    });
+    setLive('q9', ls.group_goals_total, !complete);
+    if (ls.hat_trick_in_group_stage) setLive('q10', 'Yes', false); // locked once it happens
+    const gt = ls.goal_timing || {};
+    setLive('q14', gt.added_time_goals, true);
+    setLive('q16', gt.fastest_goal_seconds, true);
+    if (ls.top_scorers && ls.top_scorers[0]) setLive('q19_player', ls.top_scorers[0].player, true);
+  }
+  if (ball && ball.q15_longest_range_m != null) setLive('q15', ball.q15_longest_range_m, true);
+  SCORE_DATA = { key, live };
+  return SCORE_DATA;
+}
+
+// Correct-answer text for a question id (as stored in the answer key).
+function answerText(qid, key) {
+  if (qid === 'q3') return [key.q3a, key.q3b].filter(Boolean).map(teamLabel).join(' + ') || '—';
+  if (qid === 'q8') return t('q8'); // group order — points shown, detail per-group below
+  if (qid === 'q10') return key.q10 || '—';
+  if (BANDS[qid]) {
+    const v = key[qid];
+    if (v == null) return '—';
+    const idx = (typeof bandIndexFor === 'function') ? bandIndexFor(Number(String(v).replace(/[ms]/gi, '')), BANDS[qid].opts) : -1;
+    const band = idx >= 0 ? BANDS[qid].opts[idx] : '';
+    return band ? `${v} (${band})` : String(v);
+  }
+  if (qid.endsWith('_player')) return key[qid] || '—';
+  return key[qid] ? teamLabel(key[qid]) : '—';      // team picks
+}
+
+function resultEl(qid, bd, isLive) {
+  const el = document.createElement('div');
+  el.className = 'q-result';
+  if (!bd || !bd.graded) {
+    el.classList.add('pending');
+    el.innerHTML = `<span class="qr-icon">·</span><span class="qr-ans">${t('not_decided') || 'Not decided yet'}</span>`;
+    return el;
+  }
+  if (bd.skipped) {
+    el.classList.add('pending');
+    el.innerHTML = `<span class="qr-icon">*</span><span class="qr-ans">${t('q8_skipped') || 'Not counted — group order left at default; points redistributed.'}</span>`;
+    return el;
+  }
+  const cls = bd.pts >= bd.max ? 'hit' : (bd.pts > 0 ? 'partial' : 'miss');
+  const icon = cls === 'hit' ? '✓' : (cls === 'partial' ? '≈' : '✗');
+  el.classList.add(cls);
+  const { key } = SCORE_DATA;
+  const chip = isLive ? '<span class="qr-chip live">Live</span>' : '<span class="qr-chip locked">Locked</span>';
+  el.innerHTML =
+    `<span class="qr-icon">${icon}</span>` +
+    `<span class="qr-ans">${t('actual') || 'Actual'}: <b>${escapeHtml(answerText(qid, key))}</b></span>` +
+    chip +
+    `<span class="qr-pts">${Math.round(bd.pts * 10) / 10}/${bd.max} ${t('pts')}</span>`;
+  return el;
+}
+
+async function annotateScoring() {
+  if (!VIEW_MODE) return;
+  const { key, live } = await loadScoreData();
+  if (!keyHasData({ answers: key })) return;       // nothing decided yet
+  const dg = (typeof isDefaultGroupOrder === 'function') && isDefaultGroupOrder(answers.q8, groupsData);
+  const res = scoreEntry(answers, key, { defaultGroup: dg });
+  const bdKeyFor = (qid) => (qid === 'q3a' || qid === 'q3b') ? 'q3' : qid;
+
+  // score header into the view banner
+  const banner = document.querySelector('.view-banner');
+  if (banner && !banner.querySelector('.score-head')) {
+    const gradedCount = Object.values(res.breakdown).filter(b => b.graded && !b.skipped).length;
+    const sh = document.createElement('div');
+    sh.className = 'score-head';
+    sh.innerHTML =
+      `<div class="sh-item"><div class="sh-tot">${Math.round(res.total)}</div><div class="l">${t('points') || 'points so far'}</div></div>` +
+      `<div class="sh-item"><div class="v">${Math.round(res.lockedGroup)}</div><div class="l">${t('group') || 'group'}</div></div>` +
+      `<div class="sh-item"><div class="v">${Math.round(res.lockedKO)}</div><div class="l">${t('knockout') || 'knockout'}</div></div>` +
+      `<div class="sh-item"><div class="v">${Math.round(res.pendingMax)}</div><div class="l">${t('still_open') || 'still in play'}</div></div>` +
+      (dg ? `<div class="sh-item"><div class="v" style="color:var(--gold)">×${res.rebalanceScale.toFixed(2)}</div><div class="l">${t('rebalanced') || 'rebalanced'}</div></div>` : '');
+    banner.appendChild(sh);
+  }
+
+  // annotate each tagged card (idempotent: clear prior overlays first)
+  document.querySelectorAll('.q-result').forEach(e => e.remove());
+  // player cards carry their own qid
+  document.querySelectorAll('.pcard[data-qid]').forEach(card => {
+    const qid = card.dataset.qid;
+    card.appendChild(resultEl(qid, res.breakdown[bdKeyFor(qid)], live.has(qid)));
+  });
+  // group block (q8)
+  const gq = document.querySelector('[data-qid="q8"]');
+  if (gq) gq.appendChild(resultEl('q8', res.breakdown.q8, live.has('q8')));
+  // standard q-cards: find the inner builder's data-qid
+  document.querySelectorAll('.q-card').forEach(card => {
+    const tagged = card.querySelector('[data-qid]');
+    if (!tagged) return;
+    const qid = tagged.dataset.qid;
+    card.appendChild(resultEl(qid, res.breakdown[bdKeyFor(qid)], live.has(bdKeyFor(qid))));
+  });
+}
 
 // ═══════════════════════════════════════ PAGE RENDER
 function renderPage() {

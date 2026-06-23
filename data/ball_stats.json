@@ -1,0 +1,12 @@
+{
+  "updated": "2026-06-23",
+  "source": "Adidas Trionda connected-ball telemetry (FIFA match pages / media). MANUALLY MAINTAINED — there is no free structured API for shot speed / goal distance, so update these from FIFA's match center or matchday recap articles. This is the ONLY part of the data layer not auto-validated.",
+  "q15_longest_range_m": 28.0,
+  "longest_range_goals": [
+    {"player": "Kylian Mbappé", "team": "France", "opponent": "Senegal", "meters": 28.0, "feet": 91.9, "matchday": 1},
+    {"player": "Connor Metcalfe", "team": "Australia", "opponent": "Türkiye", "meters": 23.4, "feet": 76.8, "matchday": 1},
+    {"player": "Yasin Ayari", "team": "Sweden", "opponent": "Tunisia", "meters": 22.7, "feet": 74.5, "matchday": 1},
+    {"player": "Ismael Saibari", "team": "Morocco", "opponent": "Brazil", "meters": 22.6, "feet": 74.1, "matchday": 1},
+    {"player": "Yasin Ayari", "team": "Sweden", "opponent": "Tunisia", "meters": 22.6, "feet": 74.1, "matchday": 1}
+  ]
+}

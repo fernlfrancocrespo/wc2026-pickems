@@ -19,3 +19,7 @@ archive/
 
 # Private participant data (names/emails) — never commit
 data/private/
+
+# Local-only preview page (reads private board.json)
+preview.html
+data/board.json
