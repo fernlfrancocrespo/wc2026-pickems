@@ -16,6 +16,30 @@ const POINTS = {
   q17:12, q18:12, q19:8, q20:6, q21:6, q22:6,
 };
 
+// Full perfect score across every question (q3 is worth 6 twice = 12).
+const FULL_MAX = Object.values(POINTS).reduce((a, b) => a + b, 0) + POINTS.q3; // 251
+// Pool of points available to a "default-group" entry (everything except q8).
+const NON_Q8_MAX = FULL_MAX - POINTS.q8; // 179
+// Rebalance factor: a default-group entry can still reach FULL_MAX by earning more on
+// every other question, so q8's 72 pts are redistributed proportionally over the rest.
+const DEFAULT_GROUP_SCALE = FULL_MAX / NON_Q8_MAX; // ≈ 1.402
+
+// Which questions settle when the GROUP STAGE ends (vs. over the knockout/whole tournament).
+const GROUP_QS = ['q8', 'q9', 'q10'];
+
+// True if a submission's q8 is byte-for-byte the form's default order in every group
+// (i.e. the person never dragged anything). `groups` is data/groups.json.
+function isDefaultGroupOrder(q8, groups) {
+  if (!q8 || !groups) return false;
+  const letters = Object.keys(groups);
+  if (letters.length === 0) return false;
+  return letters.every(L => {
+    const def = groups[L], mine = q8[L];
+    return Array.isArray(mine) && Array.isArray(def) &&
+           mine.length === def.length && mine.every((t, i) => t === def[i]);
+  });
+}
+
 // Band options per numeric question (must match the form's BANDS).
 const BAND_OPTS = {
   q9:  ['0–149','150–169','170–184','185–199','200–219','220+'],
@@ -59,13 +83,14 @@ function scoreBand(qid, picked, value) {
   return 0;
 }
 
-function scoreEntry(answers, key) {
+function scoreEntry(answers, key, opts) {
   answers = answers || {};
   key = key || {};
+  opts = opts || {};
   const bd = {};
   let total = 0, graded = 0;
   const add = (qid, pts, max, isGraded) => {
-    bd[qid] = { pts, max };
+    bd[qid] = { pts, max, graded: !!isGraded };
     total += pts;
     if (isGraded) graded += max;
   };
@@ -119,8 +144,46 @@ function scoreEntry(answers, key) {
     add('q8', pts, POINTS.q8, graded_);
   }
 
-  const max = Object.values(POINTS).reduce((a, b) => a + b, 0) + POINTS.q3; // q3 counted twice (6 each)
-  return { total, max, graded, breakdown: bd };
+  // ---- Default-group rebalance --------------------------------------------
+  // Entries that never touched the drag-rankings are not penalized on q8: it's
+  // scored 0 and marked skipped, and their remaining points are scaled up so a
+  // perfect non-q8 sheet still reaches FULL_MAX. Per-question breakdown stays
+  // RAW (honest); only the rolled-up total/graded are scaled. The flag + scale
+  // are returned so the UI can disclose the asterisk.
+  let defaultGroup = false, rebalanceScale = 1;
+  if (opts.defaultGroup) {
+    defaultGroup = true;
+    rebalanceScale = DEFAULT_GROUP_SCALE;
+    const q8 = bd.q8 || { pts: 0, max: 0, graded: false };
+    total  -= q8.pts;                       // remove q8 from the rolled-up total
+    if (q8.graded) graded -= q8.max;         // and from the graded denominator
+    bd.q8 = { pts: 0, max: 0, graded: false, skipped: true };
+    total  = Math.min(total * rebalanceScale, FULL_MAX);
+    graded = graded * rebalanceScale;        // keeps mid-tournament % fair
+  }
+
+  // ---- Locked vs. pending split -------------------------------------------
+  // "Locked" = points already decided (this question is graded in the key).
+  // Everything else is still in play. The two-bucket (group/knockout) split
+  // mirrors the spec; `lockedGroup` settles after the group stage.
+  let lockedTotal = 0, lockedGroup = 0, lockedKO = 0, pendingMax = 0;
+  Object.entries(bd).forEach(([qid, b]) => {
+    const isGroup = GROUP_QS.includes(qid);
+    if (b.skipped) return;
+    if (b.graded) {
+      const pts = defaultGroup ? b.pts * rebalanceScale : b.pts;
+      lockedTotal += pts;
+      if (isGroup) lockedGroup += pts; else lockedKO += pts;
+    } else {
+      pendingMax += defaultGroup ? b.max * rebalanceScale : b.max;
+    }
+  });
+
+  return {
+    total, max: FULL_MAX, graded, breakdown: bd,
+    defaultGroup, rebalanceScale,
+    lockedTotal, lockedGroup, lockedKO, pendingMax,
+  };
 }
 
 // True if the answer key has at least one real (graded) outcome.
@@ -131,4 +194,13 @@ function keyHasData(key) {
   return ['q1','q2','q3a','q4','q5','q6','q7','q9','q10','q11','q12','q13','q14','q15','q16',
           'q17_player','q18_player','q19_player','q20_player','q21_player','q22_player']
           .some(k => a[k] != null && a[k] !== '');
+}
+
+// CommonJS export for the Node-side eval CLI; no-op in the browser (where these
+// names are already globals on window).
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    POINTS, FULL_MAX, NON_Q8_MAX, DEFAULT_GROUP_SCALE, GROUP_QS,
+    isDefaultGroupOrder, scoreEntry, keyHasData, scoreBand, bandIndexFor, bandRange,
+  };
 }

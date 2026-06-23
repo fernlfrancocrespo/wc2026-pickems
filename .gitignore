@@ -16,3 +16,6 @@ server.log
 # Local-only review folder (not deployed)
 archive/
 .claude/
+
+# Private participant data (names/emails) — never commit
+data/private/
