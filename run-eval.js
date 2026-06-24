@@ -66,8 +66,8 @@ if (project) {
   if (key.q9 == null) key.q9 = ls.group_goals_total;   // band graded vs current total
   // q10 hat-trick is genuinely locked once one happens (can't un-happen)
   if (key.q10 == null && ls.hat_trick_in_group_stage) key.q10 = 'Yes';
-  // q19 Golden Boot: current scoring leader (trending; full name match)
-  if (key.q19_player == null && ls.top_scorers && ls.top_scorers.length) key.q19_player = ls.top_scorers[0].player;
+  // q18 Golden Boot (top scorer): current scoring leader (trending; full name match)
+  if (key.q18_player == null && ls.top_scorers && ls.top_scorers.length) key.q18_player = ls.top_scorers[0].player;
   // band props from live timing + connected-ball data
   const gt = ls.goal_timing || {};
   if (key.q14 == null && gt.added_time_goals != null) key.q14 = gt.added_time_goals;     // added-time goals

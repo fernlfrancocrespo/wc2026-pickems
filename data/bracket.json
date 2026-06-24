@@ -1,0 +1,49 @@
+{
+  "note": "WC2026 knockout bracket STRUCTURE (fixed, locks June 27). Slots reference group positions (W=winner, RU=runner-up, 3rd=one of the listed groups' third-placed qualifiers); real teams populate at lock from final standings + FIFA's third-place assignment table. Round/win wiring is by FIFA match number: R32=73-88, R16=89-96, QF=97-100, SF=101-102, third-place=103, final=104. Points-per-round confirmed: 3/5/8/12/20 (123 bonus).",
+  "open": false,
+  "teams": {},
+  "rounds": [
+    { "key": "R32",   "label": "Round of 32",    "points": 3,  "matches": [73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88] },
+    { "key": "R16",   "label": "Round of 16",    "points": 5,  "matches": [89,90,91,92,93,94,95,96] },
+    { "key": "QF",    "label": "Quarter-finals", "points": 8,  "matches": [97,98,99,100] },
+    { "key": "SF",    "label": "Semi-finals",    "points": 12, "matches": [101,102] },
+    { "key": "final", "label": "Final",          "points": 20, "matches": [104] }
+  ],
+  "matches": {
+    "73": { "round": "R32", "s1": { "t": "RU",  "g": "A" },                          "s2": { "t": "RU",  "g": "B" } },
+    "74": { "round": "R32", "s1": { "t": "W",   "g": "E" },                          "s2": { "t": "3rd", "g": ["A","B","C","D","F"] } },
+    "75": { "round": "R32", "s1": { "t": "W",   "g": "F" },                          "s2": { "t": "RU",  "g": "C" } },
+    "76": { "round": "R32", "s1": { "t": "W",   "g": "C" },                          "s2": { "t": "RU",  "g": "F" } },
+    "77": { "round": "R32", "s1": { "t": "W",   "g": "I" },                          "s2": { "t": "3rd", "g": ["C","D","F","G","H"] } },
+    "78": { "round": "R32", "s1": { "t": "RU",  "g": "E" },                          "s2": { "t": "RU",  "g": "I" } },
+    "79": { "round": "R32", "s1": { "t": "W",   "g": "A" },                          "s2": { "t": "3rd", "g": ["C","E","F","H","I"] } },
+    "80": { "round": "R32", "s1": { "t": "W",   "g": "L" },                          "s2": { "t": "3rd", "g": ["E","H","I","J","K"] } },
+    "81": { "round": "R32", "s1": { "t": "W",   "g": "D" },                          "s2": { "t": "3rd", "g": ["B","E","F","I","J"] } },
+    "82": { "round": "R32", "s1": { "t": "W",   "g": "G" },                          "s2": { "t": "3rd", "g": ["A","E","H","I","J"] } },
+    "83": { "round": "R32", "s1": { "t": "RU",  "g": "K" },                          "s2": { "t": "RU",  "g": "L" } },
+    "84": { "round": "R32", "s1": { "t": "W",   "g": "H" },                          "s2": { "t": "RU",  "g": "J" } },
+    "85": { "round": "R32", "s1": { "t": "W",   "g": "B" },                          "s2": { "t": "3rd", "g": ["E","F","G","I","J"] } },
+    "86": { "round": "R32", "s1": { "t": "W",   "g": "J" },                          "s2": { "t": "RU",  "g": "H" } },
+    "87": { "round": "R32", "s1": { "t": "W",   "g": "K" },                          "s2": { "t": "3rd", "g": ["D","E","I","J","L"] } },
+    "88": { "round": "R32", "s1": { "t": "RU",  "g": "D" },                          "s2": { "t": "RU",  "g": "G" } },
+
+    "89": { "round": "R16", "s1": { "t": "W", "m": 74 }, "s2": { "t": "W", "m": 77 } },
+    "90": { "round": "R16", "s1": { "t": "W", "m": 73 }, "s2": { "t": "W", "m": 75 } },
+    "91": { "round": "R16", "s1": { "t": "W", "m": 76 }, "s2": { "t": "W", "m": 78 } },
+    "92": { "round": "R16", "s1": { "t": "W", "m": 79 }, "s2": { "t": "W", "m": 80 } },
+    "93": { "round": "R16", "s1": { "t": "W", "m": 83 }, "s2": { "t": "W", "m": 84 } },
+    "94": { "round": "R16", "s1": { "t": "W", "m": 81 }, "s2": { "t": "W", "m": 82 } },
+    "95": { "round": "R16", "s1": { "t": "W", "m": 86 }, "s2": { "t": "W", "m": 88 } },
+    "96": { "round": "R16", "s1": { "t": "W", "m": 85 }, "s2": { "t": "W", "m": 87 } },
+
+    "97":  { "round": "QF", "s1": { "t": "W", "m": 89 }, "s2": { "t": "W", "m": 90 } },
+    "98":  { "round": "QF", "s1": { "t": "W", "m": 93 }, "s2": { "t": "W", "m": 94 } },
+    "99":  { "round": "QF", "s1": { "t": "W", "m": 91 }, "s2": { "t": "W", "m": 92 } },
+    "100": { "round": "QF", "s1": { "t": "W", "m": 95 }, "s2": { "t": "W", "m": 96 } },
+
+    "101": { "round": "SF", "s1": { "t": "W", "m": 97 }, "s2": { "t": "W", "m": 98 } },
+    "102": { "round": "SF", "s1": { "t": "W", "m": 99 }, "s2": { "t": "W", "m": 100 } },
+
+    "104": { "round": "final", "s1": { "t": "W", "m": 101 }, "s2": { "t": "W", "m": 102 } }
+  }
+}

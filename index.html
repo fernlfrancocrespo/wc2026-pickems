@@ -82,25 +82,86 @@
 
     /* ── Question card ── */
     .q-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 14px 15px; display: flex; flex-direction: column; gap: 10px; }
-    /* ── VIEW_MODE scoring overlay ───────────────────────────────── */
-    .q-result { display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:.8rem; padding:8px 10px; border-radius:8px; border:1px solid var(--border); margin-top:2px; }
-    .q-result.hit { background:rgba(34,197,94,.10); border-color:rgba(34,197,94,.35); }
-    .q-result.partial { background:rgba(201,168,76,.10); border-color:rgba(201,168,76,.35); }
-    .q-result.miss { background:rgba(200,16,46,.08); border-color:rgba(200,16,46,.30); }
-    .q-result.pending { background:rgba(255,255,255,.03); color:var(--grey-mid); }
-    .q-result .qr-icon { font-weight:700; font-size:.95rem; }
-    .q-result.hit .qr-icon{color:var(--green)} .q-result.partial .qr-icon{color:var(--gold)} .q-result.miss .qr-icon{color:var(--red)}
-    .q-result .qr-ans { color:var(--grey-light); } .q-result .qr-ans b{color:var(--white)}
-    .q-result .qr-pts { margin-left:auto; font-weight:700; color:var(--white); white-space:nowrap; }
-    .qr-chip { font-size:.6rem; font-weight:700; letter-spacing:.4px; text-transform:uppercase; padding:2px 7px; border-radius:20px; }
-    .qr-chip.live { color:var(--gold); background:rgba(201,168,76,.12); border:1px solid rgba(201,168,76,.3); }
-    .qr-chip.locked { color:var(--green); background:rgba(34,197,94,.12); border:1px solid rgba(34,197,94,.3); }
-    .pcard .q-result { margin:0 13px 12px; }
-    /* score header on the view banner */
-    .score-head { display:flex; gap:18px; flex-wrap:wrap; align-items:baseline; margin-top:10px; padding-top:10px; border-top:1px solid var(--border); }
-    .score-head .sh-tot { font-family:'Bebas Neue',sans-serif; font-size:2.2rem; color:var(--gold); line-height:1; }
-    .score-head .sh-item .l { font-size:.62rem; text-transform:uppercase; letter-spacing:1px; color:var(--grey-mid); }
-    .score-head .sh-item .v { font-size:1.05rem; font-weight:700; }
+    /* ── VIEW_MODE scorecard ─────────────────────────────────────── */
+    --sc-green:#22c55e; --sc-green-soft:rgba(34,197,94,.10); --sc-red-soft:rgba(200,16,46,.10);
+    .sc-wrap { max-width:680px; margin:0 auto; }
+    .sc-id { display:flex; align-items:center; gap:9px; margin-bottom:14px; }
+    .sc-id .lbl { font-size:.7rem; letter-spacing:1.5px; color:var(--grey-mid); text-transform:uppercase; }
+    .sc-id .name { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:1px; }
+    .sc-id .own { margin-left:auto; }
+    .sc-hero { background:var(--navy-light); border:1px solid rgba(201,168,76,.35); border-radius:14px; padding:20px 22px; display:flex; gap:24px; align-items:center; flex-wrap:wrap; }
+    .sc-hero-tot { text-align:center; min-width:118px; }
+    .sc-hero-tot .big { font-family:'Bebas Neue',sans-serif; font-size:4.6rem; line-height:.85; color:var(--gold); }
+    .sc-hero-tot .cap { font-size:.64rem; letter-spacing:2px; color:var(--grey-light); text-transform:uppercase; margin-top:4px; }
+    .sc-hero-tot .rank { font-size:.74rem; color:var(--sc-green); margin-top:6px; font-weight:600; }
+    .sc-hero-r { flex:1; min-width:230px; }
+    .sc-barlbl { display:flex; justify-content:space-between; font-size:.7rem; color:var(--grey-mid); margin-bottom:5px; letter-spacing:.5px; }
+    .sc-bar { height:12px; border-radius:7px; background:var(--navy-input); overflow:hidden; display:flex; }
+    .sc-bar .e { background:var(--sc-green); } .sc-bar .p { background:var(--gold); }
+    .sc-mini { display:flex; gap:10px; margin-top:14px; }
+    .sc-mini > div { flex:1; background:var(--navy-card); border-radius:9px; padding:10px 12px; }
+    .sc-mini .v { font-family:'Bebas Neue',sans-serif; font-size:1.7rem; line-height:1; }
+    .sc-mini .v small { font-size:.9rem; color:var(--grey-mid); }
+    .sc-mini .k { font-size:.6rem; letter-spacing:1px; color:var(--grey-mid); text-transform:uppercase; margin-top:3px; }
+    .sc-sec { display:flex; align-items:center; gap:8px; margin:22px 0 10px; }
+    .sc-sec .h { font-family:'Bebas Neue',sans-serif; font-size:1.15rem; letter-spacing:2px; }
+    .sc-sec .ln { height:1px; flex:1; background:rgba(255,255,255,.1); }
+    .sc-sec .meta { font-size:.7rem; color:var(--grey-mid); }
+    .sc-rows { display:flex; flex-direction:column; gap:8px; }
+    .sc-row { background:var(--navy-card); border-left:3px solid var(--grey-mid); border-radius:9px; padding:11px 14px; display:flex; align-items:center; gap:12px; }
+    .sc-row.hit { border-left-color:var(--sc-green); }
+    .sc-row.partial { border-left-color:var(--gold); }
+    .sc-row.miss { border-left-color:var(--red); }
+    .sc-row .q { flex:1; min-width:0; }
+    .sc-row .ql { font-size:.7rem; color:var(--grey-mid); letter-spacing:.5px; text-transform:uppercase; }
+    .sc-row .ql .tag { font-weight:600; }
+    .sc-row .ql .tag.live { color:var(--gold); } .sc-row .ql .tag.locked { color:var(--sc-green); }
+    .sc-row .qd { font-size:.92rem; margin-top:3px; } .sc-row .qd b { color:var(--white); }
+    .sc-row .qd .ok { color:var(--sc-green); } .sc-row .qd .par { color:var(--gold); } .sc-row .qd .no { color:#e8857f; }
+    .sc-row .pts { font-family:'Bebas Neue',sans-serif; font-size:1.9rem; min-width:56px; text-align:right; line-height:1; }
+    .sc-row.hit .pts { color:var(--sc-green); } .sc-row.partial .pts { color:var(--gold); } .sc-row.miss .pts { color:var(--red); }
+    .sc-row .pts small { font-size:.78rem; color:var(--grey-mid); }
+    .sc-out { display:inline-flex; align-items:center; gap:6px; margin-top:6px; font-size:.72rem; padding:2px 9px; border-radius:20px; }
+    .sc-out .dot { width:6px; height:6px; border-radius:50%; }
+    .sc-out.green { color:var(--sc-green); background:var(--sc-green-soft); } .sc-out.green .dot { background:var(--sc-green); }
+    .sc-out.amber { color:var(--gold-light); background:rgba(201,168,76,.12); } .sc-out.amber .dot { background:var(--gold); }
+    .sc-out.red { color:#e8857f; background:var(--sc-red-soft); } .sc-out.red .dot { background:var(--red); }
+    /* ── knockout bracket (two-sided, final in the centre) ───────── */
+    .br-intro { font-size:.8rem; color:var(--grey-light); line-height:1.6; margin-bottom:10px; }
+    .br-scroll { overflow:auto; -webkit-overflow-scrolling:touch; border:1px solid var(--border); border-radius:10px; background:var(--navy); padding:10px 6px; }
+    .br-tree { display:flex; align-items:stretch; min-width:1180px; height:600px; }
+    .bc { display:flex; flex-direction:column; flex:0 0 142px; }
+    .bcen { display:flex; flex-direction:column; flex:0 0 158px; justify-content:center; align-items:center; }
+    .blab { font-family:'Bebas Neue',sans-serif; letter-spacing:1.5px; color:var(--gold); font-size:.85rem; text-align:center; height:20px; }
+    .blab em { font-style:normal; font-family:'Inter',sans-serif; font-size:.58rem; color:var(--grey-mid); margin-left:4px; }
+    .bcw { display:flex; flex-direction:column; justify-content:space-around; flex:1; }
+    .bm { position:relative; display:flex; flex-direction:column; gap:3px; flex:1; justify-content:center; }
+    .bc.L .bm::after { content:""; position:absolute; right:-7px; top:50%; width:7px; height:2px; background:rgba(255,255,255,.13); }
+    .bc.L .bm:nth-child(odd)::before { content:""; position:absolute; right:-7px; top:50%; height:50%; width:2px; background:rgba(255,255,255,.13); }
+    .bc.L .bm:nth-child(even)::before { content:""; position:absolute; right:-7px; bottom:50%; height:50%; width:2px; background:rgba(255,255,255,.13); }
+    .bc.L.sf .bm::after, .bc.L.sf .bm::before { display:none; }
+    .bc.R .bm::after { content:""; position:absolute; left:-7px; top:50%; width:7px; height:2px; background:rgba(255,255,255,.13); }
+    .bc.R .bm:nth-child(odd)::before { content:""; position:absolute; left:-7px; top:50%; height:50%; width:2px; background:rgba(255,255,255,.13); }
+    .bc.R .bm:nth-child(even)::before { content:""; position:absolute; left:-7px; bottom:50%; height:50%; width:2px; background:rgba(255,255,255,.13); }
+    .bc.R.sf .bm::after, .bc.R.sf .bm::before { display:none; }
+    .bs { display:flex; align-items:center; gap:6px; background:var(--navy-card); border:1px solid var(--border); border-radius:5px; padding:5px 7px; cursor:pointer; color:var(--white); font-size:.72rem; min-height:25px; transition:background .12s,border-color .12s; }
+    .bs:hover:not(.tbd):not(.on) { background:var(--navy-light); }
+    .bs.on { background:rgba(201,168,76,.16); border-color:var(--gold); font-weight:600; }
+    .bs.tbd { cursor:default; color:var(--grey-mid); }
+    .bs img { width:18px; border-radius:2px; flex-shrink:0; }
+    .bs i { width:18px; height:12px; border-radius:2px; background:var(--navy-input); flex-shrink:0; display:inline-block; }
+    .bs span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .bm.fin { flex:0 0 auto; width:100%; gap:4px; }
+    .bm.fin .bs { background:var(--navy-card); border-color:rgba(201,168,76,.3); }
+    .trophy { margin-top:14px; text-align:center; }
+    .tcup { font-size:1.8rem; } .tname { font-family:'Bebas Neue',sans-serif; font-size:1.3rem; color:var(--gold); letter-spacing:1px; }
+    .tsub { font-size:.62rem; color:var(--grey-mid); text-transform:uppercase; letter-spacing:1px; }
+    .sc-pend { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+    .sc-pcell { background:var(--navy-input); border-radius:8px; padding:9px 12px; display:flex; justify-content:space-between; align-items:center; gap:8px; }
+    .sc-pcell .t { font-size:.84rem; color:var(--grey-light); min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .sc-pcell .t b { color:var(--white); }
+    .sc-pcell .m { font-family:'Bebas Neue',sans-serif; color:var(--grey-mid); flex-shrink:0; }
+    @media(max-width:560px){ .sc-pend{grid-template-columns:1fr} .sc-hero-tot .big{font-size:3.6rem} }
     .q-head { display: flex; align-items: flex-start; gap: 10px; }
     .q-num { font-family: 'Bebas Neue', sans-serif; font-size: 1.05rem; color: var(--gold); min-width: 20px; line-height: 1.35; flex-shrink: 0; }
     .q-label { flex: 1; font-weight: 600; font-size: 0.9rem; line-height: 1.35; }
@@ -637,8 +698,8 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
-<script src="/i18n.js?v=2"></script>
-<script src="/scoring.js?v=1"></script>
+<script src="/i18n.js?v=3"></script>
+<script src="/scoring.js?v=3"></script>
 <script>
 // ═══════════════════════════════════════ CONFIG
 const LOCK_TIME  = new Date('2026-06-11T19:00:00Z');
@@ -672,6 +733,8 @@ let teamsData   = {};
 let rostersData = {};
 let formData     = {}; // last-10-games per team — optional, loads gracefully
 let scheduleData = {}; // per-group fixtures — optional, loads gracefully
+let bracketStruct = {}; // knockout tree (data/bracket.json) — { open, rounds, matches }
+let bracketState  = {}; // populated R32 teams (data/bracket_state.json) — { r32_teams, ... }
 let cinderellaSet = new Set();
 let VIEW_MODE     = false; // true when rendering a shared, read-only entry
 let hideEntry     = false; // user opted to hide their entry from the public leaderboard
@@ -697,6 +760,7 @@ const answers = {
   q20_team:'', q20_player:'',   // Golden Glove
   q21_team:'', q21_player:'',   // Score in final
   q22_team:'', q22_player:'',   // Most goals after group stage
+  bracket: {},                  // knockout picks: { "<matchId>": "<winning team>" }
 };
 
 // ═══════════════════════════════════════ INIT
@@ -710,6 +774,8 @@ async function init() {
     // form.json and schedule.json are optional — load gracefully if present
     formData     = await fetch('/data/form.json').then(r => r.ok ? r.json() : {}).catch(() => ({}));
     scheduleData = await fetch('/data/schedule.json').then(r => r.ok ? r.json() : {}).catch(() => ({}));
+    bracketStruct = await fetch('/data/bracket.json').then(r => r.ok ? r.json() : {}).catch(() => ({}));
+    bracketState  = await fetch('/data/bracket_state.json').then(r => r.ok ? r.json() : {}).catch(() => ({}));
   } catch(e) {
     document.getElementById('app').innerHTML = `
       <div class="loading" style="grid-column:1/-1">
@@ -752,14 +818,17 @@ async function init() {
 
   setupLangToggle();
   applyChrome();
-  renderPage();
-  setupDrawer();
+  if (VIEW_MODE) {
+    renderScorecard();              // scored entry view (falls back to picks if nothing graded)
+  } else {
+    renderPage();
+    setupDrawer();
+  }
   startCountdown(); // keep the live timer on read-only /p/ pages too
-  if (VIEW_MODE) annotateScoring();   // overlay live scoring on a shared entry
 
   // Re-render the whole form on language switch. Builders are answers-aware,
   // so in-progress picks (selects, drag order, bands, players) are preserved.
-  onLangChange(() => { applyChrome(); renderPage(); setupDrawer(); if (VIEW_MODE) annotateScoring(); });
+  onLangChange(() => { applyChrome(); if (VIEW_MODE) renderScorecard(); else { renderPage(); setupDrawer(); } });
 }
 
 // ═══════════════════════════════════════ LANGUAGE CHROME
@@ -855,7 +924,9 @@ function b64decode(b64) { return decodeURIComponent(escape(atob(b64))); }
 function buildSharePayload() {
   const a = {};
   SHARE_Q_KEYS.forEach(k => { if (answers[k]) a[k] = answers[k]; });
-  return { v: 1, n: answers.name, c: answers.country, l: getLang(), q8: answers.q8, a };
+  const p = { v: 1, n: answers.name, c: answers.country, l: getLang(), q8: answers.q8, a };
+  if (answers.bracket && Object.keys(answers.bracket).length) p.b = answers.bracket;
+  return p;
 }
 
 function buildShareUrl() {
@@ -899,6 +970,7 @@ function applySharedAnswers(p) {
   answers.country = p.c || '';
   answers.q8      = p.q8 || {};
   SHARE_Q_KEYS.forEach(k => { answers[k] = (p.a && p.a[k]) || ''; });
+  answers.bracket = p.b || (p.a && p.a.bracket) || {};
   if (p.l && p.l !== getLang()) setLangSilent(p.l);
 }
 
@@ -1655,95 +1727,291 @@ async function loadScoreData() {
     const gt = ls.goal_timing || {};
     setLive('q14', gt.added_time_goals, true);
     setLive('q16', gt.fastest_goal_seconds, true);
-    if (ls.top_scorers && ls.top_scorers[0]) setLive('q19_player', ls.top_scorers[0].player, true);
+    if (ls.top_scorers && ls.top_scorers[0]) setLive('q18_player', ls.top_scorers[0].player, true); // Golden Boot = q18
   }
   if (ball && ball.q15_longest_range_m != null) setLive('q15', ball.q15_longest_range_m, true);
-  SCORE_DATA = { key, live };
+  SCORE_DATA = { key, live, ls };
   return SCORE_DATA;
 }
 
-// Correct-answer text for a question id (as stored in the answer key).
-function answerText(qid, key) {
-  if (qid === 'q3') return [key.q3a, key.q3b].filter(Boolean).map(teamLabel).join(' + ') || '—';
-  if (qid === 'q8') return t('q8'); // group order — points shown, detail per-group below
-  if (qid === 'q10') return key.q10 || '—';
-  if (BANDS[qid]) {
-    const v = key[qid];
-    if (v == null) return '—';
-    const idx = (typeof bandIndexFor === 'function') ? bandIndexFor(Number(String(v).replace(/[ms]/gi, '')), BANDS[qid].opts) : -1;
-    const band = idx >= 0 ? BANDS[qid].opts[idx] : '';
-    return band ? `${v} (${band})` : String(v);
-  }
-  if (qid.endsWith('_player')) return key[qid] || '—';
-  return key[qid] ? teamLabel(key[qid]) : '—';      // team picks
+// Outlook for a still-live question: is the current score likely to hold? Honest,
+// projection-based where the stat is projectable; directional where it's monotonic.
+const TOTAL_GROUP_MATCHES = 72, TOTAL_MATCHES = 104;
+function bandOutlook(qid, projected, note) {
+  const opts = BANDS[qid].opts;
+  const pi = bandIndexFor(projected, opts), ui = opts.indexOf(answers[qid]);
+  if (pi < 0 || ui < 0) return { cls: 'amber', label: note };
+  const d = Math.abs(pi - ui);
+  const verdict = d === 0 ? t('sc_hold_ok') : (d === 1 ? t('sc_hold_maybe') : t('sc_hold_no'));
+  return { cls: d === 0 ? 'green' : (d === 1 ? 'amber' : 'red'), label: `${note} · ${verdict}` };
+}
+function scOutlook(qid) {
+  const ls = SCORE_DATA && SCORE_DATA.ls; if (!ls) return null;
+  const played = ls.matches_played || 0;
+  const gt = ls.goal_timing || {};
+  if (qid === 'q9' && played) { const p = Math.round(ls.group_goals_total / played * TOTAL_GROUP_MATCHES); return bandOutlook('q9', p, `${t('sc_trend')} ~${p}`); }
+  if (qid === 'q14' && played && gt.added_time_goals != null) { const p = Math.round(gt.added_time_goals / played * TOTAL_MATCHES); return bandOutlook('q14', p, `${t('sc_onpace')} ~${p} ${t('sc_byfinal')}`); }
+  if (qid === 'q16') return { cls: 'amber', label: t('sc_faster') };
+  if (qid === 'q15') return { cls: 'amber', label: t('sc_longer') };
+  if (qid === 'q8') return { cls: 'amber', label: `${TOTAL_GROUP_MATCHES - played} ${t('sc_games_left')}` };
+  if (qid === 'q18_player') return { cls: 'amber', label: t('sc_boot_open') };
+  return null;
 }
 
-function resultEl(qid, bd, isLive) {
+// Short labels + display order for the scorecard. Order = how rows are listed.
+const SC_LABELS = {
+  q9:'Group-stage goals', q10:'Hat-trick in group stage?', q8:'Group order · 12 groups',
+  q15:'Longest-range goal', q16:'Fastest goal', q14:'Added-time goals',
+  q18_player:'Golden Boot · top scorer', q19_player:'Young Player', q17_player:'Golden Ball',
+  q20_player:'Golden Glove', q11:'Total tournament goals', q12:'Penalty shootouts',
+  q13:'Extra-time matches', q1:'Champion', q2:'Runner-up', q3:'Other two semifinalists',
+  q4:'Best-finishing host', q5:'Top African team', q6:'Top Asian team', q7:'Cinderella (3rd place)',
+  q21_player:'Scores in the final', q22_player:'Most goals after groups',
+};
+const SC_UNIT = { q15:'m', q16:'s' };
+// Bilingual short label per question: q8 has its own short key; the rest reuse the
+// already-translated form question labels (q17_player → q17, etc.).
+function scLabel(qid) { return qid === 'q8' ? t('sc_q8') : t(qid.replace('_player', '')); }
+
+// This entry's pick, formatted for display.
+function scPick(qid) {
+  if (qid === 'q3') return [answers.q3a, answers.q3b].filter(Boolean).map(teamLabel).join(' + ') || '—';
+  if (qid === 'q8') return null;
+  if (BANDS[qid]) return answers[qid] || '—';
+  if (qid === 'q10') return answers.q10 || '—';
+  const pk = qid.endsWith('_player') ? answers[qid] : (answers[qid] && teamLabel(answers[qid]));
+  return pk || '—';
+}
+// The real / current answer, short form.
+function scActual(qid, key) {
+  if (qid === 'q3') return [key.q3a, key.q3b].filter(Boolean).map(teamLabel).join(' + ') || '—';
+  if (qid === 'q10') return key.q10 || '—';
+  if (BANDS[qid]) return key[qid] != null ? `${key[qid]}${SC_UNIT[qid] || ''}` : '—';
+  if (qid.endsWith('_player')) return key[qid] || '—';
+  return key[qid] ? teamLabel(key[qid]) : '—';
+}
+function scStatus(bd) { return bd.pts >= bd.max ? 'hit' : (bd.pts > 0 ? 'partial' : 'miss'); }
+
+// Build one scored row.
+function scRow(qid, bd, key, isLive) {
+  const st = scStatus(bd);
+  const icon = st === 'hit' ? '✓' : (st === 'partial' ? '≈' : '✗');
+  const dcl = st === 'hit' ? 'ok' : (st === 'partial' ? 'par' : 'no');
+  const tag = isLive ? `<span class="tag live">· ${t('sc_live')}</span>` : `<span class="tag locked">· ${t('sc_locked')}</span>`;
+  let detail;
+  if (qid === 'q8') {
+    detail = t('sc_q8_detail');
+  } else {
+    detail = `${t('sc_picked')} <b>${escapeHtml(scPick(qid))}</b> · <span class="${dcl}">${escapeHtml(scActual(qid, key))} ${icon}</span>`;
+  }
+  const ptsTxt = bd.pts > 0 ? `+${Math.round(bd.pts)}` : '0';
+  const out = isLive ? scOutlook(qid) : null;
+  const outHtml = out ? `<div class="sc-out ${out.cls}"><span class="dot"></span>${escapeHtml(out.label)}</div>` : '';
   const el = document.createElement('div');
-  el.className = 'q-result';
-  if (!bd || !bd.graded) {
-    el.classList.add('pending');
-    el.innerHTML = `<span class="qr-icon">·</span><span class="qr-ans">${t('not_decided') || 'Not decided yet'}</span>`;
-    return el;
-  }
-  if (bd.skipped) {
-    el.classList.add('pending');
-    el.innerHTML = `<span class="qr-icon">*</span><span class="qr-ans">${t('q8_skipped') || 'Not counted — group order left at default; points redistributed.'}</span>`;
-    return el;
-  }
-  const cls = bd.pts >= bd.max ? 'hit' : (bd.pts > 0 ? 'partial' : 'miss');
-  const icon = cls === 'hit' ? '✓' : (cls === 'partial' ? '≈' : '✗');
-  el.classList.add(cls);
-  const { key } = SCORE_DATA;
-  const chip = isLive ? '<span class="qr-chip live">Live</span>' : '<span class="qr-chip locked">Locked</span>';
+  el.className = `sc-row ${st}`;
   el.innerHTML =
-    `<span class="qr-icon">${icon}</span>` +
-    `<span class="qr-ans">${t('actual') || 'Actual'}: <b>${escapeHtml(answerText(qid, key))}</b></span>` +
-    chip +
-    `<span class="qr-pts">${Math.round(bd.pts * 10) / 10}/${bd.max} ${t('pts')}</span>`;
+    `<div class="q"><div class="ql">${scLabel(qid).toUpperCase()} ${tag}</div>` +
+    `<div class="qd">${detail}</div>${outHtml}</div>` +
+    `<div class="pts">${ptsTxt}<small>/${bd.max}</small></div>`;
   return el;
 }
 
-async function annotateScoring() {
+// Compute this entry's rank by scoring every public entry the same way.
+async function computeRank(key, myTotal) {
+  try {
+    const r = await fetch('/api/results'); const d = await r.json();
+    if (!d || !d.ok || !d.submissions) return null;
+    let better = 0;
+    d.submissions.forEach(s => {
+      const dg = isDefaultGroupOrder(s.answers.q8, groupsData);
+      if (scoreEntry(s.answers, key, { defaultGroup: dg }).total > myTotal + 1e-6) better++;
+    });
+    return { rank: better + 1, of: d.submissions.length };
+  } catch { return null; }
+}
+
+async function renderScorecard() {
   if (!VIEW_MODE) return;
   const { key, live } = await loadScoreData();
-  if (!keyHasData({ answers: key })) return;       // nothing decided yet
+  if (!keyHasData({ answers: key })) { renderPage(); setupDrawer(); return; } // pre-tournament: plain picks
   const dg = (typeof isDefaultGroupOrder === 'function') && isDefaultGroupOrder(answers.q8, groupsData);
   const res = scoreEntry(answers, key, { defaultGroup: dg });
-  const bdKeyFor = (qid) => (qid === 'q3a' || qid === 'q3b') ? 'q3' : qid;
+  const bdKeyFor = (q) => (q === 'q3a' || q === 'q3b') ? 'q3' : q;
 
-  // score header into the view banner
-  const banner = document.querySelector('.view-banner');
-  if (banner && !banner.querySelector('.score-head')) {
-    const gradedCount = Object.values(res.breakdown).filter(b => b.graded && !b.skipped).length;
-    const sh = document.createElement('div');
-    sh.className = 'score-head';
-    sh.innerHTML =
-      `<div class="sh-item"><div class="sh-tot">${Math.round(res.total)}</div><div class="l">${t('points') || 'points so far'}</div></div>` +
-      `<div class="sh-item"><div class="v">${Math.round(res.lockedGroup)}</div><div class="l">${t('group') || 'group'}</div></div>` +
-      `<div class="sh-item"><div class="v">${Math.round(res.lockedKO)}</div><div class="l">${t('knockout') || 'knockout'}</div></div>` +
-      `<div class="sh-item"><div class="v">${Math.round(res.pendingMax)}</div><div class="l">${t('still_open') || 'still in play'}</div></div>` +
-      (dg ? `<div class="sh-item"><div class="v" style="color:var(--gold)">×${res.rebalanceScale.toFixed(2)}</div><div class="l">${t('rebalanced') || 'rebalanced'}</div></div>` : '');
-    banner.appendChild(sh);
+  const order = Object.keys(SC_LABELS);
+  const scored = order.filter(q => { const b = res.breakdown[q]; return b && b.graded && !b.skipped; })
+    .sort((a, b) => {
+      const rank = s => s === 'hit' ? 0 : s === 'partial' ? 1 : 2;
+      const ra = rank(scStatus(res.breakdown[a])), rb = rank(scStatus(res.breakdown[b]));
+      return ra - rb || res.breakdown[b].max - res.breakdown[a].max;
+    });
+  const pending = order.filter(q => { const b = res.breakdown[q]; return b && !b.graded && !b.skipped; })
+    .sort((a, b) => res.breakdown[b].max - res.breakdown[a].max);
+
+  const total = Math.round(res.total), pend = Math.round(res.pendingMax);
+  const earnW = Math.max(2, Math.round(total / FULL_MAX * 100));
+
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+  const wrap = document.createElement('div');
+  wrap.className = 'sc-wrap';
+  wrap.innerHTML =
+    `<div class="sc-id"><span class="lbl">${t('sc_entry')}</span><span class="name">${escapeHtml(displayName(answers.name))}</span>` +
+      `<button class="btn-make-own own" id="sc-makeown">${t('make_own')}</button></div>` +
+    `<div class="sc-hero">` +
+      `<div class="sc-hero-tot"><div class="big">${total}</div><div class="cap">${t('sc_points')}</div><div class="rank" id="sc-rank"></div></div>` +
+      `<div class="sc-hero-r">` +
+        `<div class="sc-barlbl"><span>${t('sc_earned')} ${total}</span><span>${t('sc_inplay')} ${pend}</span></div>` +
+        `<div class="sc-bar"><div class="e" style="width:${earnW}%"></div></div>` +
+        `<div class="sc-mini">` +
+          `<div><div class="v">${Math.round(res.lockedGroup)}</div><div class="k">${t('sc_group')}</div></div>` +
+          `<div><div class="v">${Math.round(res.lockedKO)}</div><div class="k">${t('sc_ko')}</div></div>` +
+          `<div><div class="v">${scored.length}<small>/22</small></div><div class="k">${t('sc_scored_n')}</div></div>` +
+        `</div></div></div>` +
+    `<div class="sc-sec"><span class="h">${t('sc_scored_head')}</span><span class="ln"></span></div>` +
+    `<div class="sc-rows" id="sc-scored"></div>` +
+    `<div class="sc-sec"><span class="h" style="color:var(--grey-mid)">${t('sc_pending_head')}</span><span class="ln"></span>` +
+      `<span class="meta">${pend} ${t('sc_pts_inplay')}</span></div>` +
+    `<div class="sc-pend" id="sc-pending"></div>`;
+  app.appendChild(wrap);
+
+  const sc = wrap.querySelector('#sc-scored');
+  scored.forEach(q => sc.appendChild(scRow(q, res.breakdown[q], key, live.has(bdKeyFor(q)))));
+  if (!scored.length) sc.innerHTML = `<div class="sc-row"><div class="q"><div class="qd" style="color:var(--grey-mid)">${t('sc_nothing')}</div></div></div>`;
+
+  const pe = wrap.querySelector('#sc-pending');
+  pending.forEach(q => {
+    const cell = document.createElement('div');
+    cell.className = 'sc-pcell';
+    cell.innerHTML = `<span class="t">${scLabel(q)} · <b>${escapeHtml(scPick(q))}</b></span><span class="m">${res.breakdown[q].max}</span>`;
+    pe.appendChild(cell);
+  });
+
+  wrap.querySelector('#sc-makeown').addEventListener('click', startOwnEntry);
+  computeRank(key, res.total).then(r => {
+    if (!r) return;
+    const rankTxt = getLang() === 'pt' ? `${r.rank}º ${t('sc_of')} ${r.of}` : `${ordinal(r.rank)} ${t('sc_of')} ${r.of}`;
+    wrap.querySelector('#sc-rank').textContent = rankTxt;
+  });
+}
+
+function ordinal(n) { const s = ['th','st','nd','rd'], v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
+
+// ═══════════════════════════════════════ KNOCKOUT BRACKET PICKER
+// The two competing teams for a match (null where not yet known).
+function brMatchTeams(mid) {
+  const m = bracketStruct.matches[mid];
+  if (!m) return [null, null];
+  if (m.round === 'R32') {
+    const r = (bracketState.r32_teams || {})[mid] || {};
+    return [r.s1 || null, r.s2 || null];
   }
+  const w = (slot) => (slot.t === 'W' && slot.m) ? (answers.bracket[slot.m] || null) : null;
+  return [w(m.s1), w(m.s2)];
+}
+// Placeholder text for a slot whose team isn't known yet.
+function brSlotLabel(slot) {
+  if (slot.t === 'W' && slot.m) return `Winner of M${slot.m}`;
+  if (slot.t === 'RU') return `Runner-up ${slot.g}`;
+  if (slot.t === 'W')  return `Winner ${slot.g}`;
+  if (slot.t === '3rd') return `3rd place`;
+  return 'TBD';
+}
+// After any pick, clear downstream picks that are no longer valid (ascending pass:
+// later matches depend only on earlier ones, so one forward sweep settles it).
+function brCascade() {
+  Object.keys(bracketStruct.matches).map(Number).sort((a, b) => a - b).forEach(n => {
+    const mid = String(n), pick = answers.bracket[mid];
+    if (!pick) return;
+    const [t1, t2] = brMatchTeams(mid);
+    if (pick !== t1 && pick !== t2) delete answers.bracket[mid];
+  });
+}
+// Two-sided layout (final in the centre), top→bottom order per column so feeders
+// line up. Derived from the fixed bracket.json tree; stable for WC2026.
+const BR_LEFT = [
+  { rk: 'R32', label: 'R32',  ids: [74, 77, 73, 75, 83, 84, 81, 82] },
+  { rk: 'R16', label: 'R16',  ids: [89, 90, 93, 94] },
+  { rk: 'QF',  label: 'QF',   ids: [97, 98] },
+  { rk: 'SF',  label: 'Semi', ids: [101] },
+];
+const BR_RIGHT = [
+  { rk: 'SF',  label: 'Semi', ids: [102] },
+  { rk: 'QF',  label: 'QF',   ids: [99, 100] },
+  { rk: 'R16', label: 'R16',  ids: [91, 92, 95, 96] },
+  { rk: 'R32', label: 'R32',  ids: [76, 78, 79, 80, 86, 88, 85, 87] },
+];
+const BR_PTS = (() => { const o = {}; (bracketStruct.rounds || []).forEach(r => o[r.key] = r.points); return o; })();
 
-  // annotate each tagged card (idempotent: clear prior overlays first)
-  document.querySelectorAll('.q-result').forEach(e => e.remove());
-  // player cards carry their own qid
-  document.querySelectorAll('.pcard[data-qid]').forEach(card => {
-    const qid = card.dataset.qid;
-    card.appendChild(resultEl(qid, res.breakdown[bdKeyFor(qid)], live.has(qid)));
+function brSideHtml(mid, team) {
+  const tm = team && teamsData[team];
+  const flag = tm && flagUrl(tm.iso2);
+  const on = team && answers.bracket[mid] === team ? ' on' : '';
+  const tbd = team ? '' : ' tbd';
+  return `<div class="bs${on}${tbd}" data-m="${mid}" data-t="${team ? escapeAttr(team) : ''}">` +
+         (flag ? `<img src="${flag}" alt="">` : '<i></i>') +
+         `<span>${team ? teamLabel(team) : t('br_tbd')}</span></div>`;
+}
+function brColEl(c, side) {
+  const el = document.createElement('div');
+  el.className = `bc ${side}${c.rk === 'SF' ? ' sf' : ''}`;
+  el.innerHTML = `<div class="blab">${c.label}<em>+${BR_PTS[c.rk] || ''}</em></div>`;
+  const wrap = document.createElement('div');
+  wrap.className = 'bcw';
+  c.ids.forEach(n => {
+    const mid = String(n), [t1, t2] = brMatchTeams(mid);
+    const mt = document.createElement('div');
+    mt.className = 'bm';
+    mt.innerHTML = brSideHtml(mid, t1) + brSideHtml(mid, t2);
+    wrap.appendChild(mt);
   });
-  // group block (q8)
-  const gq = document.querySelector('[data-qid="q8"]');
-  if (gq) gq.appendChild(resultEl('q8', res.breakdown.q8, live.has('q8')));
-  // standard q-cards: find the inner builder's data-qid
-  document.querySelectorAll('.q-card').forEach(card => {
-    const tagged = card.querySelector('[data-qid]');
-    if (!tagged) return;
-    const qid = tagged.dataset.qid;
-    card.appendChild(resultEl(qid, res.breakdown[bdKeyFor(qid)], live.has(bdKeyFor(qid))));
-  });
+  el.appendChild(wrap);
+  return el;
+}
+function renderBracketTree(tree) {
+  tree.innerHTML = '';
+  BR_LEFT.forEach(c => tree.appendChild(brColEl(c, 'L')));
+  const [fa, fb] = brMatchTeams('104'), champ = answers.bracket['104'];
+  const picked = Object.keys(answers.bracket).length;
+  const cen = document.createElement('div');
+  cen.className = 'bcen';
+  cen.innerHTML =
+    `<div class="blab">${t('br_final')}<em>+${BR_PTS.final || 20}</em></div>` +
+    `<div class="bm fin">${brSideHtml('104', fa)}${brSideHtml('104', fb)}</div>` +
+    `<div class="trophy">` +
+      (champ ? `<div class="tcup">🏆</div><div class="tname">${teamLabel(champ)}</div><div class="tsub">${t('sc_champion')}</div>`
+             : `<div class="tsub">${picked} / 31 ${t('br_picked')}</div>`) +
+    `</div>`;
+  tree.appendChild(cen);
+  BR_RIGHT.forEach(c => tree.appendChild(brColEl(c, 'R')));
+}
+function buildBracketSection() {
+  const sec = makeSection('', t('sec_bracket') || 'Knockout bracket', 'knockout');
+  const body = sec.querySelector('.section-body');
+  const intro = document.createElement('p');
+  intro.className = 'br-intro';
+  intro.textContent = t('bracket_intro') ||
+    'Optional bonus: tap a team to advance them through the bracket — winners flow to the centre. Points grow each round (Round of 32 → final). Scroll sideways to see it all.';
+  body.appendChild(intro);
+  const scroll = document.createElement('div');
+  scroll.className = 'br-scroll';
+  const tree = document.createElement('div');
+  tree.className = 'br-tree';
+  scroll.appendChild(tree);
+  body.appendChild(scroll);
+  renderBracketTree(tree);
+  if (!VIEW_MODE) {
+    tree.addEventListener('click', (e) => {
+      const cell = e.target.closest('.bs');
+      if (!cell || cell.classList.contains('tbd')) return;
+      const mid = cell.dataset.m, team = cell.dataset.t;
+      answers.bracket[mid] = (answers.bracket[mid] === team) ? undefined : team;
+      if (!answers.bracket[mid]) delete answers.bracket[mid];
+      brCascade();
+      renderBracketTree(tree);
+    });
+  }
+  return sec;
 }
 
 // ═══════════════════════════════════════ PAGE RENDER
@@ -1871,6 +2139,11 @@ function renderPage() {
   pgrid.appendChild(buildPlayerCard(22, t('q22'), 6,  'q22_team', 'q22_player', '', t('q22_sub')));
   bodyE.appendChild(pgrid);
   formMain.appendChild(secE);
+
+  // ── SECTION F: KNOCKOUT BRACKET (only once intake is open) ────
+  if (bracketStruct && bracketStruct.open && bracketStruct.matches) {
+    formMain.appendChild(buildBracketSection());
+  }
 
   // ── SUBMIT (edit mode only) ───────────────────────────────────
   if (!VIEW_MODE) {
