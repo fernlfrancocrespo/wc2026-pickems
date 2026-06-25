@@ -1,13 +1,13 @@
 {
-  "updated": "2026-06-25T11:06:44+00:00",
+  "updated": "2026-06-25T20:13:35+00:00",
   "provisional": true,
   "group_stage_complete": false,
   "qualifying_third_groups": [
+    "A",
     "B",
     "C",
     "D",
     "F",
-    "G",
     "H",
     "J",
     "L"
@@ -15,7 +15,7 @@
   "allocation_found": true,
   "r32_teams": {
     "73": {
-      "s1": "South Korea",
+      "s1": "South Africa",
       "s2": "Canada"
     },
     "74": {
@@ -44,7 +44,7 @@
     },
     "80": {
       "s1": "England",
-      "s2": "Algeria"
+      "s2": "Cape Verde"
     },
     "81": {
       "s1": "United States",
@@ -52,7 +52,7 @@
     },
     "82": {
       "s1": "Egypt",
-      "s2": "Cape Verde"
+      "s2": "South Korea"
     },
     "83": {
       "s1": "Portugal",
@@ -64,7 +64,7 @@
     },
     "85": {
       "s1": "Switzerland",
-      "s2": "Belgium"
+      "s2": "Algeria"
     },
     "86": {
       "s1": "Argentina",

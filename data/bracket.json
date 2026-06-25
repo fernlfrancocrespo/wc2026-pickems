@@ -1,6 +1,6 @@
 {
   "note": "WC2026 knockout bracket STRUCTURE (fixed, locks June 27). Slots reference group positions (W=winner, RU=runner-up, 3rd=one of the listed groups' third-placed qualifiers); real teams populate at lock from final standings + FIFA's third-place assignment table. Round/win wiring is by FIFA match number: R32=73-88, R16=89-96, QF=97-100, SF=101-102, third-place=103, final=104. Points-per-round confirmed: R32 3 / R16 3 / QF 3 / SF 2 / final 2 = 90 bonus (front-loaded; SF/final kept small because q1/q2/q3 already reward champion/runner-up/semifinalists).",
-  "open": false,
+  "open": true,
   "teams": {},
   "rounds": [
     { "key": "R32",   "label": "Round of 32",    "points": 3, "matches": [73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88] },

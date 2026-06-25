@@ -1,8 +1,8 @@
 {
-  "updated": "2026-06-24T21:12:55+00:00",
+  "updated": "2026-06-25T20:13:33+00:00",
   "source": "wikipedia",
-  "matches_played": 50,
-  "group_goals_total": 148,
+  "matches_played": 54,
+  "group_goals_total": 161,
   "top_scorers": [
     {
       "player": "Lionel Messi",
@@ -20,8 +20,18 @@
       "goals": 4
     },
     {
+      "player": "Vinícius Júnior",
+      "team": "Brazil",
+      "goals": 4
+    },
+    {
       "player": "Deniz Undav",
       "team": "Germany",
+      "goals": 3
+    },
+    {
+      "player": "Ismael Saibari",
+      "team": "Morocco",
       "goals": 3
     },
     {
@@ -32,6 +42,11 @@
     {
       "player": "Jonathan David",
       "team": "Canada",
+      "goals": 3
+    },
+    {
+      "player": "Matheus Cunha",
+      "team": "Brazil",
       "goals": 3
     },
     {
@@ -63,21 +78,6 @@
       "player": "Cyle Larin",
       "team": "Canada",
       "goals": 2
-    },
-    {
-      "player": "Daichi Kamada",
-      "team": "Japan",
-      "goals": 2
-    },
-    {
-      "player": "Daniel Muñoz",
-      "team": "Colombia",
-      "goals": 2
-    },
-    {
-      "player": "Elijah Just",
-      "team": "New Zealand",
-      "goals": 2
     }
   ],
   "hat_trick_in_group_stage": true,
@@ -94,63 +94,63 @@
     }
   ],
   "goal_timing": {
-    "goals_counted": 148,
+    "goals_counted": 161,
     "fastest_goal_seconds": 64.0,
-    "added_time_goals": 15
+    "added_time_goals": 16
   },
   "group_stage_complete": false,
   "groups": {
     "A": {
       "provisional_order": [
         "Mexico",
+        "South Africa",
         "South Korea",
-        "Czechia",
-        "South Africa"
+        "Czechia"
       ],
-      "matches_played": 4,
-      "complete": false,
+      "matches_played": 6,
+      "complete": true,
       "standings": {
         "Mexico": {
-          "pld": 2,
-          "w": 2,
+          "pld": 3,
+          "w": 3,
           "d": 0,
           "l": 0,
-          "gf": 3,
+          "gf": 6,
           "ga": 0,
-          "gd": 3,
-          "pts": 6,
+          "gd": 6,
+          "pts": 9,
           "pos": 1
         },
-        "South Korea": {
-          "pld": 2,
+        "South Africa": {
+          "pld": 3,
           "w": 1,
-          "d": 0,
-          "l": 1,
-          "gf": 2,
-          "ga": 2,
-          "gd": 0,
-          "pts": 3,
-          "pos": 2
-        },
-        "Czechia": {
-          "pld": 2,
-          "w": 0,
           "d": 1,
           "l": 1,
           "gf": 2,
           "ga": 3,
           "gd": 1,
-          "pts": 1,
+          "pts": 4,
+          "pos": 2
+        },
+        "South Korea": {
+          "pld": 3,
+          "w": 1,
+          "d": 0,
+          "l": 2,
+          "gf": 2,
+          "ga": 3,
+          "gd": 1,
+          "pts": 3,
           "pos": 3
         },
-        "South Africa": {
-          "pld": 2,
+        "Czechia": {
+          "pld": 3,
           "w": 0,
           "d": 1,
-          "l": 1,
-          "gf": 1,
-          "ga": 3,
-          "gd": 2,
+          "l": 2,
+          "gf": 2,
+          "ga": 6,
+          "gd": 4,
           "pts": 1,
           "pos": 4
         }
@@ -219,50 +219,50 @@
         "Scotland",
         "Haiti"
       ],
-      "matches_played": 4,
-      "complete": false,
+      "matches_played": 6,
+      "complete": true,
       "standings": {
         "Brazil": {
-          "pld": 2,
-          "w": 1,
+          "pld": 3,
+          "w": 2,
           "d": 1,
           "l": 0,
-          "gf": 4,
+          "gf": 7,
           "ga": 1,
-          "gd": 3,
-          "pts": 4,
+          "gd": 6,
+          "pts": 7,
           "pos": 1
         },
         "Morocco": {
-          "pld": 2,
-          "w": 1,
+          "pld": 3,
+          "w": 2,
           "d": 1,
           "l": 0,
-          "gf": 2,
-          "ga": 1,
-          "gd": 1,
-          "pts": 4,
+          "gf": 6,
+          "ga": 3,
+          "gd": 3,
+          "pts": 7,
           "pos": 2
         },
         "Scotland": {
-          "pld": 2,
+          "pld": 3,
           "w": 1,
           "d": 0,
-          "l": 1,
+          "l": 2,
           "gf": 1,
-          "ga": 1,
-          "gd": 0,
+          "ga": 4,
+          "gd": 3,
           "pts": 3,
           "pos": 3
         },
         "Haiti": {
-          "pld": 2,
+          "pld": 3,
           "w": 0,
           "d": 0,
-          "l": 2,
-          "gf": 0,
-          "ga": 4,
-          "gd": 4,
+          "l": 3,
+          "gf": 2,
+          "ga": 8,
+          "gd": 6,
           "pts": 0,
           "pos": 4
         }
@@ -781,7 +781,7 @@
     },
     "espn_cross_check": {
       "ok": true,
-      "matches_compared": 50,
+      "matches_compared": 54,
       "issues": []
     }
   }
