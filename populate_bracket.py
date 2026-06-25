@@ -13,10 +13,79 @@ Writes: data/bracket_state.json — R32 slot teams + qualifying third-place grou
 """
 import argparse
 import json
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 
 DATA = Path(__file__).parent / "data"
+KO_URL = "https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_knockout_stage"
+SCORE_RE = re.compile(r"(\d+)\s*[–\-:]\s*(\d+)")
+
+
+def scrape_knockout_results(bracket, r32_teams, all_teams):
+    """Completed knockout match winners from Wikipedia → {match#: winner}. Maps by
+    team-set, resolving round by round (R32 teams known; later rounds = prior winners).
+    Penalty wins read from a '(x–y)' shootout score when regulation is level. Anything
+    ambiguous is left ungraded + flagged. Returns ({match#: winner}, [warnings])."""
+    try:
+        import requests
+        from bs4 import BeautifulSoup
+        from scrape import HEADERS, normalize
+    except Exception as e:
+        return {}, [f"knockout scrape skipped: {e}"]
+
+    def resolve(raw):
+        n = normalize(re.sub(r"\(.*?\)", "", raw).strip())
+        if n in all_teams:
+            return n
+        for t in all_teams:
+            if t.lower() in raw.lower():
+                return t
+        return None
+
+    by_pair, warnings = {}, []
+    try:
+        soup = BeautifulSoup(requests.get(KO_URL, headers=HEADERS, timeout=30).text, "html.parser")
+    except Exception as e:
+        return {}, [f"knockout fetch failed: {e}"]
+    for box in soup.select("div.footballbox"):
+        s = box.select_one(".fscore")
+        if not s:
+            continue
+        m = SCORE_RE.search(s.get_text(strip=True))
+        if not m:
+            continue  # not played yet ("Match NN")
+        h = box.select_one(".fhome"); a = box.select_one(".faway")
+        home = resolve(h.get_text(" ", strip=True)) if h else None
+        away = resolve(a.get_text(" ", strip=True)) if a else None
+        if not home or not away:
+            continue
+        hs, as_ = int(m.group(1)), int(m.group(2))
+        if hs > as_:
+            win = home
+        elif as_ > hs:
+            win = away
+        else:  # level after regulation/ET → look for a penalty shootout score
+            pm = re.search(r"\(\s*(\d+)\s*[–\-]\s*(\d+)\s*\)", box.get_text(" ", strip=True))
+            if not pm:
+                warnings.append(f"undetermined winner: {home} {hs}-{as_} {away} (no pen score found)")
+                continue
+            win = home if int(pm.group(1)) > int(pm.group(2)) else away
+        by_pair[frozenset({home, away})] = win
+
+    # resolve match numbers by walking the bracket (ascending: feeders settle first)
+    results = {}
+    for mid in sorted(bracket["matches"], key=int):
+        mm = bracket["matches"][mid]
+        if mm["round"] == "R32":
+            r = r32_teams.get(mid, {}); t1, t2 = r.get("s1"), r.get("s2")
+        else:
+            t1 = results.get(str(mm["s1"].get("m"))); t2 = results.get(str(mm["s2"].get("m")))
+        if t1 and t2:
+            w = by_pair.get(frozenset({t1, t2}))
+            if w:
+                results[mid] = w
+    return results, warnings
 
 
 def load(name):
@@ -78,6 +147,10 @@ def main():
                     t2 = team
         r32_teams[mid] = {"s1": t1, "s2": t2}
 
+    # Knockout results (auto-grades the bracket once games are played; empty until then).
+    all_teams = {t for ts in load("groups.json").values() for t in ts}
+    ko_results, ko_warnings = scrape_knockout_results(bracket, r32_teams, all_teams)
+
     state = {
         "updated": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "provisional": not complete,
@@ -85,7 +158,8 @@ def main():
         "qualifying_third_groups": qualifying,
         "allocation_found": alloc is not None,
         "r32_teams": r32_teams,
-        "results": {},  # match# -> winning team, filled during the knockouts
+        "results": ko_results,           # match# -> winning team (filled as knockouts play)
+        "results_warnings": ko_warnings,
     }
     (DATA / "bracket_state.json").write_text(json.dumps(state, indent=2, ensure_ascii=False), encoding="utf-8")
 
@@ -93,6 +167,7 @@ def main():
     print(f"bracket_state.json written — {'PROVISIONAL' if not complete else 'FINAL'}")
     print(f"  qualifying 3rd-place groups: {', '.join(qualifying)}  (allocation {'OK' if alloc else 'NOT FOUND'})")
     print(f"  R32 matches fully populated: {filled}/16")
+    print(f"  knockout results scraped: {len(ko_results)}" + (f"  ⚠ {len(ko_warnings)} warning(s)" if ko_warnings else ""))
     if args.verbose:
         for mid in sorted(r32_teams, key=int):
             v = r32_teams[mid]
