@@ -26,3 +26,6 @@ data/board.json
 
 # Preview-only results dump (never to prod)
 data/_preview_results.json
+
+# Generated email cards (carry names) — never commit
+out/

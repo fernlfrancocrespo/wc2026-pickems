@@ -88,6 +88,7 @@
     .entry-toggle { display:flex; gap:4px; background:rgba(255,255,255,.05); border-radius:9px; padding:4px; max-width:680px; margin:0 auto 14px; }
     .entry-toggle .etog { flex:1; background:transparent; border:none; color:var(--grey-light); font-family:'Inter',sans-serif; font-weight:700; font-size:.8rem; padding:9px 12px; border-radius:6px; cursor:pointer; transition:background .12s,color .12s; }
     .entry-toggle .etog.on { background:var(--gold); color:var(--navy); }
+    .bracket-note { background:rgba(201,168,76,.10); border:1px solid rgba(201,168,76,.35); border-radius:10px; padding:13px 16px; font-size:.86rem; color:var(--gold-light); line-height:1.5; margin-bottom:16px; }
     .sc-id { display:flex; align-items:center; gap:9px; margin-bottom:14px; }
     .sc-id .lbl { font-size:.7rem; letter-spacing:1.5px; color:var(--grey-mid); text-transform:uppercase; }
     .sc-id .name { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:1px; }
@@ -705,7 +706,14 @@
 <script src="/scoring.js?v=4"></script>
 <script>
 // ═══════════════════════════════════════ CONFIG
-const LOCK_TIME  = new Date('2026-06-11T19:00:00Z');
+const LOCK_TIME  = new Date('2026-06-11T19:00:00Z');   // group-stage picks lock (opening kickoff)
+const BRACKET_LOCK = new Date('2026-06-28T20:00:00Z'); // bracket picks lock (first R32 kickoff) — adjust if needed
+// Second intake window: AFTER group lock, knockout bracket can still be filled — but
+// only once the host opens it (data/bracket.json "open": true). Group picks stay locked.
+function bracketWindow() {
+  return !!(typeof bracketStruct !== 'undefined' && bracketStruct && bracketStruct.open)
+         && Date.now() < BRACKET_LOCK;
+}
 const SUBMIT_URL = '/api/submit';  // Cloudflare Pages Function (same origin)
 const ENTRY_CODE = '';             // set if you enable the ENTRY_CODE secret on the Worker
 
@@ -826,12 +834,13 @@ async function init() {
   } else {
     renderPage();
     setupDrawer();
+    applyBracketWindowLock();       // freeze locked group picks if the bracket window is open
   }
   startCountdown(); // keep the live timer on read-only /p/ pages too
 
   // Re-render the whole form on language switch. Builders are answers-aware,
   // so in-progress picks (selects, drag order, bands, players) are preserved.
-  onLangChange(() => { applyChrome(); if (VIEW_MODE) renderEntry(); else { renderPage(); setupDrawer(); } });
+  onLangChange(() => { applyChrome(); if (VIEW_MODE) renderEntry(); else { renderPage(); setupDrawer(); applyBracketWindowLock(); } });
 }
 
 // ═══════════════════════════════════════ LANGUAGE CHROME
@@ -1884,7 +1893,7 @@ async function renderScorecard() {
   wrap.innerHTML =
     entryToggleHtml() +
     `<div class="sc-id"><span class="lbl">${t('sc_entry')}</span><span class="name">${escapeHtml(displayName(answers.name))}</span>` +
-      `<button class="btn-make-own own" id="sc-makeown">${t('make_own')}</button></div>` +
+      `<button class="btn-make-own own" id="sc-makeown">${bracketWindow() ? t('bracket_cta') : t('make_own')}</button></div>` +
     `<div class="sc-hero">` +
       `<div class="sc-hero-tot"><div class="big">${total}</div><div class="cap">${t('sc_points')}</div><div class="rank" id="sc-rank"></div></div>` +
       `<div class="sc-hero-r">` +
@@ -2027,6 +2036,7 @@ function renderBracketTree(tree) {
 }
 function buildBracketSection() {
   const sec = makeSection('', t('sec_bracket') || 'Knockout bracket', 'knockout');
+  sec.id = 'bracket-sec';
   const body = sec.querySelector('.section-body');
   const intro = document.createElement('p');
   intro.className = 'br-intro';
@@ -2061,6 +2071,14 @@ function renderPage() {
   const formMain = document.createElement('div');
   formMain.className = 'form-main';
 
+  // ── Bracket-window banner: group locked, bracket open ─────────
+  if (!VIEW_MODE && bracketWindow()) {
+    const bn = document.createElement('div');
+    bn.className = 'bracket-note';
+    bn.textContent = answers.q1 ? t('group_locked_note') : t('bracket_new_note');
+    formMain.appendChild(bn);
+  }
+
   // ── VIEW-MODE banner (shared read-only entry) ─────────────────
   if (VIEW_MODE) {
     const tog = document.createElement('div');
@@ -2073,7 +2091,7 @@ function renderPage() {
         <div class="view-banner-name">${displayName(answers.name)}</div>
         <div class="view-banner-sub">${t('locked_view')}</div>
       </div>
-      <button class="btn-make-own" id="btn-make-own">${t('make_own')}</button>`;
+      <button class="btn-make-own" id="btn-make-own">${bracketWindow() ? t('bracket_cta') : t('make_own')}</button>`;
     formMain.appendChild(banner);
     banner.querySelector('#btn-make-own').addEventListener('click', startOwnEntry);
   }
@@ -2242,6 +2260,10 @@ function validate() {
   else if (!answers.email.includes('@')) bad.push(t('err_email'));
   if (!answers.country) missing.push(t('f_country'));
 
+  // Bracket window: group-stage picks are locked (not editable), so only identity
+  // is required — the bracket itself is an optional bonus.
+  if (bracketWindow()) return { bad, missing: [...new Set(missing)] };
+
   [['q1',1],['q2',2],['q3a',3],['q3b',3],['q4',4],['q5',5],['q6',6],['q7',7]]
     .forEach(([k, n]) => { if (!answers[k]) missing.push('Q' + n); });
 
@@ -2365,26 +2387,61 @@ function showShareScreen(url) {
 
 // "Make your own" from a shared view → go to the blank form at the site root.
 function startOwnEntry() {
+  // During the bracket window, editing a shared entry keeps its (locked) group
+  // picks and lets the person add bracket picks in place — no fresh reload.
+  if (VIEW_MODE && bracketWindow()) {
+    VIEW_MODE = false;
+    renderPage();
+    setupDrawer();
+    applyBracketWindowLock();
+    window.scrollTo(0, 0);
+    return;
+  }
   location.href = location.origin + '/';
 }
 
+// In the bracket window, freeze everything except identity + the bracket section,
+// so locked group/prop/player picks can't change but the bracket stays editable.
+function applyBracketWindowLock() {
+  if (VIEW_MODE || !bracketWindow()) return;
+  document.querySelectorAll('.section-card').forEach(card => {
+    if (card.id === 'bracket-sec') return;          // bracket stays editable
+    if (card.querySelector('.identity-grid')) return; // identity stays editable + bright
+    card.querySelectorAll('select, input, button, .group-team-item, .yesno-label, .band-pill, .pcard')
+      .forEach(el => { if ('disabled' in el) el.disabled = true; el.style.pointerEvents = 'none'; });
+    card.style.opacity = '0.62';
+  });
+}
+
 // ═══════════════════════════════════════ COUNTDOWN
+function fmtCountdown(diff) {
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000)  / 60000);
+  const s = Math.floor((diff % 60000)    / 1000);
+  return `${d}d ${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
+}
 function startCountdown() {
   const el = document.getElementById('countdown');
   function tick() {
     const diff = LOCK_TIME - Date.now();
     if (diff <= 0) {
+      // Group stage locked. If the bracket window is open, submission stays enabled.
+      if (bracketWindow()) {
+        el.textContent = `${t('bracket_closes')} ${fmtCountdown(BRACKET_LOCK - Date.now())}`;
+        el.style.color = 'var(--gold)';
+        const btn = document.getElementById('btn-submit');
+        if (btn) { btn.disabled = false; }
+        setTimeout(tick, 1000);
+        return;
+      }
       el.textContent  = t('countdown_locked');
       el.style.color  = '#f87171';
       const btn = document.getElementById('btn-submit');
       if (btn) { btn.disabled = true; btn.textContent = t('submit_locked'); }
       return;
     }
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000)  / 60000);
-    const s = Math.floor((diff % 60000)    / 1000);
-    el.textContent = `${d}d ${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
+    el.textContent = fmtCountdown(diff);
     setTimeout(tick, 1000);
   }
   tick();

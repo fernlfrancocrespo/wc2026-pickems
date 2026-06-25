@@ -160,7 +160,7 @@ if (args.includes('--json')) {
     longest_range_goals: ball.longest_range_goals || [],
     props,
     entries: entries.map((e, i) => ({
-      rank: i + 1, name: e.name, handle: e.handle, tag: e.tag || null,
+      rank: i + 1, name: e.name, handle: e.handle, slug: e.slug, tag: e.tag || null,
       total: Math.round(e.total * 10) / 10, lockedGroup: Math.round(e.lockedGroup * 10) / 10,
       lockedKO: Math.round(e.lockedKO * 10) / 10, pendingMax: Math.round(e.pendingMax * 10) / 10,
       defaultGroup: e.defaultGroup, pct: e.graded > 0 ? Math.round((e.total / e.graded) * 100) : null,
