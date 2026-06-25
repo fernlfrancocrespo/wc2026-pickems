@@ -86,6 +86,10 @@
     .bar-track{flex:1;height:16px;min-width:40px;background:var(--navy-input);border-radius:4px;overflow:hidden;display:block}
     .bar-fill{display:block;height:100%;min-width:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:4px}
     .bar-count { font-size:.72rem; color:var(--grey-mid); width:auto; text-align:right; flex-shrink:0 }
+    .bar{cursor:pointer;border-radius:4px;padding:2px 4px;margin:0 -4px 5px}
+    .bar:hover{background:rgba(255,255,255,.04)}
+    .bar-names{font-size:.74rem;color:var(--grey-light);padding:4px 8px 9px 31px;line-height:1.5}
+    .bar-names.got{color:var(--green)}
 
     /* group winners */
     .gw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
@@ -95,6 +99,7 @@
     .gw-team img{width:22px;border-radius:2px}
     .gw-team .nm{font-size:.8rem;font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .gw-team .pc{font-size:.72rem;color:var(--gold);font-weight:700}
+    .gw-sub{font-size:.66rem;color:var(--grey-mid);margin-top:5px}
 
     /* participants */
     .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
@@ -127,6 +132,8 @@
     .qcorrect{color:var(--green,#22c55e);font-weight:700;font-size:.72rem;margin-left:auto}
     .stats-head{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;color:var(--grey-light);margin:30px 0 4px}
     @media(max-width:520px){.lb-row .lb-sub{display:none}}
+    .lb-more{display:block;width:100%;margin-top:12px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--gold);font-family:'Inter',sans-serif;font-weight:600;font-size:.82rem;padding:11px;cursor:pointer}
+    .lb-more:hover{border-color:var(--gold);background:rgba(201,168,76,.06)}
 
     .empty{text-align:center;padding:60px 20px;color:var(--grey-mid)}
     .empty .big{font-size:2.4rem;margin-bottom:14px}
@@ -219,12 +226,13 @@
   <div class="spinner"></div>
 </div>
 
-<script src="i18n.js?v=5"></script>
+<script src="i18n.js?v=6"></script>
 <script src="scoring.js?v=5"></script>
 <script>
 let teamsData = {}, results = [], answerKey = null, liveStats = null, ballStats = null, tagsMap = {}, groupsData = {};
 let bracketStruct = {}, bracketState = {};
 let lbTag = ''; // leaderboard tag filter: '' (all) | 'SDC' | 'Lastinger'
+let lbExpanded = false; // top-10 by default; toggle shows the full field
 
 async function init() {
   const g = (p) => fetch(p).then(r => r.ok ? r.json() : null).catch(() => null);
@@ -396,7 +404,8 @@ function render() {
         `<button data-tag="Lastinger" class="${lbTag === 'Lastinger' ? 'on' : ''}">Lastinger</button>` +
       `</div><div class="plist" id="lblist"></div>`;
     const rows = scored.filter(r => !lbTag || r.tag === lbTag);
-    body.querySelector('#lblist').innerHTML = rows.map((r, i) => {
+    const shown = lbExpanded ? rows : rows.slice(0, 10);   // top 10 by default
+    body.querySelector('#lblist').innerHTML = shown.map((r, i) => {
       const e = r.e, s = r.s;
       return `<a class="lb-row" href="${viewUrl(e)}">
         <span class="rank">${i + 1}</span>
@@ -405,8 +414,15 @@ function render() {
         <span class="lb-tot">${Math.round(s.total)}</span>
       </a>`;
     }).join('') || `<div style="color:var(--grey-mid);padding:14px">${t('lb_empty')}</div>`;
+    if (rows.length > 10) {
+      const more = document.createElement('button');
+      more.className = 'lb-more'; more.type = 'button';
+      more.textContent = lbExpanded ? t('lb_showless') : `${t('lb_showall')} (${rows.length})`;
+      more.addEventListener('click', () => { lbExpanded = !lbExpanded; render(); });
+      body.appendChild(more);
+    }
     body.querySelectorAll('.lb-toggle button').forEach(b =>
-      b.addEventListener('click', () => { lbTag = b.dataset.tag; render(); }));
+      b.addEventListener('click', () => { lbTag = b.dataset.tag; lbExpanded = false; render(); }));
     app.appendChild(sec);
   } else {
     const note = document.createElement('div');
@@ -441,16 +457,28 @@ function render() {
   popSec.querySelector('.section-body').appendChild(grid);
   app.appendChild(popSec);
 
-  // ── consensus group winners ──
-  const gwSec = section('🗂️', t('lb_groups_consensus'));
+  // ── group winners: who actually CALLED each group right (once known), else consensus ──
+  const realQ8 = (LIVE_KEY && LIVE_KEY.key && LIVE_KEY.key.q8) || {};
+  const haveWinners = Object.keys(realQ8).length > 0;
+  const vis = results.filter(e => !e.hidden).length || 1;
+  const gwSec = section('🗂️', haveWinners ? t('lb_groups_correct') : t('lb_groups_consensus'));
   const gwGrid = document.createElement('div'); gwGrid.className = 'gw-grid';
   'ABCDEFGHIJKL'.split('').forEach(letter => {
-    const top = tally(e => e.answers.q8 && e.answers.q8[letter] && e.answers.q8[letter][0])[0];
+    const winner = realQ8[letter] && realQ8[letter][0];
     const gw = document.createElement('div'); gw.className = 'gw';
-    gw.innerHTML = `<div class="gw-letter">${t('group_word')} ${letter}</div>
-      <div class="gw-team">${top ? teamFlag(top[0]) : ''}
-        <span class="nm">${top ? teamLabel(top[0]) : '—'}</span>
-        <span class="pc">${top ? Math.round(top[1]/total*100)+'%' : ''}</span></div>`;
+    if (winner) {
+      const got = results.filter(e => !e.hidden && e.answers.q8 && e.answers.q8[letter] && e.answers.q8[letter][0] === winner).length;
+      gw.innerHTML = `<div class="gw-letter">${t('group_word')} ${letter}</div>
+        <div class="gw-team">${teamFlag(winner)}<span class="nm">${teamLabel(winner)}</span>
+          <span class="pc">${Math.round(got / vis * 100)}%</span></div>
+        <div class="gw-sub">${got}/${vis} ${t('lb_got_winner')}</div>`;
+    } else {
+      const top = tally(e => e.answers.q8 && e.answers.q8[letter] && e.answers.q8[letter][0])[0];
+      gw.innerHTML = `<div class="gw-letter">${t('group_word')} ${letter}</div>
+        <div class="gw-team">${top ? teamFlag(top[0]) : ''}
+          <span class="nm">${top ? teamLabel(top[0]) : '—'}</span>
+          <span class="pc">${top ? Math.round(top[1] / total * 100) + '%' : ''}</span></div>`;
+    }
     gwGrid.appendChild(gw);
   });
   gwSec.querySelector('.section-body').appendChild(gwGrid);
@@ -479,16 +507,18 @@ function render() {
     }
     return v; // team / player name / 'Yes' | 'No'
   };
-  const barHTML = (val, cnt, type, correct) => {
+  const barHTML = (val, cnt, type, correct, qid) => {
     const pct = Math.round(cnt / total * 100);
     const isTeam = type === 'team';
     const disp = isTeam ? teamLabel(val) : type === 'band' ? tBand(val) : type === 'yesno' ? t(val.toLowerCase()) : val;
     const ok = correct != null && val === correct ? ' correct' : '';
-    return `<div class="bar">${isTeam ? teamFlag(val) : ''}
+    return `<div class="bar${ok ? ' is-correct' : ''}" data-q="${qid}" data-v="${escapeHtml(String(val))}">${isTeam ? teamFlag(val) : ''}
         <span class="bar-name" title="${disp}">${disp}</span>
         <span class="bar-track"><span class="bar-fill${ok}" style="width:${pct}%"></span></span>
         <span class="bar-count">${cnt} · ${pct}%</span></div>`;
   };
+  // helper to escape for the data attribute
+  function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
   QS.forEach(([key, n, type]) => {
     const labelKey = key.replace('_player','').replace('q3a','q3').replace('q3b','q3');
     const allRows = tally(e => e.answers[key]);
@@ -500,9 +530,9 @@ function render() {
     blk.innerHTML = `<div class="qtitle"><span class="qn">${n}</span><span>${t(labelKey)}</span>`
       + (correct != null ? `<span class="qcorrect" title="${correctRow ? correctRow[1] : 0} / ${total}">✓ ${correctRow ? correctRow[1] : 0} ${t('lb_correct')}</span>` : '')
       + `</div>`
-      + top.map(([v, c]) => barHTML(v, c, type, correct)).join('')
+      + top.map(([v, c]) => barHTML(v, c, type, correct, key)).join('')
       + (rest.length
-          ? `<div class="more" style="display:none">${rest.map(([v, c]) => barHTML(v, c, type, correct)).join('')}</div>
+          ? `<div class="more" style="display:none">${rest.map(([v, c]) => barHTML(v, c, type, correct, key)).join('')}</div>
              <button class="showmore" type="button">${t('lb_showall')} (${rest.length})</button>`
           : '');
     bBody.appendChild(blk);
@@ -514,6 +544,19 @@ function render() {
       more.style.display = open ? 'none' : 'block';
       btn.textContent = open ? `${t('lb_showall')} (${more.children.length})` : t('lb_showless');
     });
+  });
+  // Click a bar → reveal who picked it (the correct/green bar celebrates who nailed it).
+  bBody.addEventListener('click', (ev) => {
+    const bar = ev.target.closest('.bar[data-q]'); if (!bar) return;
+    const sib = bar.nextElementSibling;
+    if (sib && sib.classList.contains('bar-names')) { sib.remove(); return; }
+    bBody.querySelectorAll('.bar-names').forEach(n => n.remove());
+    const q = bar.dataset.q, v = bar.dataset.v;
+    const names = results.filter(e => !e.hidden && String(e.answers[q]) === v).map(e => e.display_name || 'anon');
+    const el = document.createElement('div');
+    el.className = 'bar-names' + (bar.classList.contains('is-correct') ? ' got' : '');
+    el.textContent = (bar.classList.contains('is-correct') ? '✓ ' : '') + (names.join(', ') || '—');
+    bar.after(el);
   });
   app.appendChild(bSec);
 

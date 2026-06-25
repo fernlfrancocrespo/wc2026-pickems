@@ -89,6 +89,8 @@
     .entry-toggle .etog { flex:1; background:transparent; border:none; color:var(--grey-light); font-family:'Inter',sans-serif; font-weight:700; font-size:.8rem; padding:9px 12px; border-radius:6px; cursor:pointer; transition:background .12s,color .12s; }
     .entry-toggle .etog.on { background:var(--gold); color:var(--navy); }
     .bracket-note { background:rgba(201,168,76,.10); border:1px solid rgba(201,168,76,.35); border-radius:10px; padding:13px 16px; font-size:.86rem; color:var(--gold-light); line-height:1.5; margin-bottom:16px; }
+    .locked-toggle { width:100%; background:var(--navy-card); border:1px solid var(--border); border-radius:10px; color:var(--grey-light); font-family:'Inter',sans-serif; font-weight:600; font-size:.84rem; padding:13px 16px; cursor:pointer; margin-bottom:16px; text-align:left; }
+    .locked-toggle:hover { border-color:var(--gold); color:var(--gold); }
     .sc-id { display:flex; align-items:center; gap:9px; margin-bottom:14px; }
     .sc-id .lbl { font-size:.7rem; letter-spacing:1.5px; color:var(--grey-mid); text-transform:uppercase; }
     .sc-id .name { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:1px; }
@@ -702,7 +704,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
-<script src="/i18n.js?v=5"></script>
+<script src="/i18n.js?v=6"></script>
 <script src="/scoring.js?v=5"></script>
 <script>
 // ═══════════════════════════════════════ CONFIG
@@ -2404,13 +2406,39 @@ function startOwnEntry() {
 // so locked group/prop/player picks can't change but the bracket stays editable.
 function applyBracketWindowLock() {
   if (VIEW_MODE || !bracketWindow()) return;
-  document.querySelectorAll('.section-card').forEach(card => {
-    if (card.id === 'bracket-sec') return;          // bracket stays editable
-    if (card.querySelector('.identity-grid')) return; // identity stays editable + bright
-    card.querySelectorAll('select, input, button, .group-team-item, .yesno-label, .band-pill, .pcard')
+  const bracket = document.getElementById('bracket-sec');
+  const cards = [...document.querySelectorAll('.section-card')];
+  const idCard = cards.find(c => c.querySelector('.identity-grid'));
+  const locked = cards.filter(c => c.id !== 'bracket-sec' && c !== idCard); // the 22 group/prop/player Qs
+  const isNew = !answers.q1;                          // no group picks → brand-new bracket-only entrant
+
+  // Bracket goes right under identity so it's the first thing (no endless scroll).
+  if (bracket && idCard && idCard.parentNode) idCard.parentNode.insertBefore(bracket, idCard.nextSibling);
+
+  if (isNew) { locked.forEach(c => c.remove()); return; }   // new user: only the bracket
+
+  // Existing user: freeze the 22 locked picks and tuck them behind a toggle.
+  locked.forEach(c => {
+    c.querySelectorAll('select, input, button, .group-team-item, .yesno-label, .band-pill, .pcard')
       .forEach(el => { if ('disabled' in el) el.disabled = true; el.style.pointerEvents = 'none'; });
-    card.style.opacity = '0.62';
+    c.style.opacity = '0.62';
   });
+  if (locked.length && !document.getElementById('locked-toggle')) {
+    const anchor = locked[0];
+    const tog = document.createElement('button');
+    tog.id = 'locked-toggle'; tog.type = 'button'; tog.className = 'locked-toggle';
+    tog.textContent = t('show_original');
+    const box = document.createElement('div');
+    box.id = 'locked-box'; box.style.display = 'none';
+    anchor.parentNode.insertBefore(tog, anchor);
+    anchor.parentNode.insertBefore(box, anchor);
+    locked.forEach(c => box.appendChild(c));
+    tog.addEventListener('click', () => {
+      const open = box.style.display !== 'none';
+      box.style.display = open ? 'none' : 'block';
+      tog.textContent = open ? t('show_original') : t('hide_original');
+    });
+  }
 }
 
 // ═══════════════════════════════════════ COUNTDOWN

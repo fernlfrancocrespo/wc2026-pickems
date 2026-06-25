@@ -164,6 +164,12 @@ if (args.includes('--json')) {
       total: Math.round(e.total * 10) / 10, lockedGroup: Math.round(e.lockedGroup * 10) / 10,
       lockedKO: Math.round(e.lockedKO * 10) / 10, pendingMax: Math.round(e.pendingMax * 10) / 10,
       defaultGroup: e.defaultGroup, pct: e.graded > 0 ? Math.round((e.total / e.graded) * 100) : null,
+      // confirmed-vs-ongoing detail for the email card
+      conf: {
+        q9: e.breakdown.q9 && e.breakdown.q9.graded ? (e.breakdown.q9.pts >= e.breakdown.q9.max ? 'hit' : e.breakdown.q9.pts > 0 ? 'part' : 'miss') : null,
+        q10: e.breakdown.q10 && e.breakdown.q10.graded ? (e.breakdown.q10.pts > 0 ? 'hit' : 'miss') : null,
+        q8: e.breakdown.q8 && e.breakdown.q8.graded && !e.breakdown.q8.skipped ? { pts: Math.round(e.breakdown.q8.pts), max: e.breakdown.q8.max } : null,
+      },
     })),
   };
   const out = path.join(ROOT, 'data', 'private', 'board.json');
