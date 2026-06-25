@@ -23,3 +23,6 @@ data/private/
 # Local-only preview page (reads private board.json)
 preview.html
 data/board.json
+
+# Preview-only results dump (never to prod)
+data/_preview_results.json

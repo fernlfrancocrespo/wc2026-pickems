@@ -1,26 +1,26 @@
 {
-  "updated": "2026-06-24T00:54:34+00:00",
+  "updated": "2026-06-24T21:13:15+00:00",
   "provisional": true,
   "group_stage_complete": false,
   "qualifying_third_groups": [
-    "A",
+    "B",
     "C",
     "D",
     "F",
     "G",
     "H",
     "J",
-    "K"
+    "L"
   ],
   "allocation_found": true,
   "r32_teams": {
     "73": {
       "s1": "South Korea",
-      "s2": "Switzerland"
+      "s2": "Canada"
     },
     "74": {
       "s1": "Germany",
-      "s2": "Scotland"
+      "s2": "Paraguay"
     },
     "75": {
       "s1": "Netherlands",
@@ -40,22 +40,22 @@
     },
     "79": {
       "s1": "Mexico",
-      "s2": "Cape Verde"
+      "s2": "Scotland"
     },
     "80": {
       "s1": "England",
-      "s2": "Portugal"
+      "s2": "Algeria"
     },
     "81": {
       "s1": "United States",
-      "s2": "Algeria"
+      "s2": "Bosnia and Herzegovina"
     },
     "82": {
       "s1": "Egypt",
-      "s2": "Czechia"
+      "s2": "Cape Verde"
     },
     "83": {
-      "s1": "DR Congo",
+      "s1": "Portugal",
       "s2": "Ghana"
     },
     "84": {
@@ -63,7 +63,7 @@
       "s2": "Austria"
     },
     "85": {
-      "s1": "Canada",
+      "s1": "Switzerland",
       "s2": "Belgium"
     },
     "86": {
@@ -72,7 +72,7 @@
     },
     "87": {
       "s1": "Colombia",
-      "s2": "Paraguay"
+      "s2": "Croatia"
     },
     "88": {
       "s1": "Australia",

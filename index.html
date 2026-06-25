@@ -85,6 +85,9 @@
     /* ── VIEW_MODE scorecard ─────────────────────────────────────── */
     --sc-green:#22c55e; --sc-green-soft:rgba(34,197,94,.10); --sc-red-soft:rgba(200,16,46,.10);
     .sc-wrap { max-width:680px; margin:0 auto; }
+    .entry-toggle { display:flex; gap:4px; background:rgba(255,255,255,.05); border-radius:9px; padding:4px; max-width:680px; margin:0 auto 14px; }
+    .entry-toggle .etog { flex:1; background:transparent; border:none; color:var(--grey-light); font-family:'Inter',sans-serif; font-weight:700; font-size:.8rem; padding:9px 12px; border-radius:6px; cursor:pointer; transition:background .12s,color .12s; }
+    .entry-toggle .etog.on { background:var(--gold); color:var(--navy); }
     .sc-id { display:flex; align-items:center; gap:9px; margin-bottom:14px; }
     .sc-id .lbl { font-size:.7rem; letter-spacing:1.5px; color:var(--grey-mid); text-transform:uppercase; }
     .sc-id .name { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:1px; }
@@ -698,8 +701,8 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
-<script src="/i18n.js?v=3"></script>
-<script src="/scoring.js?v=3"></script>
+<script src="/i18n.js?v=4"></script>
+<script src="/scoring.js?v=4"></script>
 <script>
 // ═══════════════════════════════════════ CONFIG
 const LOCK_TIME  = new Date('2026-06-11T19:00:00Z');
@@ -819,7 +822,7 @@ async function init() {
   setupLangToggle();
   applyChrome();
   if (VIEW_MODE) {
-    renderScorecard();              // scored entry view (falls back to picks if nothing graded)
+    renderEntry();                  // scorecard ⇆ original picks (toggle); falls back to picks if nothing graded
   } else {
     renderPage();
     setupDrawer();
@@ -828,7 +831,7 @@ async function init() {
 
   // Re-render the whole form on language switch. Builders are answers-aware,
   // so in-progress picks (selects, drag order, bands, players) are preserved.
-  onLangChange(() => { applyChrome(); if (VIEW_MODE) renderScorecard(); else { renderPage(); setupDrawer(); } });
+  onLangChange(() => { applyChrome(); if (VIEW_MODE) renderEntry(); else { renderPage(); setupDrawer(); } });
 }
 
 // ═══════════════════════════════════════ LANGUAGE CHROME
@@ -1706,6 +1709,25 @@ document.addEventListener('click', (e) => {
 // answer, whether this person got it, and the points. Decided outcomes show as
 // LOCKED; still-in-play ones as LIVE. Additive: if no key data, nothing changes.
 let SCORE_DATA = null; // cached { key, liveSet } so lang re-render needn't refetch
+let entryView = 'card'; // shared-entry view: 'card' (scorecard) | 'picks' (original submission)
+
+function entryToggleHtml() {
+  return `<div class="entry-toggle">` +
+    `<button class="etog ${entryView === 'card' ? 'on' : ''}" data-v="card">${t('tab_scorecard')}</button>` +
+    `<button class="etog ${entryView === 'picks' ? 'on' : ''}" data-v="picks">${t('tab_picks')}</button>` +
+    `</div>`;
+}
+// Dispatch the shared-entry view (scorecard vs. read-only original picks).
+function renderEntry() {
+  if (entryView === 'picks') { renderPage(); setupDrawer(); }
+  else { renderScorecard(); }
+}
+document.addEventListener('click', (e) => {
+  const b = e.target.closest ? e.target.closest('.etog') : null;
+  if (!b || !VIEW_MODE) return;
+  entryView = b.dataset.v;
+  renderEntry();
+});
 
 async function loadScoreData() {
   if (SCORE_DATA) return SCORE_DATA;
@@ -1848,14 +1870,19 @@ async function renderScorecard() {
   const pending = order.filter(q => { const b = res.breakdown[q]; return b && !b.graded && !b.skipped; })
     .sort((a, b) => res.breakdown[b].max - res.breakdown[a].max);
 
-  const total = Math.round(res.total), pend = Math.round(res.pendingMax);
-  const earnW = Math.max(2, Math.round(total / FULL_MAX * 100));
+  // bracket = bonus on top of the 251 main entry (not rebalanced); only counts once open
+  const brkActive = bracketStruct && bracketStruct.open && typeof scoreBracket === 'function';
+  const brk = brkActive
+    ? scoreBracket(answers.bracket, bracketStruct, (bracketState && bracketState.results) || {}) : { pts: 0, max: 0, byRound: {} };
+  const total = Math.round(res.total + brk.pts), pend = Math.round(res.pendingMax + (brk.max - brk.pts));
+  const earnW = Math.max(2, Math.round(total / (FULL_MAX + brk.max) * 100));
 
   const app = document.getElementById('app');
   app.innerHTML = '';
   const wrap = document.createElement('div');
   wrap.className = 'sc-wrap';
   wrap.innerHTML =
+    entryToggleHtml() +
     `<div class="sc-id"><span class="lbl">${t('sc_entry')}</span><span class="name">${escapeHtml(displayName(answers.name))}</span>` +
       `<button class="btn-make-own own" id="sc-makeown">${t('make_own')}</button></div>` +
     `<div class="sc-hero">` +
@@ -1865,7 +1892,7 @@ async function renderScorecard() {
         `<div class="sc-bar"><div class="e" style="width:${earnW}%"></div></div>` +
         `<div class="sc-mini">` +
           `<div><div class="v">${Math.round(res.lockedGroup)}</div><div class="k">${t('sc_group')}</div></div>` +
-          `<div><div class="v">${Math.round(res.lockedKO)}</div><div class="k">${t('sc_ko')}</div></div>` +
+          `<div><div class="v">${Math.round(res.lockedKO + brk.pts)}</div><div class="k">${t('sc_ko')}</div></div>` +
           `<div><div class="v">${scored.length}<small>/22</small></div><div class="k">${t('sc_scored_n')}</div></div>` +
         `</div></div></div>` +
     `<div class="sc-sec"><span class="h">${t('sc_scored_head')}</span><span class="ln"></span></div>` +
@@ -1877,7 +1904,20 @@ async function renderScorecard() {
 
   const sc = wrap.querySelector('#sc-scored');
   scored.forEach(q => sc.appendChild(scRow(q, res.breakdown[q], key, live.has(bdKeyFor(q)))));
-  if (!scored.length) sc.innerHTML = `<div class="sc-row"><div class="q"><div class="qd" style="color:var(--grey-mid)">${t('sc_nothing')}</div></div></div>`;
+  if (!scored.length && !(brk.max && Object.keys(answers.bracket || {}).length))
+    sc.innerHTML = `<div class="sc-row"><div class="q"><div class="qd" style="color:var(--grey-mid)">${t('sc_nothing')}</div></div></div>`;
+  // bracket summary row — only once they've made bracket picks
+  if (brk.max && Object.keys(answers.bracket || {}).length) {
+    const decided = Object.values(brk.byRound).reduce((a, r) => a + r.decided, 0);
+    const st = !decided ? 'partial' : (brk.pts > 0 ? (brk.pts >= brk.max ? 'hit' : 'partial') : 'miss');
+    const row = document.createElement('div');
+    row.className = `sc-row ${st}`;
+    row.innerHTML =
+      `<div class="q"><div class="ql">${t('sec_bracket')} <span class="tag ${decided ? 'locked' : 'live'}">· ${decided ? t('sc_locked') : t('sc_live')}</span></div>` +
+      `<div class="qd">${Object.keys(answers.bracket).length} ${t('br_picked')}${decided ? ` · ${decided} ${t('sc_decided') || 'decided'}` : ''}</div></div>` +
+      `<div class="pts">${brk.pts > 0 ? '+' + Math.round(brk.pts) : '0'}<small>/${brk.max}</small></div>`;
+    sc.appendChild(row);
+  }
 
   const pe = wrap.querySelector('#sc-pending');
   pending.forEach(q => {
@@ -2023,6 +2063,9 @@ function renderPage() {
 
   // ── VIEW-MODE banner (shared read-only entry) ─────────────────
   if (VIEW_MODE) {
+    const tog = document.createElement('div');
+    tog.innerHTML = entryToggleHtml();
+    formMain.appendChild(tog.firstChild);
     const banner = document.createElement('div');
     banner.className = 'view-banner';
     banner.innerHTML = `

@@ -109,6 +109,24 @@
     .prow .lang-pill{font-size:.62rem;border:1px solid var(--border);border-radius:10px;padding:1px 7px;color:var(--grey-light);text-transform:uppercase}
     .prow a.view{color:var(--gold);text-decoration:none;font-weight:600;font-size:.8rem}
     .prow a.view:hover{text-decoration:underline}
+    /* ranked leaderboard */
+    .lb-toggle{display:inline-flex;gap:4px;background:rgba(255,255,255,.05);border-radius:8px;padding:4px;margin-bottom:12px}
+    .lb-toggle button{background:transparent;border:none;color:var(--grey-light);font-weight:700;font-size:.8rem;padding:7px 16px;border-radius:6px;cursor:pointer}
+    .lb-toggle button.on{background:var(--gold);color:var(--navy)}
+    .lb-row{display:flex;align-items:center;gap:12px;padding:11px 12px;border-bottom:1px solid var(--border);text-decoration:none;color:var(--white)}
+    .lb-row:hover{background:rgba(255,255,255,.03)}
+    .lb-row .rank{font-family:'Bebas Neue',sans-serif;color:var(--grey-mid);width:30px;font-size:1.15rem;text-align:center}
+    .lb-row:nth-child(1) .rank,.lb-row:nth-child(2) .rank,.lb-row:nth-child(3) .rank{color:var(--gold)}
+    .lb-row .who{flex:1;font-weight:600;display:flex;align-items:center;gap:8px;min-width:0}
+    .lb-row .who .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .lb-row .lb-sub{font-size:.7rem;color:var(--grey-mid);white-space:nowrap}
+    .lb-row .lb-tot{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--gold);min-width:42px;text-align:right}
+    .tag{font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:20px;border:1px solid var(--border);color:var(--grey-light);text-transform:uppercase}
+    .tag.SDC{color:#7dd3fc;border-color:#7dd3fc55}.tag.Lastinger{color:#fca5a5;border-color:#fca5a555}
+    .bar-fill.correct{background:var(--green,#22c55e)!important}
+    .qcorrect{color:var(--green,#22c55e);font-weight:700;font-size:.72rem;margin-left:auto}
+    .stats-head{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;color:var(--grey-light);margin:30px 0 4px}
+    @media(max-width:520px){.lb-row .lb-sub{display:none}}
 
     .empty{text-align:center;padding:60px 20px;color:var(--grey-mid)}
     .empty .big{font-size:2.4rem;margin-bottom:14px}
@@ -201,25 +219,31 @@
   <div class="spinner"></div>
 </div>
 
-<script src="i18n.js?v=3"></script>
-<script src="scoring.js?v=3"></script>
+<script src="i18n.js?v=4"></script>
+<script src="scoring.js?v=4"></script>
 <script>
-let teamsData = {}, results = [], answerKey = null;
+let teamsData = {}, results = [], answerKey = null, liveStats = null, ballStats = null, tagsMap = {}, groupsData = {};
+let bracketStruct = {}, bracketState = {};
+let lbTag = ''; // leaderboard tag filter: '' (all) | 'SDC' | 'Lastinger'
 
 async function init() {
-  try {
-    teamsData = await fetch('/data/teams.json').then(r => r.ok ? r.json() : {});
-  } catch (e) { teamsData = {}; }
-  try {
-    answerKey = await fetch('/data/answer_key.json').then(r => r.ok ? r.json() : null);
-  } catch (e) { answerKey = null; }
+  const g = (p) => fetch(p).then(r => r.ok ? r.json() : null).catch(() => null);
+  teamsData  = await g('/data/teams.json') || {};
+  answerKey  = await g('/data/answer_key.json');
+  liveStats  = await g('/data/live_stats.json');
+  ballStats  = await g('/data/ball_stats.json');
+  tagsMap    = await g('/data/tags.json') || {};
+  groupsData = await g('/data/groups.json') || {};
+  bracketStruct = await g('/data/bracket.json') || {};
+  bracketState  = await g('/data/bracket_state.json') || {};
   try {
     const r = await fetch('/api/results');
     const data = await r.json();
     results = (data && data.submissions) || [];
-  } catch (e) {
-    results = [];
-  }
+  } catch (e) { results = []; }
+  // Preview fallback only (no D1 on preview deploys): a static, public-fields-only
+  // dump. Never used in production, where /api/results returns live data.
+  if (!results.length) { const f = await g('/data/_preview_results.json'); if (f && f.submissions) results = f.submissions; }
   setupLang();
   render();
   onLangChange(() => { applyChrome(); render(); });
@@ -259,12 +283,40 @@ function applyChrome() {
   if (ns) ns.textContent = t('nav_standings');
 }
 
+// Effective answer key = confirmed outcomes + live projections (mirrors the scorecard).
+let LIVE_KEY = null;
+function buildLiveKey() {
+  const ak = (answerKey && (answerKey.answers || answerKey)) || {};
+  const key = JSON.parse(JSON.stringify(ak)); const live = new Set();
+  const setL = (k, v, isL) => { if (key[k] == null) { key[k] = v; if (isL) live.add(k); } };
+  if (liveStats) {
+    const complete = !!liveStats.group_stage_complete;
+    key.q8 = key.q8 || {};
+    Object.entries(liveStats.groups || {}).forEach(([L, gg]) => { if (!key.q8[L]) { key.q8[L] = gg.provisional_order; if (!complete) live.add('q8'); } });
+    setL('q9', liveStats.group_goals_total, !complete);
+    if (liveStats.hat_trick_in_group_stage) setL('q10', 'Yes', false);
+    const gt = liveStats.goal_timing || {}; setL('q14', gt.added_time_goals, true); setL('q16', gt.fastest_goal_seconds, true);
+    if (liveStats.top_scorers && liveStats.top_scorers[0]) setL('q18_player', liveStats.top_scorers[0].player, true);
+  }
+  if (ballStats && ballStats.q15_longest_range_m != null) setL('q15', ballStats.q15_longest_range_m, true);
+  return { key, live };
+}
+function tagOf(e) { return tagsMap[e.slug] || tagsMap[(e.email || '').toLowerCase()] || ''; }
+
 function computeScores() {
-  if (!answerKey || typeof keyHasData !== 'function' || !keyHasData(answerKey)) return null;
-  const key = answerKey.answers || answerKey;
+  LIVE_KEY = buildLiveKey();
+  const key = LIVE_KEY.key;
+  if (typeof keyHasData !== 'function' || !keyHasData({ answers: key })) return null;
+  const bResults = (bracketState && bracketState.results) || {};
   return results.filter(e => !e.hidden)            // hidden entries don't appear in the ranking
-                .map(e => ({ e, s: scoreEntry(e.answers, key) }))
-                .sort((a, b) => b.s.total - a.s.total);
+    .map(e => {
+      const dg = (typeof isDefaultGroupOrder === 'function') && isDefaultGroupOrder(e.answers.q8, groupsData);
+      const s = scoreEntry(e.answers, key, { defaultGroup: dg });
+      const brk = (typeof scoreBracket === 'function') ? scoreBracket(e.answers.bracket, bracketStruct, bResults) : { pts: 0 };
+      s.total += brk.pts; s.lockedKO += brk.pts; s.bracketPts = brk.pts;   // bracket = bonus on top
+      return { e, tag: tagOf(e), s };
+    })
+    .sort((a, b) => b.s.total - a.s.total || b.s.graded - a.s.graded || (a.e.display_name || '').localeCompare(b.e.display_name || ''));
 }
 
 // ── helpers ──────────────────────────────────────────────
@@ -300,7 +352,10 @@ function render() {
   const total = results.length;
   app.innerHTML = '';
 
-  // ── summary: entries + consensus champion ──
+  const scored = computeScores();   // ranked array (projected/live) or null pre-grading
+
+  // ── summary: entries + current leader (or consensus champion pre-grading) ──
+  const leader = scored && scored[0];
   const champTally = tally(e => e.answers.q1);
   const champ = champTally[0];
   const summary = document.createElement('div');
@@ -311,12 +366,12 @@ function render() {
       <div class="stat-label">${t('lb_entries')}</div>
     </div>
     <div class="champ-card">
-      <div class="ttl">${t('lb_champ')}</div>
+      <div class="ttl">${leader ? t('lb_leader') : t('lb_champ')}</div>
       <div class="champ-row">
-        ${champ ? teamFlag(champ[0]) : ''}
+        ${leader ? '' : (champ ? teamFlag(champ[0]) : '')}
         <div>
-          <div class="champ-name">${champ ? teamLabel(champ[0]) : '—'}</div>
-          <div class="champ-pct">${champ ? Math.round(champ[1]/total*100)+'% · '+champ[1]+'/'+total : ''}</div>
+          <div class="champ-name">${leader ? (leader.e.display_name || 'anon') : (champ ? teamLabel(champ[0]) : '—')}</div>
+          <div class="champ-pct">${leader ? Math.round(leader.s.total) + ' ' + t('lb_pts_short') : (champ ? Math.round(champ[1]/total*100)+'% · '+champ[1]+'/'+total : '')}</div>
         </div>
       </div>
     </div>`;
@@ -329,24 +384,42 @@ function render() {
   stLink.textContent = t('lb_view_standings');
   app.appendChild(stLink);
 
-  // ── live scores (only once the answer key has graded outcomes) ──
-  const scored = computeScores();
+  // ── THE LEADERBOARD (ranked, projected/live; tag-filterable) ──
   if (scored) {
-    const sec = section('', t('lb_scores'));
+    const sec = section('🏆', t('nav_board'));
     const body = sec.querySelector('.section-body');
-    body.innerHTML = `<div style="font-size:.74rem;color:var(--grey-mid);margin-bottom:12px">${t('lb_provisional')}</div>`;
-    const list = document.createElement('div'); list.className = 'plist';
-    list.innerHTML = scored.map((row, i) => `
-      <div class="prow">
+    body.innerHTML =
+      `<div style="font-size:.74rem;color:var(--grey-mid);margin-bottom:10px">${t('lb_proj_note')}</div>` +
+      `<div class="lb-toggle">` +
+        `<button data-tag="" class="${lbTag === '' ? 'on' : ''}">${t('lb_all')}</button>` +
+        `<button data-tag="SDC" class="${lbTag === 'SDC' ? 'on' : ''}">SDC</button>` +
+        `<button data-tag="Lastinger" class="${lbTag === 'Lastinger' ? 'on' : ''}">Lastinger</button>` +
+      `</div><div class="plist" id="lblist"></div>`;
+    const rows = scored.filter(r => !lbTag || r.tag === lbTag);
+    body.querySelector('#lblist').innerHTML = rows.map((r, i) => {
+      const e = r.e, s = r.s;
+      return `<a class="lb-row" href="${viewUrl(e)}">
         <span class="rank">${i + 1}</span>
-        <span class="who">${row.e.display_name || 'anon'}</span>
-        <span class="ctry">${row.e.country === 'United States' ? '🇺🇸' : '🌎'}</span>
-        <span style="color:var(--gold);font-weight:700;white-space:nowrap">${row.s.total} ${t('lb_pts_short')}</span>
-        <a class="view" href="${viewUrl(row.e)}">${t('lb_view')}</a>
-      </div>`).join('');
-    body.appendChild(list);
+        <span class="who"><span class="nm">${e.display_name || 'anon'}</span>${r.tag ? `<span class="tag ${r.tag}">${r.tag}</span>` : ''}</span>
+        <span class="lb-sub">${Math.round(s.lockedGroup)} ${t('sc_group')} · ${Math.round(s.lockedKO)} ${t('sc_ko')}</span>
+        <span class="lb-tot">${Math.round(s.total)}</span>
+      </a>`;
+    }).join('') || `<div style="color:var(--grey-mid);padding:14px">${t('lb_empty')}</div>`;
+    body.querySelectorAll('.lb-toggle button').forEach(b =>
+      b.addEventListener('click', () => { lbTag = b.dataset.tag; render(); }));
     app.appendChild(sec);
+  } else {
+    const note = document.createElement('div');
+    note.style.cssText = 'font-size:.85rem;color:var(--grey-mid);margin:6px 0 20px';
+    note.textContent = t('lb_no_scores');
+    app.appendChild(note);
   }
+
+  // ── everything below is submission stats (what people picked) ──
+  const statsHead = document.createElement('div');
+  statsHead.className = 'stats-head';
+  statsHead.textContent = t('lb_stats_head');
+  app.appendChild(statsHead);
 
   // ── popular picks (marquee questions) ──
   const marquee = [
@@ -394,25 +467,42 @@ function render() {
   ];
   const bSec = section('', t('lb_breakdown'));
   const bBody = bSec.querySelector('.section-body');
-  const barHTML = (val, cnt, type) => {
+  // Confirmed correct answer for a question (null if not yet settled).
+  const correctFor = (key, type) => {
+    const v = LIVE_KEY && LIVE_KEY.key[key];
+    if (v == null || v === '') return null;
+    if (type === 'band') {
+      const opts = (typeof BAND_OPTS !== 'undefined') && BAND_OPTS[key];
+      if (!opts) return null;
+      const i = bandIndexFor(Number(String(v).replace(/[ms]/gi, '')), opts);
+      return i >= 0 ? opts[i] : null;
+    }
+    return v; // team / player name / 'Yes' | 'No'
+  };
+  const barHTML = (val, cnt, type, correct) => {
     const pct = Math.round(cnt / total * 100);
     const isTeam = type === 'team';
     const disp = isTeam ? teamLabel(val) : type === 'band' ? tBand(val) : type === 'yesno' ? t(val.toLowerCase()) : val;
+    const ok = correct != null && val === correct ? ' correct' : '';
     return `<div class="bar">${isTeam ? teamFlag(val) : ''}
         <span class="bar-name" title="${disp}">${disp}</span>
-        <span class="bar-track"><span class="bar-fill" style="width:${pct}%"></span></span>
+        <span class="bar-track"><span class="bar-fill${ok}" style="width:${pct}%"></span></span>
         <span class="bar-count">${cnt} · ${pct}%</span></div>`;
   };
   QS.forEach(([key, n, type]) => {
     const labelKey = key.replace('_player','').replace('q3a','q3').replace('q3b','q3');
     const allRows = tally(e => e.answers[key]);
     if (!allRows.length) return;
+    const correct = correctFor(key, type);
+    const correctRow = correct != null ? allRows.find(([v]) => v === correct) : null;
     const top = allRows.slice(0, 5), rest = allRows.slice(5);
     const blk = document.createElement('div'); blk.className = 'qblock';
-    blk.innerHTML = `<div class="qtitle"><span class="qn">${n}</span><span>${t(labelKey)}</span></div>`
-      + top.map(([v, c]) => barHTML(v, c, type)).join('')
+    blk.innerHTML = `<div class="qtitle"><span class="qn">${n}</span><span>${t(labelKey)}</span>`
+      + (correct != null ? `<span class="qcorrect" title="${correctRow ? correctRow[1] : 0} / ${total}">✓ ${correctRow ? correctRow[1] : 0} ${t('lb_correct')}</span>` : '')
+      + `</div>`
+      + top.map(([v, c]) => barHTML(v, c, type, correct)).join('')
       + (rest.length
-          ? `<div class="more" style="display:none">${rest.map(([v, c]) => barHTML(v, c, type)).join('')}</div>
+          ? `<div class="more" style="display:none">${rest.map(([v, c]) => barHTML(v, c, type, correct)).join('')}</div>
              <button class="showmore" type="button">${t('lb_showall')} (${rest.length})</button>`
           : '');
     bBody.appendChild(blk);
@@ -427,7 +517,8 @@ function render() {
   });
   app.appendChild(bSec);
 
-  // ── participants (hidden entries excluded from the list, still counted in stats) ──
+  // ── participants list — only before scoring starts (the ranked board replaces it) ──
+  if (!scored) {
   const visible = results.filter(e => !e.hidden);
   const hiddenCount = results.length - visible.length;
   const pSec = section('', t('lb_participants') + ` (${visible.length})`);
@@ -461,6 +552,7 @@ function render() {
   pBody.querySelector('#p-country').addEventListener('change', renderList);
   renderList();
   app.appendChild(pSec);
+  }
 }
 
 function section(icon, title) {

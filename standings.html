@@ -87,7 +87,7 @@
 
 <div class="wrap" id="app"><div class="spinner"></div></div>
 
-<script src="i18n.js?v=3"></script>
+<script src="i18n.js?v=4"></script>
 <script>
 let teamsData = {}, live = null;
 
@@ -133,6 +133,28 @@ function render(){
     html+='</tbody></table></div>';
   });
   html+='</div>';
+
+  // Third-place race: each group's 3rd team, ranked; the best 8 advance.
+  const thirds=[];
+  Object.keys(live.groups).forEach(L=>{ const rows=live.groups[L]; if(rows.length>=3 && rows[2].pld>0) thirds.push(Object.assign({grp:L},rows[2])); });
+  if(thirds.length){
+    thirds.sort((a,b)=>b.pts-a.pts||b.gd-a.gd||b.gf-a.gf||a.team.localeCompare(b.team));
+    html+=`<div class="gcard thirdrace" style="margin-top:22px">
+      <div class="ghead">${t('st_third_title')}</div>
+      <div class="pagesub" style="margin:2px 0 10px">${t('st_third_sub')}</div>
+      <table><thead><tr><th></th><th class="team">${t('st_team')}</th><th>${t('st_third_grp')}</th><th class="pld">${t('col_pld')}</th><th class="gd">${t('col_gd')}</th><th class="pts">${t('col_pts')}</th><th></th></tr></thead><tbody>`;
+    thirds.forEach((r,i)=>{
+      const adv=i<8, gd=(r.gd>0?'+':'')+r.gd;
+      const cut=i===7?'border-bottom:2px solid var(--gold)':'';
+      html+=`<tr class="${adv?'adv':'out'}" style="${cut}">
+        <td class="pos">${i+1}</td>
+        <td class="team"><span class="team">${flagFor(r.team)}<span class="nm">${teamLabel(r.team)}</span></span></td>
+        <td>${r.grp}</td><td class="pld">${r.pld}</td><td class="gd">${gd}</td><td class="pts pts">${r.pts}</td>
+        <td style="font-size:.66rem;font-weight:700;color:${adv?'var(--green,#22c55e)':'var(--grey-mid)'}">${adv?t('st_advancing'):t('st_eliminated')}</td></tr>`;
+    });
+    html+='</tbody></table></div>';
+  }
+
   app.innerHTML=html;
 }
 init();

@@ -186,6 +186,30 @@ function scoreEntry(answers, key, opts) {
   };
 }
 
+// Score the knockout bracket — a bonus ON TOP of the 251-point main entry (not
+// rebalanced). `picks` = answers.bracket { matchId: winningTeam }. `struct` =
+// bracket.json. `results` = { matchId: actualWinner } (filled as knockouts play).
+// Each match: you earn its round's points if your pick equals the real winner.
+function scoreBracket(picks, struct, results) {
+  picks = picks || {}; results = results || {};
+  const out = { pts: 0, max: 0, graded: false, byRound: {} };
+  if (!struct || !struct.rounds) return out;
+  struct.rounds.forEach(rd => {
+    const r = { pts: 0, max: 0, correct: 0, decided: 0, points: rd.points };
+    rd.matches.forEach(mid => {
+      const id = String(mid);
+      r.max += rd.points; out.max += rd.points;
+      const real = results[id];
+      if (real != null && real !== '') {
+        out.graded = true; r.decided++;
+        if (picks[id] === real) { r.pts += rd.points; r.correct++; out.pts += rd.points; }
+      }
+    });
+    out.byRound[rd.key] = r;
+  });
+  return out;
+}
+
 // True if the answer key has at least one real (graded) outcome.
 function keyHasData(key) {
   if (!key) return false;
@@ -201,6 +225,6 @@ function keyHasData(key) {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     POINTS, FULL_MAX, NON_Q8_MAX, DEFAULT_GROUP_SCALE, GROUP_QS,
-    isDefaultGroupOrder, scoreEntry, keyHasData, scoreBand, bandIndexFor, bandRange,
+    isDefaultGroupOrder, scoreEntry, scoreBracket, keyHasData, scoreBand, bandIndexFor, bandRange,
   };
 }
