@@ -154,6 +154,9 @@
     .bs:hover:not(.tbd):not(.on) { background:var(--navy-light); }
     .bs.on { background:rgba(201,168,76,.16); border-color:var(--gold); font-weight:600; }
     .bs.tbd { cursor:default; color:var(--grey-mid); }
+    .bs.locked { cursor:default; }
+    .bs.won { background:rgba(34,197,94,.16); border-color:var(--sc-green,#22c55e); font-weight:600; }
+    .bs.lost { opacity:.4; text-decoration:line-through; }
     .bs img { width:18px; border-radius:2px; flex-shrink:0; }
     .bs i { width:18px; height:12px; border-radius:2px; background:var(--navy-input); flex-shrink:0; display:inline-block; }
     .bs span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -705,7 +708,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 <script src="/i18n.js?v=7"></script>
-<script src="/scoring.js?v=5"></script>
+<script src="/scoring.js?v=8"></script>
 <script>
 // ═══════════════════════════════════════ CONFIG
 const LOCK_TIME  = new Date('2026-06-11T19:00:00Z');   // group-stage picks lock (opening kickoff)
@@ -719,6 +722,7 @@ function bracketWindow() {
 // Secret edit token from a person's emailed link (/p/<slug>?k=<token>). Present = this
 // is YOUR link, so you may edit/submit; absent = view-only (you can't edit others').
 const EDIT_TOKEN = new URLSearchParams(location.search).get('k') || '';
+let ENTRY_CREATED_AT = '';          // viewed entry's submit time (for the late-bracket SF comp)
 const SUBMIT_URL = '/api/submit';  // Cloudflare Pages Function (same origin)
 const ENTRY_CODE = '';             // set if you enable the ENTRY_CODE secret on the Worker
 
@@ -815,6 +819,7 @@ async function init() {
     if (entry) {
       const a = { ...entry.answers }; const q8 = a.q8 || {}; delete a.q8;
       applySharedAnswers({ n: entry.display_name, c: entry.country, l: entry.lang, q8, a });
+      ENTRY_CREATED_AT = entry.created_at || '';
       VIEW_MODE = true;
     } else if (!parseShareFragment()) {
       // A /p/<slug> that doesn't resolve (e.g. /p/leaderboard) — don't silently
@@ -1886,8 +1891,9 @@ async function renderScorecard() {
 
   // bracket = bonus on top of the 251 main entry (not rebalanced); only counts once open
   const brkActive = bracketStruct && bracketStruct.open && typeof scoreBracket === 'function';
+  const late = (typeof isLateBracket === 'function') && isLateBracket(ENTRY_CREATED_AT);
   const brk = brkActive
-    ? scoreBracket(answers.bracket, bracketStruct, (bracketState && bracketState.results) || {}) : { pts: 0, max: 0, byRound: {} };
+    ? scoreBracket(answers.bracket, bracketStruct, (bracketState && bracketState.results) || {}, { lateSfBonus: late ? 1 : 0 }) : { pts: 0, max: 0, byRound: {} };
   const total = Math.round(res.total + brk.pts), pend = Math.round(res.pendingMax + (brk.max - brk.pts));
   const earnW = Math.max(2, Math.round(total / (FULL_MAX + brk.max) * 100));
 
@@ -1952,7 +1958,11 @@ async function renderScorecard() {
 function ordinal(n) { const s = ['th','st','nd','rd'], v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
 
 // ═══════════════════════════════════════ KNOCKOUT BRACKET PICKER
-// The two competing teams for a match (null where not yet known).
+// The real winner of a match once it's been played (locks it). Null = still open.
+function brResult(mid) { return (bracketState.results || {})[String(mid)] || null; }
+// The two competing teams for a match (null where not yet known). A played match
+// advances its REAL winner to the next round (for everyone); an open one advances
+// whoever the user picked.
 function brMatchTeams(mid) {
   const m = bracketStruct.matches[mid];
   if (!m) return [null, null];
@@ -1960,7 +1970,7 @@ function brMatchTeams(mid) {
     const r = (bracketState.r32_teams || {})[mid] || {};
     return [r.s1 || null, r.s2 || null];
   }
-  const w = (slot) => (slot.t === 'W' && slot.m) ? (answers.bracket[slot.m] || null) : null;
+  const w = (slot) => (slot.t === 'W' && slot.m) ? (brResult(slot.m) || answers.bracket[slot.m] || null) : null;
   return [w(m.s1), w(m.s2)];
 }
 // Placeholder text for a slot whose team isn't known yet.
@@ -2000,9 +2010,11 @@ const BR_PTS = (() => { const o = {}; (bracketStruct.rounds || []).forEach(r => 
 function brSideHtml(mid, team) {
   const tm = team && teamsData[team];
   const flag = tm && flagUrl(tm.iso2);
-  const on = team && answers.bracket[mid] === team ? ' on' : '';
+  const result = brResult(mid);                 // played? then the match is locked
+  const cls = result ? (team && team === result ? ' won' : ' lost') + ' locked'
+                      : (team && answers.bracket[mid] === team ? ' on' : '');
   const tbd = team ? '' : ' tbd';
-  return `<div class="bs${on}${tbd}" data-m="${mid}" data-t="${team ? escapeAttr(team) : ''}">` +
+  return `<div class="bs${cls}${tbd}" data-m="${mid}" data-t="${team ? escapeAttr(team) : ''}">` +
          (flag ? `<img src="${flag}" alt="">` : '<i></i>') +
          `<span>${team ? teamLabel(team) : t('br_tbd')}</span></div>`;
 }
@@ -2058,7 +2070,7 @@ function buildBracketSection() {
   if (!VIEW_MODE) {
     tree.addEventListener('click', (e) => {
       const cell = e.target.closest('.bs');
-      if (!cell || cell.classList.contains('tbd')) return;
+      if (!cell || cell.classList.contains('tbd') || cell.classList.contains('locked')) return; // played = locked
       const mid = cell.dataset.m, team = cell.dataset.t;
       answers.bracket[mid] = (answers.bracket[mid] === team) ? undefined : team;
       if (!answers.bracket[mid]) delete answers.bracket[mid];

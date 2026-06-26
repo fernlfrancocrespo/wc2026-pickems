@@ -227,7 +227,7 @@
 </div>
 
 <script src="i18n.js?v=7"></script>
-<script src="scoring.js?v=5"></script>
+<script src="scoring.js?v=8"></script>
 <script>
 let teamsData = {}, results = [], answerKey = null, liveStats = null, ballStats = null, tagsMap = {}, groupsData = {};
 let bracketStruct = {}, bracketState = {};
@@ -320,7 +320,8 @@ function computeScores() {
     .map(e => {
       const dg = (typeof isDefaultGroupOrder === 'function') && isDefaultGroupOrder(e.answers.q8, groupsData);
       const s = scoreEntry(e.answers, key, { defaultGroup: dg });
-      const brk = (typeof scoreBracket === 'function') ? scoreBracket(e.answers.bracket, bracketStruct, bResults) : { pts: 0 };
+      const late = (typeof isLateBracket === 'function') && isLateBracket(e.created_at);
+      const brk = (typeof scoreBracket === 'function') ? scoreBracket(e.answers.bracket, bracketStruct, bResults, { lateSfBonus: late ? 1 : 0 }) : { pts: 0 };
       s.total += brk.pts; s.lockedKO += brk.pts; s.bracketPts = brk.pts;   // bracket = bonus on top
       return { e, tag: tagOf(e), s };
     })

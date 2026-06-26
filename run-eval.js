@@ -18,7 +18,7 @@
  * ========================================================================== */
 const fs = require('fs');
 const path = require('path');
-const { scoreEntry, isDefaultGroupOrder, FULL_MAX, DEFAULT_GROUP_SCALE,
+const { scoreEntry, isDefaultGroupOrder, scoreBracket, isLateBracket, FULL_MAX, DEFAULT_GROUP_SCALE,
         bandIndexFor } = require('./scoring.js');
 
 // Band option lists (mirror scoring.js BAND_OPTS) for the "which band is winning" view.
@@ -84,13 +84,18 @@ if (project) {
 const tagOf = (r) => tags[r.slug] || tags[(r.email || '').toLowerCase()] || '';
 
 // ---- score ------------------------------------------------------------------
+const bracketStruct = readJSON('data/bracket.json', {});
+const bracketResults = (readJSON('data/bracket_state.json', {}) || {}).results || {};
 let entries = rows.map((r) => {
   const a = JSON.parse(r.payload);
   const defaultGroup = isDefaultGroupOrder(a.q8, groups);
   const s = scoreEntry(a, key, { defaultGroup });
+  const late = isLateBracket(r.created_at);
+  const brk = scoreBracket(a.bracket, bracketStruct, bracketResults, { lateSfBonus: late ? 1 : 0 });
+  s.total += brk.pts; s.lockedKO += brk.pts; s.bracketPts = brk.pts;   // bracket bonus on top
   return {
     name: r.name, handle: r.display_name, slug: r.slug, tag: tagOf(r),
-    defaultGroup, picks: a, ...s,
+    defaultGroup, picks: a, created_at: r.created_at, ...s,
   };
 });
 

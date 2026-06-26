@@ -9,7 +9,7 @@ export async function onRequestGet({ request, env }) {
   if (!slug) return json({ ok: false, error: "no_slug" }, 400);
 
   const row = await env.DB.prepare(
-    "SELECT display_name, country, lang, payload FROM submissions WHERE slug = ?"
+    "SELECT created_at, display_name, country, lang, payload FROM submissions WHERE slug = ?"
   ).bind(slug).first();
 
   if (!row) return json({ ok: false, error: "not_found" }, 404);
@@ -20,6 +20,6 @@ export async function onRequestGet({ request, env }) {
 
   return json({
     ok: true,
-    entry: { display_name: row.display_name, country: row.country, lang: row.lang, answers },
+    entry: { created_at: row.created_at, display_name: row.display_name, country: row.country, lang: row.lang, answers },
   });
 }
