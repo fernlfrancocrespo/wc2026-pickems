@@ -26,27 +26,40 @@ TUTORIAL_EN = "https://YOUTUBE-LINK-EN"
 TUTORIAL_PT = "https://YOUTUBE-LINK-PT"
 SUBJECT_EN = "{first} — it's time to fill out your bracket"
 SUBJECT_PT = "{first} — hora de preencher sua chave"
-BODY_EN = """Hi {first},
-
-Thank you for playing in our World Cup 2026 pick-'ems! The group stage is over, so the knockout bracket is now open — fill it out for bonus points.
-
-Your bracket link: {link}
-
-Attached is a snapshot of how you're doing so far. If you run into any issues, this short tutorial walks you through it: {tutorial}
-
-Good luck,
-Fernando"""
-BODY_PT = """Oi {first},
-
-Obrigado por participar do nosso bolão da Copa 2026! A fase de grupos acabou, então a chave do mata-mata já está aberta — preencha para ganhar pontos bônus.
-
-Seu link da chave: {link}
-
-Em anexo está um resumo de como você está indo. Se tiver qualquer dificuldade, este tutorial rápido te ajuda: {tutorial}
-
-Boa sorte,
-Fernando"""
+TOP_N = 15   # ranks 1..15 get the "in contention" email; the rest get the "anyone can win" email
 # ─────────────────────────────────────────────────────────────────────────────
+
+def highlights(conf, lang):
+    """A phrase listing the confirmed things they got right (or '')."""
+    gw = conf.get("gw") or {}
+    en, pt = [], []
+    if conf.get("q9") == "hit": en.append("the group-stage goal total"); pt.append("o total de gols da fase de grupos")
+    if conf.get("q10") == "hit": en.append("the hat-trick call"); pt.append("o palpite do hat-trick")
+    if gw.get("got"): en.append(f"{gw['got']} of {gw['of']} group winners"); pt.append(f"{gw['got']} de {gw['of']} vencedores de grupo")
+    items = pt if lang == "pt" else en
+    if not items: return ""
+    joined = items[0] if len(items) == 1 else (", ".join(items[:-1]) + (" and " if lang != "pt" else " e ") + items[-1])
+    return (f"Você já acertou {joined} — muito bem! " if lang == "pt"
+            else f"You've already nailed {joined} — nice work! ")
+
+def make_body(lang, first, rank, total, inplay, conf, link, tutorial):
+    hl = highlights(conf, lang)
+    top = rank <= TOP_N
+    if lang == "pt":
+        lead = (f"Você está na briga — atualmente em #{rank} de 61, com {total} pontos. {hl}" if top
+                else f"Obrigado por jogar! Você está com {total} pontos até agora. {hl}")
+        push = ("A chave do mata-mata já está aberta e ainda há {inplay} pontos em jogo — dá pra subir (ou defender a posição). Preencha sua chave aqui:"
+                if top else
+                "E o melhor: ainda há {inplay} pontos em jogo no mata-mata — mais que suficiente pra qualquer um chegar ao topo. Preencha sua chave e siga no jogo:")
+        return (f"Oi {first},\n\n{lead}\n\n{push.format(inplay=inplay)}\n{link}\n\n"
+                f"Primeira vez? Este tutorial rápido te ajuda: {tutorial}\n\nBoa sorte,\nFernando")
+    lead = (f"You're right in the mix — currently #{rank} of 61 with {total} points. {hl}" if top
+            else f"Thanks for playing! You're at {total} points so far. {hl}")
+    push = ("The knockout bracket is open now, and there are still {inplay} points up for grabs — plenty to climb (or defend). Fill out your bracket here:"
+            if top else
+            "Here's the fun part: there are still {inplay} points up for grabs in the knockouts — more than enough for anyone to make a run at the top. Fill out your bracket and stay in it:")
+    return (f"Hi {first},\n\n{lead}\n\n{push.format(inplay=inplay)}\n{link}\n\n"
+            f"New to it? This quick tutorial walks you through it: {tutorial}\n\nGood luck,\nFernando")
 
 NAVY=(13,27,42); CARD=(26,45,64); TRACK=(15,34,53); LINE=(70,90,112)
 GOLD=(201,168,76); GOLDL=(232,198,106); WHITE=(255,255,255)
@@ -143,14 +156,16 @@ def main():
         link=f"https://wc2026-pickems.com/p/{slug}?k={token}" if token else f"https://wc2026-pickems.com/p/{slug}"
         pt = lang=="pt"
         subj=(SUBJECT_PT if pt else SUBJECT_EN).format(first=first)
-        body=(BODY_PT if pt else BODY_EN).format(first=first, link=link, tutorial=(TUTORIAL_PT if pt else TUTORIAL_EN))
+        tut=(TUTORIAL_PT if pt else TUTORIAL_EN)
+        body=make_body(lang, first, rank, total, inplay, conf, link, tut)
         (PACKETS/f"{base}.txt").write_text(
             f"TO: {rr.get('email','')}\nSUBJECT: {subj}\nATTACH: email_cards/{base}.png\nLANG: {lang}\n\n{body}\n", encoding="utf-8")
         rows.append({"rank":rank,"name":fullname,"email":rr.get("email",""),"lang":lang,"tag":tag or "",
-                     "total":total,"subject":subj,"card_file":f"{base}.png","link":link})
+                     "total":total,"tier":"top15" if rank<=TOP_N else "field","subject":subj,
+                     "body":body,"card_file":f"{base}.png","link":link})
 
     with open(CARDS/"_mailmerge.csv","w",newline="",encoding="utf-8-sig") as f:
-        w=csv.DictWriter(f,fieldnames=["rank","name","email","lang","tag","total","subject","card_file","link"])
+        w=csv.DictWriter(f,fieldnames=["rank","name","email","lang","tag","total","tier","subject","body","card_file","link"])
         w.writeheader(); [w.writerow(r) for r in sorted(rows,key=lambda r:r["rank"])]
     print(f"wrote {len(rows)} cards (out/email_cards) + {len(rows)} packets (out/email_packets) + _mailmerge.csv")
     print(f"  ⚠ set TUTORIAL_EN / TUTORIAL_PT at the top of this script before sending.")

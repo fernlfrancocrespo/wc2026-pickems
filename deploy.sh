@@ -34,7 +34,7 @@ if [ "$CARDS" = "1" ]; then
 fi
 
 STAGE="$(mktemp -d)"; mkdir -p "$STAGE/data"
-cp index.html leaderboard.html standings.html faq.html i18n.js scoring.js _redirects "$STAGE/"
+cp index.html leaderboard.html standings.html faq.html i18n.js scoring.js _redirects wrangler.toml "$STAGE/"
 cp -r functions "$STAGE/"
 cp data/*.json "$STAGE/data/" 2>/dev/null || true
 rm -f "$STAGE/data/_preview_results.json"
