@@ -704,7 +704,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
-<script src="/i18n.js?v=6"></script>
+<script src="/i18n.js?v=7"></script>
 <script src="/scoring.js?v=5"></script>
 <script>
 // ═══════════════════════════════════════ CONFIG
@@ -716,6 +716,9 @@ function bracketWindow() {
   return !!(typeof bracketStruct !== 'undefined' && bracketStruct && bracketStruct.open)
          && Date.now() < BRACKET_LOCK;
 }
+// Secret edit token from a person's emailed link (/p/<slug>?k=<token>). Present = this
+// is YOUR link, so you may edit/submit; absent = view-only (you can't edit others').
+const EDIT_TOKEN = new URLSearchParams(location.search).get('k') || '';
 const SUBMIT_URL = '/api/submit';  // Cloudflare Pages Function (same origin)
 const ENTRY_CODE = '';             // set if you enable the ENTRY_CODE secret on the Worker
 
@@ -1895,7 +1898,7 @@ async function renderScorecard() {
   wrap.innerHTML =
     entryToggleHtml() +
     `<div class="sc-id"><span class="lbl">${t('sc_entry')}</span><span class="name">${escapeHtml(displayName(answers.name))}</span>` +
-      `<button class="btn-make-own own" id="sc-makeown">${bracketWindow() ? t('bracket_cta') : t('make_own')}</button></div>` +
+      `<button class="btn-make-own own" id="sc-makeown">${bracketWindow() && EDIT_TOKEN ? t('bracket_cta') : t('make_own')}</button></div>` +
     `<div class="sc-hero">` +
       `<div class="sc-hero-tot"><div class="big">${total}</div><div class="cap">${t('sc_points')}</div><div class="rank" id="sc-rank"></div></div>` +
       `<div class="sc-hero-r">` +
@@ -2093,7 +2096,7 @@ function renderPage() {
         <div class="view-banner-name">${displayName(answers.name)}</div>
         <div class="view-banner-sub">${t('locked_view')}</div>
       </div>
-      <button class="btn-make-own" id="btn-make-own">${bracketWindow() ? t('bracket_cta') : t('make_own')}</button>`;
+      <button class="btn-make-own" id="btn-make-own">${bracketWindow() && EDIT_TOKEN ? t('bracket_cta') : t('make_own')}</button>`;
     formMain.appendChild(banner);
     banner.querySelector('#btn-make-own').addEventListener('click', startOwnEntry);
   }
@@ -2323,8 +2326,9 @@ async function doSubmit() {
   const payload = { ...answers, displayName: displayName(answers.name),
                     lang: getLang(), hidden: hideEntry, submitted_at: new Date().toISOString() };
   if (ENTRY_CODE) payload.code = ENTRY_CODE;
+  if (EDIT_TOKEN) payload.token = EDIT_TOKEN;   // authorizes editing this specific entry
 
-  let serverSlug = null;
+  let serverSlug = null, serverToken = '';
   if (!SUBMIT_URL) {
     console.log('📋 Submission payload (dev mode):\n', JSON.stringify(payload, null, 2));
   } else {
@@ -2341,21 +2345,26 @@ async function doSubmit() {
       if (data && data.ok === false) {
         confirmBtn.disabled = false;
         confirmBtn.textContent = t('confirm_yes');
-        const msg = data.error === 'closed'   ? t('entries_closed')
-                  : data.error === 'bad_code' ? t('bad_code')
+        const msg = data.error === 'closed'        ? t('entries_closed')
+                  : data.error === 'bad_code'      ? t('bad_code')
+                  : data.error === 'bad_token'     ? t('err_bad_token')
+                  : data.error === 'use_your_link' ? t('err_use_link')
                   : t('toast_fail');
         showToast(msg, true);
         return;
       }
-      if (data && data.ok && data.slug) serverSlug = data.slug;
+      if (data && data.ok && data.slug) { serverSlug = data.slug; serverToken = data.token || ''; }
     } catch (e) {
       // Network error — the self-contained link still works, so proceed with a warning.
       showToast(t('save_warn'), true);
     }
   }
 
-  // Pretty short link when the server gave us a slug; else the self-contained fallback.
-  const url = serverSlug ? `${location.origin}/p/${serverSlug}` : buildShareUrl();
+  // Pretty short link when the server gave us a slug; carry the edit token so the
+  // person can return to edit (their private link). View-only links omit the token.
+  const url = serverSlug
+    ? `${location.origin}/p/${serverSlug}${serverToken ? '?k=' + serverToken : ''}`
+    : buildShareUrl();
   showShareScreen(url);
 }
 
@@ -2391,7 +2400,7 @@ function showShareScreen(url) {
 function startOwnEntry() {
   // During the bracket window, editing a shared entry keeps its (locked) group
   // picks and lets the person add bracket picks in place — no fresh reload.
-  if (VIEW_MODE && bracketWindow()) {
+  if (VIEW_MODE && bracketWindow() && EDIT_TOKEN) {   // only the owner's link can edit in place
     VIEW_MODE = false;
     renderPage();
     setupDrawer();

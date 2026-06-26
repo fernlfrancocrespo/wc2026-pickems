@@ -182,6 +182,8 @@ const I18N = {
     q10_sub:      'A hat-trick is one player scoring three goals in a single match.',
     entries_closed:'Entries are closed — the cap was reached.',
     bad_code:     'Wrong entry code.',
+    err_bad_token:"This edit link isn't valid. Open the personal link from your email to edit your bracket.",
+    err_use_link: 'An entry already exists for that email. Use the edit link from your email, or contact Fernando.',
     save_warn:    "Couldn't reach the server. Your link still works — share it so you're counted.",
 
     // leaderboard
@@ -431,6 +433,8 @@ const I18N = {
     q10_sub:      'Um hat-trick é quando um jogador marca três gols na mesma partida.',
     entries_closed:'As inscrições foram encerradas — o limite foi atingido.',
     bad_code:     'Código de entrada incorreto.',
+    err_bad_token:'Este link de edição não é válido. Abra o link pessoal do seu e-mail para editar sua chave.',
+    err_use_link: 'Já existe um palpite com esse e-mail. Use o link de edição do seu e-mail, ou fale com o Fernando.',
     save_warn:    'Não foi possível contatar o servidor. Seu link funciona — compartilhe para entrar no placar.',
 
     // leaderboard

@@ -139,7 +139,8 @@ def main():
         img.save(CARDS/f"{base}.png")
 
         first=(fullname.split() or ["there"])[0]
-        link=f"https://wc2026-pickems.com/p/{slug}"
+        token=rr.get("edit_token","")
+        link=f"https://wc2026-pickems.com/p/{slug}?k={token}" if token else f"https://wc2026-pickems.com/p/{slug}"
         pt = lang=="pt"
         subj=(SUBJECT_PT if pt else SUBJECT_EN).format(first=first)
         body=(BODY_PT if pt else BODY_EN).format(first=first, link=link, tutorial=(TUTORIAL_PT if pt else TUTORIAL_EN))

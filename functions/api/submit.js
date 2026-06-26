@@ -13,6 +13,12 @@ const LOCK_TIME = Date.parse("2026-06-11T19:00:00Z"); // group-stage lock (openi
 
 // Short, unambiguous share code (no 0/O/1/l/I). 7 chars → ~1.3e12 space.
 const SLUG_ALPHABET = "23456789abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ";
+// Secret per-entry edit token (32 hex chars) — the unguessable key in a person's link.
+function makeToken() {
+  const b = new Uint8Array(16);
+  crypto.getRandomValues(b);
+  return [...b].map((x) => x.toString(16).padStart(2, "0")).join("");
+}
 function makeSlug(len = 7) {
   const bytes = new Uint8Array(len);
   crypto.getRandomValues(bytes);
@@ -40,80 +46,75 @@ export async function onRequestPost({ request, env }) {
     return json({ ok: false, error: "missing_name" }, 400);
   }
 
-  // Strip email + code from the stored payload; email stays in its own column.
-  const { email = "", code, ...rest } = body;
+  // token = the secret edit key from a person's emailed link; strip it from the payload.
+  const { email = "", code, token, ...rest } = body;
   const emailNorm = String(email).trim().toLowerCase();
   const postLock = Date.now() > LOCK_TIME;
+  const tok = (typeof token === "string" && token.length >= 16) ? token : null;
 
-  // Existing entry for this email — fetched BEFORE any delete, so we can keep the same
-  // share slug across edits and freeze the locked group-stage answers.
-  let prior = null;
-  if (emailNorm) {
-    try { prior = await env.DB.prepare("SELECT slug, payload FROM submissions WHERE lower(email) = ?").bind(emailNorm).first(); }
-    catch (e) { prior = null; }
-  }
+  let prior = null;          // the row being edited (and replaced)
+  let storeEmail = email;    // email written to the row
 
   if (!postLock) {
-    // Pre-kickoff: a full entry is required (client enforces this too).
+    // Pre-kickoff: full entry required; first-time entries (edit-by-email, historical).
     const missing = [];
     REQUIRED_TEAM.forEach((k) => { if (!body[k]) missing.push(k); });
     REQUIRED_BAND.forEach((k) => { if (!body[k]) missing.push(k); });
     REQUIRED_PLAYER.forEach((k) => { if (!body[k]) missing.push(k); });
     if (!body.q8 || Object.keys(body.q8).length < 12) missing.push("q8");
     if (missing.length) return json({ ok: false, error: "incomplete", missing }, 422);
-  } else {
-    // Post-kickoff (bracket window): FREEZE the group-stage answers. Edits keep the
-    // prior entry's locked picks; brand-new bracket-only entrants get none (score 0
-    // there). This makes it impossible to set or alter group picks after the lock.
-    let priorAns = {};
-    try { priorAns = prior ? JSON.parse(prior.payload) : {}; } catch (e) { priorAns = {}; }
+    if (emailNorm) {
+      try { prior = await env.DB.prepare("SELECT slug, email, edit_token FROM submissions WHERE lower(email)=?").bind(emailNorm).first(); } catch (e) {}
+    }
+  } else if (tok) {
+    // Post-kickoff EDIT — authorized by the secret token only (never by email).
+    try { prior = await env.DB.prepare("SELECT slug, email, payload, edit_token FROM submissions WHERE edit_token=?").bind(tok).first(); } catch (e) {}
+    if (!prior) return json({ ok: false, error: "bad_token" }, 403);   // invalid/fabricated link
+    let priorAns = {}; try { priorAns = JSON.parse(prior.payload); } catch (e) {}
     FROZEN_KEYS.forEach((k) => { if (priorAns[k] !== undefined) rest[k] = priorAns[k]; else delete rest[k]; });
-    const hasBracket = rest.bracket && Object.keys(rest.bracket).length;
-    if (!prior && !hasBracket) return json({ ok: false, error: "nothing_to_submit" }, 422);
+    storeEmail = prior.email || email;   // keep the owner's email; body can't change it
+  } else {
+    // Post-kickoff, NO token → only a brand-new bracket-only entry. Never overwrite an
+    // existing entry by email (that was the hole). Group answers are dropped.
+    if (emailNorm) {
+      let exists = null;
+      try { exists = await env.DB.prepare("SELECT 1 FROM submissions WHERE lower(email)=?").bind(emailNorm).first(); } catch (e) {}
+      if (exists) return json({ ok: false, error: "use_your_link" }, 409);
+    }
+    if (!(rest.bracket && Object.keys(rest.bracket).length)) return json({ ok: false, error: "nothing_to_submit" }, 422);
+    FROZEN_KEYS.forEach((k) => { delete rest[k]; });
   }
 
-  // EDIT-BY-EMAIL: a new submission with the same email REPLACES the previous one.
-  if (emailNorm) {
-    try { await env.DB.prepare("DELETE FROM submissions WHERE lower(email) = ?").bind(emailNorm).run(); }
-    catch (e) { /* non-fatal: fall through to insert */ }
+  // Replace the prior row (edits keep the same slug + token + email).
+  if (prior) {
+    try { await env.DB.prepare("DELETE FROM submissions WHERE edit_token=?").bind(prior.edit_token).run(); } catch (e) {}
   }
 
   // Intake cap — once reached, intake is "closed" until you raise MAX_SUBMISSIONS.
   const max = parseInt(env.MAX_SUBMISSIONS || "1000", 10);
   const countRow = await env.DB.prepare("SELECT COUNT(*) AS c FROM submissions").first();
-  if (countRow && countRow.c >= max) {
-    return json({ ok: false, error: "closed" }, 423);
-  }
+  if (countRow && countRow.c >= max) return json({ ok: false, error: "closed" }, 423);
 
-  const ipHash = ""; // IP capture disabled
-
-  // `hidden` lives inside the payload JSON (rest.hidden) — no dedicated column, so this
-  // works on any existing table without a migration. results.js reads it back out.
+  const editToken = (prior && prior.edit_token) || makeToken();   // keep owner's token, else mint one
   const stmt = `INSERT INTO submissions
-       (created_at, slug, name, display_name, email, country, lang, payload, ip_hash)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+       (created_at, slug, name, display_name, email, country, lang, payload, ip_hash, edit_token)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
   const fields = [
-    new Date().toISOString(),
-    null, // slug filled per-attempt below
+    new Date().toISOString(), null,
     String(body.name).slice(0, 120),
     String(body.displayName || "").slice(0, 60),
-    String(email).slice(0, 200),
+    String(storeEmail).slice(0, 200),
     String(body.country || "").slice(0, 60),
     String(body.lang || "en").slice(0, 5),
-    JSON.stringify(rest),
-    ipHash,
+    JSON.stringify(rest), "", editToken,
   ];
-
-  // Insert, retrying a couple of times on the (very unlikely) slug collision.
   let slug = "";
   for (let attempt = 0; attempt < 4; attempt++) {
-    // Reuse the prior share slug on an edit (it's free now that we deleted the row),
-    // so a person's /p/<slug> link stays stable across bracket edits.
-    slug = (attempt === 0 && prior && prior.slug) ? prior.slug : makeSlug();
+    slug = (attempt === 0 && prior && prior.slug) ? prior.slug : makeSlug();  // stable /p/<slug> across edits
     fields[1] = slug;
     try {
       await env.DB.prepare(stmt).bind(...fields).run();
-      return json({ ok: true, slug });
+      return json({ ok: true, slug, token: editToken });   // token returned so a new entrant gets their edit link
     } catch (e) {
       if (String(e).includes("UNIQUE") && attempt < 3) continue;
       return json({ ok: false, error: "db_insert_failed", detail: String(e) }, 500);
