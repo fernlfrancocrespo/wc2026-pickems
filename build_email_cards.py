@@ -42,22 +42,27 @@ def highlights(conf, lang):
     return (f"Você já acertou {joined} — muito bem! " if lang == "pt"
             else f"You've already nailed {joined} — nice work! ")
 
-def make_body(lang, first, rank, total, inplay, conf, link, tutorial):
-    hl = highlights(conf, lang)
-    top = rank <= TOP_N
+def make_body(lang, first, tier, rank, total, inplay, conf, link, tutorial, n):
+    hl = highlights(conf, lang)   # "" if nothing confirmed yet
     if lang == "pt":
-        lead = (f"Você está na briga — atualmente em #{rank} de 61, com {total} pontos. {hl}" if top
-                else f"Obrigado por jogar! Você está com {total} pontos até agora. {hl}")
-        push = ("A chave do mata-mata já está aberta e ainda há {inplay} pontos em jogo — dá pra subir (ou defender a posição). Preencha sua chave aqui:"
-                if top else
-                "E o melhor: ainda há {inplay} pontos em jogo no mata-mata — mais que suficiente pra qualquer um chegar ao topo. Preencha sua chave e siga no jogo:")
+        if tier == "contend":     lead = f"Você está na briga — atualmente em #{rank} de {n}, com {total} pontos. {hl}"
+        elif tier == "field":     lead = f"Você está no jogo, com {total} pontos. {hl}"
+        elif tier == "rising":    lead = f"Obrigado por jogar! {hl}Você está com {total} pontos."
+        else:                     lead = f"Obrigado por jogar! {hl if hl else 'Você começou bem.'}".strip()
+        if tier in ("contend", "field"):
+            push = "A chave do mata-mata já está aberta e ainda há {inplay} pontos em jogo — dá pra subir (ou defender). Preencha sua chave aqui:"
+        else:
+            push = "E o melhor: ainda há {inplay} pontos em jogo no mata-mata — mais que suficiente pra fazer uma grande arrancada. Preencha sua chave e siga no jogo:"
         return (f"Oi {first},\n\n{lead}\n\n{push.format(inplay=inplay)}\n{link}\n\n"
                 f"Primeira vez? Este tutorial rápido te ajuda: {tutorial}\n\nBoa sorte,\nFernando")
-    lead = (f"You're right in the mix — currently #{rank} of 61 with {total} points. {hl}" if top
-            else f"Thanks for playing! You're at {total} points so far. {hl}")
-    push = ("The knockout bracket is open now, and there are still {inplay} points up for grabs — plenty to climb (or defend). Fill out your bracket here:"
-            if top else
-            "Here's the fun part: there are still {inplay} points up for grabs in the knockouts — more than enough for anyone to make a run at the top. Fill out your bracket and stay in it:")
+    if tier == "contend":   lead = f"You're right in the mix — currently #{rank} of {n} with {total} points. {hl}"
+    elif tier == "field":   lead = f"You're in it, sitting on {total} points. {hl}"
+    elif tier == "rising":  lead = f"Thanks for playing! {hl}You're on {total} points."
+    else:                   lead = f"Thanks for playing! {hl if hl else 'You got off to a solid start.'}".strip()
+    if tier in ("contend", "field"):
+        push = "The knockout bracket is open now, and there are still {inplay} points up for grabs — plenty to climb (or defend). Fill out your bracket here:"
+    else:
+        push = "Here's the fun part: there are still {inplay} points up for grabs in the knockouts — more than enough to make a real run at the top. Fill out your bracket and stay in it:"
     return (f"Hi {first},\n\n{lead}\n\n{push.format(inplay=inplay)}\n{link}\n\n"
             f"New to it? This quick tutorial walks you through it: {tutorial}\n\nGood luck,\nFernando")
 
@@ -107,13 +112,25 @@ def main():
             tc=TAGCLR.get(tag,GOLD); tw=d.textlength(tag.upper(),font=font(17))
             d.rounded_rectangle([50,142,50+tw+24,172], radius=15, outline=tc, width=2)
             d.text((62,144), tag.upper(), font=font(17), fill=tc)
-        # rank + total
-        d.text((50,192), f"#{rank}", font=font(118), fill=GOLD)
-        rl=d.textlength(f"#{rank}",font=font(118))
-        d.text((60+rl,272), f"of {N}", font=font(28,False), fill=GREYL)
-        d.text((60+rl,306), f"ahead of {ahead}% of the field", font=font(22,False), fill=GREEN if ahead>=50 else GREY)
-        d.text((W-50,210), str(total), font=font(104), fill=WHITE, anchor="ra")
-        d.text((W-50,322), "POINTS", font=font(22), fill=GREY, anchor="ra")
+        # Tier by percentile (dynamic). Top half sees rank + field; bottom half is
+        # celebration only (no rank, no field); bottom 10% is pure celebration.
+        tier = "contend" if rank <= 15 else ("field" if rank <= N/2 else ("cheer" if rank > N*0.9 else "rising"))
+        show_field = tier in ("contend", "field")
+        if show_field:
+            d.text((50,192), f"#{rank}", font=font(118), fill=GOLD)
+            rl=d.textlength(f"#{rank}",font=font(118))
+            d.text((60+rl,272), f"of {N}", font=font(28,False), fill=GREYL)
+            d.text((60+rl,306), f"ahead of {ahead}% of the field", font=font(22,False), fill=GREEN if ahead>=50 else GREY)
+            d.text((W-50,210), str(total), font=font(104), fill=WHITE, anchor="ra")
+            d.text((W-50,322), "POINTS", font=font(22), fill=GREY, anchor="ra")
+        else:
+            d.text((50,192), str(total), font=font(118), fill=GOLD)
+            tl=d.textlength(str(total),font=font(118))
+            d.text((60+tl,272), "POINTS", font=font(28,False), fill=GREYL)
+            msg = "Look at everything you nailed!" if tier == "cheer" else "A strong group stage so far!"
+            d.text((60+tl,306), msg, font=font(22), fill=GREEN)
+            d.text((W-50,210), f"+{inplay}", font=font(104), fill=WHITE, anchor="ra")
+            d.text((W-50,322), "STILL UP FOR GRABS", font=font(20), fill=GOLD, anchor="ra")
 
         # ── confirmed vs ongoing ─────────────────────────────────
         y=366; d.line([50,y,W-50,y], fill=LINE, width=1)
@@ -136,15 +153,19 @@ def main():
         d.text((midx+20,y+86), "Champion, awards & your", font=font(20,False), fill=GREYL)
         d.text((midx+20,y+112), "knockout bracket — open now.", font=font(20,False), fill=GREYL)
 
-        # field strip
-        Y=H-66; d.text((50,Y-24), "THE FIELD", font=font(16), fill=GREY)
-        d.text((W-50,Y-26), f"{N} players · {round(mn)}–{round(mx)} pts", font=font(16,False), fill=GREY, anchor="ra")
-        d.rounded_rectangle([50,Y,W-50,Y+12], radius=6, fill=TRACK)
-        span=(mx-mn) or 1
-        for t in totals:
-            x=50+(t-mn)/span*(W-100); d.line([x,Y,x,Y+12], fill=LINE, width=2)
-        myx=50+(e["total"]-mn)/span*(W-100)
-        d.polygon([(myx-8,Y-14),(myx+8,Y-14),(myx,Y-4)], fill=GOLD); d.line([myx,Y-6,myx,Y+18], fill=GOLD, width=4)
+        # field strip (top half only — never show the field to the bottom half)
+        if show_field:
+            Y=H-66; d.text((50,Y-24), "THE FIELD", font=font(16), fill=GREY)
+            d.text((W-50,Y-26), f"{N} players · {round(mn)}–{round(mx)} pts", font=font(16,False), fill=GREY, anchor="ra")
+            d.rounded_rectangle([50,Y,W-50,Y+12], radius=6, fill=TRACK)
+            span=(mx-mn) or 1
+            for t in totals:
+                x=50+(t-mn)/span*(W-100); d.line([x,Y,x,Y+12], fill=LINE, width=2)
+            myx=50+(e["total"]-mn)/span*(W-100)
+            d.polygon([(myx-8,Y-14),(myx+8,Y-14),(myx,Y-4)], fill=GOLD); d.line([myx,Y-6,myx,Y+18], fill=GOLD, width=4)
+        else:
+            d.text((W//2, H-78), "The knockout bracket is wide open — plenty of room to climb.",
+                   font=font(19,False), fill=GREYL, anchor="ma")
         d.text((50,H-40), f"wc2026-pickems.com/p/{slug}", font=font(19,False), fill=GREY)
         d.text((W-50,H-40), "full scorecard →", font=font(19), fill=GOLD, anchor="ra")
 
@@ -157,11 +178,11 @@ def main():
         pt = lang=="pt"
         subj=(SUBJECT_PT if pt else SUBJECT_EN).format(first=first)
         tut=(TUTORIAL_PT if pt else TUTORIAL_EN)
-        body=make_body(lang, first, rank, total, inplay, conf, link, tut)
+        body=make_body(lang, first, tier, rank, total, inplay, conf, link, tut, N)
         (PACKETS/f"{base}.txt").write_text(
             f"TO: {rr.get('email','')}\nSUBJECT: {subj}\nATTACH: email_cards/{base}.png\nLANG: {lang}\n\n{body}\n", encoding="utf-8")
         rows.append({"rank":rank,"name":fullname,"email":rr.get("email",""),"lang":lang,"tag":tag or "",
-                     "total":total,"tier":"top15" if rank<=TOP_N else "field","subject":subj,
+                     "total":total,"tier":tier,"subject":subj,
                      "body":body,"card_file":f"{base}.png","link":link})
 
     with open(CARDS/"_mailmerge.csv","w",newline="",encoding="utf-8-sig") as f:
