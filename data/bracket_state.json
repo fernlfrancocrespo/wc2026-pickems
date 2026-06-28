@@ -1,15 +1,15 @@
 {
-  "updated": "2026-06-25T20:51:27+00:00",
-  "provisional": true,
-  "group_stage_complete": false,
+  "updated": "2026-06-28T05:28:24+00:00",
+  "provisional": false,
+  "group_stage_complete": true,
   "qualifying_third_groups": [
-    "A",
     "B",
-    "C",
     "D",
+    "E",
     "F",
-    "H",
+    "I",
     "J",
+    "K",
     "L"
   ],
   "allocation_found": true,
@@ -40,23 +40,23 @@
     },
     "79": {
       "s1": "Mexico",
-      "s2": "Scotland"
+      "s2": "Ecuador"
     },
     "80": {
       "s1": "England",
-      "s2": "Cape Verde"
+      "s2": "DR Congo"
     },
     "81": {
       "s1": "United States",
       "s2": "Bosnia and Herzegovina"
     },
     "82": {
-      "s1": "Egypt",
-      "s2": "South Korea"
+      "s1": "Belgium",
+      "s2": "Senegal"
     },
     "83": {
       "s1": "Portugal",
-      "s2": "Ghana"
+      "s2": "Croatia"
     },
     "84": {
       "s1": "Spain",
@@ -68,15 +68,15 @@
     },
     "86": {
       "s1": "Argentina",
-      "s2": "Uruguay"
+      "s2": "Cape Verde"
     },
     "87": {
       "s1": "Colombia",
-      "s2": "Croatia"
+      "s2": "Ghana"
     },
     "88": {
       "s1": "Australia",
-      "s2": "Iran"
+      "s2": "Egypt"
     }
   },
   "results": {},

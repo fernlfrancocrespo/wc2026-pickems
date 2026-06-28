@@ -1,12 +1,17 @@
 {
-  "updated": "2026-06-25T20:51:03+00:00",
+  "updated": "2026-06-28T05:28:22+00:00",
   "source": "wikipedia",
-  "matches_played": 54,
-  "group_goals_total": 161,
+  "matches_played": 72,
+  "group_goals_total": 215,
   "top_scorers": [
     {
       "player": "Lionel Messi",
       "team": "Argentina",
+      "goals": 6
+    },
+    {
+      "player": "Ousmane Dembélé",
+      "team": "France",
       "goals": 5
     },
     {
@@ -25,13 +30,33 @@
       "goals": 4
     },
     {
+      "player": "Brian Brobbey",
+      "team": "Netherlands",
+      "goals": 3
+    },
+    {
       "player": "Deniz Undav",
       "team": "Germany",
       "goals": 3
     },
     {
+      "player": "Elijah Just",
+      "team": "New Zealand",
+      "goals": 3
+    },
+    {
+      "player": "Harry Kane",
+      "team": "England",
+      "goals": 3
+    },
+    {
       "player": "Ismael Saibari",
       "team": "Morocco",
+      "goals": 3
+    },
+    {
+      "player": "Ismaïla Sarr",
+      "team": "Senegal",
       "goals": 3
     },
     {
@@ -50,34 +75,9 @@
       "goals": 3
     },
     {
-      "player": "Ayase Ueda",
-      "team": "Japan",
-      "goals": 2
-    },
-    {
-      "player": "Brian Brobbey",
-      "team": "Netherlands",
-      "goals": 2
-    },
-    {
-      "player": "Cody Gakpo",
-      "team": "Netherlands",
-      "goals": 2
-    },
-    {
-      "player": "Cristiano Ronaldo",
-      "team": "Portugal",
-      "goals": 2
-    },
-    {
-      "player": "Crysencio Summerville",
-      "team": "Netherlands",
-      "goals": 2
-    },
-    {
-      "player": "Cyle Larin",
-      "team": "Canada",
-      "goals": 2
+      "player": "Yoane Wissa",
+      "team": "DR Congo",
+      "goals": 3
     }
   ],
   "hat_trick_in_group_stage": true,
@@ -88,17 +88,22 @@
       "goals": 3
     },
     {
+      "player": "Ousmane Dembélé",
+      "team": "France",
+      "goals": 4
+    },
+    {
       "player": "Lionel Messi",
       "team": "Argentina",
       "goals": 3
     }
   ],
   "goal_timing": {
-    "goals_counted": 161,
+    "goals_counted": 215,
     "fastest_goal_seconds": 64.0,
-    "added_time_goals": 16
+    "added_time_goals": 22
   },
-  "group_stage_complete": false,
+  "group_stage_complete": true,
   "groups": {
     "A": {
       "provisional_order": [
@@ -275,51 +280,51 @@
         "Paraguay",
         "Türkiye"
       ],
-      "matches_played": 4,
-      "complete": false,
+      "matches_played": 6,
+      "complete": true,
       "standings": {
         "United States": {
-          "pld": 2,
+          "pld": 3,
           "w": 2,
           "d": 0,
-          "l": 0,
-          "gf": 6,
-          "ga": 1,
-          "gd": 5,
+          "l": 1,
+          "gf": 8,
+          "ga": 4,
+          "gd": 4,
           "pts": 6,
           "pos": 1
         },
         "Australia": {
-          "pld": 2,
+          "pld": 3,
           "w": 1,
-          "d": 0,
+          "d": 1,
           "l": 1,
           "gf": 2,
           "ga": 2,
           "gd": 0,
-          "pts": 3,
+          "pts": 4,
           "pos": 2
         },
         "Paraguay": {
-          "pld": 2,
+          "pld": 3,
           "w": 1,
-          "d": 0,
+          "d": 1,
           "l": 1,
           "gf": 2,
           "ga": 4,
           "gd": 2,
-          "pts": 3,
+          "pts": 4,
           "pos": 3
         },
         "Türkiye": {
-          "pld": 2,
-          "w": 0,
+          "pld": 3,
+          "w": 1,
           "d": 0,
           "l": 2,
-          "gf": 0,
-          "ga": 3,
-          "gd": 3,
-          "pts": 0,
+          "gf": 3,
+          "ga": 5,
+          "gd": 2,
+          "pts": 3,
           "pos": 4
         }
       }
@@ -331,50 +336,50 @@
         "Ecuador",
         "Curaçao"
       ],
-      "matches_played": 4,
-      "complete": false,
+      "matches_played": 6,
+      "complete": true,
       "standings": {
         "Germany": {
-          "pld": 2,
+          "pld": 3,
           "w": 2,
           "d": 0,
-          "l": 0,
-          "gf": 9,
-          "ga": 2,
-          "gd": 7,
+          "l": 1,
+          "gf": 10,
+          "ga": 4,
+          "gd": 6,
           "pts": 6,
           "pos": 1
         },
         "Ivory Coast": {
-          "pld": 2,
-          "w": 1,
+          "pld": 3,
+          "w": 2,
           "d": 0,
+          "l": 1,
+          "gf": 4,
+          "ga": 2,
+          "gd": 2,
+          "pts": 6,
+          "pos": 2
+        },
+        "Ecuador": {
+          "pld": 3,
+          "w": 1,
+          "d": 1,
           "l": 1,
           "gf": 2,
           "ga": 2,
           "gd": 0,
-          "pts": 3,
-          "pos": 2
-        },
-        "Ecuador": {
-          "pld": 2,
-          "w": 0,
-          "d": 1,
-          "l": 1,
-          "gf": 0,
-          "ga": 1,
-          "gd": 1,
-          "pts": 1,
+          "pts": 4,
           "pos": 3
         },
         "Curaçao": {
-          "pld": 2,
+          "pld": 3,
           "w": 0,
           "d": 1,
-          "l": 1,
+          "l": 2,
           "gf": 1,
-          "ga": 7,
-          "gd": 6,
+          "ga": 9,
+          "gd": 8,
           "pts": 1,
           "pos": 4
         }
@@ -387,50 +392,50 @@
         "Sweden",
         "Tunisia"
       ],
-      "matches_played": 4,
-      "complete": false,
+      "matches_played": 6,
+      "complete": true,
       "standings": {
         "Netherlands": {
-          "pld": 2,
-          "w": 1,
+          "pld": 3,
+          "w": 2,
           "d": 1,
+          "l": 0,
+          "gf": 10,
+          "ga": 4,
+          "gd": 6,
+          "pts": 7,
+          "pos": 1
+        },
+        "Japan": {
+          "pld": 3,
+          "w": 1,
+          "d": 2,
           "l": 0,
           "gf": 7,
           "ga": 3,
           "gd": 4,
-          "pts": 4,
-          "pos": 1
-        },
-        "Japan": {
-          "pld": 2,
-          "w": 1,
-          "d": 1,
-          "l": 0,
-          "gf": 6,
-          "ga": 2,
-          "gd": 4,
-          "pts": 4,
+          "pts": 5,
           "pos": 2
         },
         "Sweden": {
-          "pld": 2,
+          "pld": 3,
           "w": 1,
-          "d": 0,
+          "d": 1,
           "l": 1,
-          "gf": 6,
-          "ga": 6,
+          "gf": 7,
+          "ga": 7,
           "gd": 0,
-          "pts": 3,
+          "pts": 4,
           "pos": 3
         },
         "Tunisia": {
-          "pld": 2,
+          "pld": 3,
           "w": 0,
           "d": 0,
-          "l": 2,
-          "gf": 1,
-          "ga": 9,
-          "gd": 8,
+          "l": 3,
+          "gf": 2,
+          "ga": 12,
+          "gd": 10,
           "pts": 0,
           "pos": 4
         }
@@ -438,55 +443,55 @@
     },
     "G": {
       "provisional_order": [
+        "Belgium",
         "Egypt",
         "Iran",
-        "Belgium",
         "New Zealand"
       ],
-      "matches_played": 4,
-      "complete": false,
+      "matches_played": 6,
+      "complete": true,
       "standings": {
-        "Egypt": {
-          "pld": 2,
+        "Belgium": {
+          "pld": 3,
           "w": 1,
-          "d": 1,
+          "d": 2,
           "l": 0,
-          "gf": 4,
+          "gf": 6,
           "ga": 2,
-          "gd": 2,
-          "pts": 4,
+          "gd": 4,
+          "pts": 5,
           "pos": 1
         },
-        "Iran": {
-          "pld": 2,
-          "w": 0,
+        "Egypt": {
+          "pld": 3,
+          "w": 1,
           "d": 2,
           "l": 0,
-          "gf": 2,
-          "ga": 2,
-          "gd": 0,
-          "pts": 2,
+          "gf": 5,
+          "ga": 3,
+          "gd": 2,
+          "pts": 5,
           "pos": 2
         },
-        "Belgium": {
-          "pld": 2,
+        "Iran": {
+          "pld": 3,
           "w": 0,
-          "d": 2,
+          "d": 3,
           "l": 0,
-          "gf": 1,
-          "ga": 1,
+          "gf": 3,
+          "ga": 3,
           "gd": 0,
-          "pts": 2,
+          "pts": 3,
           "pos": 3
         },
         "New Zealand": {
-          "pld": 2,
+          "pld": 3,
           "w": 0,
           "d": 1,
-          "l": 1,
-          "gf": 3,
-          "ga": 5,
-          "gd": 2,
+          "l": 2,
+          "gf": 4,
+          "ga": 10,
+          "gd": 6,
           "pts": 1,
           "pos": 4
         }
@@ -495,55 +500,55 @@
     "H": {
       "provisional_order": [
         "Spain",
-        "Uruguay",
         "Cape Verde",
+        "Uruguay",
         "Saudi Arabia"
       ],
-      "matches_played": 4,
-      "complete": false,
+      "matches_played": 6,
+      "complete": true,
       "standings": {
         "Spain": {
-          "pld": 2,
-          "w": 1,
+          "pld": 3,
+          "w": 2,
           "d": 1,
           "l": 0,
-          "gf": 4,
+          "gf": 5,
           "ga": 0,
-          "gd": 4,
-          "pts": 4,
+          "gd": 5,
+          "pts": 7,
           "pos": 1
         },
-        "Uruguay": {
-          "pld": 2,
-          "w": 0,
-          "d": 2,
-          "l": 0,
-          "gf": 3,
-          "ga": 3,
-          "gd": 0,
-          "pts": 2,
-          "pos": 2
-        },
         "Cape Verde": {
-          "pld": 2,
+          "pld": 3,
           "w": 0,
-          "d": 2,
+          "d": 3,
           "l": 0,
           "gf": 2,
           "ga": 2,
           "gd": 0,
+          "pts": 3,
+          "pos": 2
+        },
+        "Uruguay": {
+          "pld": 3,
+          "w": 0,
+          "d": 2,
+          "l": 1,
+          "gf": 3,
+          "ga": 4,
+          "gd": 1,
           "pts": 2,
           "pos": 3
         },
         "Saudi Arabia": {
-          "pld": 2,
+          "pld": 3,
           "w": 0,
-          "d": 1,
+          "d": 2,
           "l": 1,
           "gf": 1,
           "ga": 5,
           "gd": 4,
-          "pts": 1,
+          "pts": 2,
           "pos": 4
         }
       }
@@ -555,50 +560,50 @@
         "Senegal",
         "Iraq"
       ],
-      "matches_played": 4,
-      "complete": false,
+      "matches_played": 6,
+      "complete": true,
       "standings": {
         "France": {
-          "pld": 2,
-          "w": 2,
+          "pld": 3,
+          "w": 3,
           "d": 0,
           "l": 0,
-          "gf": 6,
-          "ga": 1,
-          "gd": 5,
-          "pts": 6,
+          "gf": 10,
+          "ga": 2,
+          "gd": 8,
+          "pts": 9,
           "pos": 1
         },
         "Norway": {
-          "pld": 2,
+          "pld": 3,
           "w": 2,
           "d": 0,
-          "l": 0,
-          "gf": 7,
-          "ga": 3,
-          "gd": 4,
+          "l": 1,
+          "gf": 8,
+          "ga": 7,
+          "gd": 1,
           "pts": 6,
           "pos": 2
         },
         "Senegal": {
-          "pld": 2,
-          "w": 0,
+          "pld": 3,
+          "w": 1,
           "d": 0,
           "l": 2,
-          "gf": 3,
+          "gf": 8,
           "ga": 6,
-          "gd": 3,
-          "pts": 0,
+          "gd": 2,
+          "pts": 3,
           "pos": 3
         },
         "Iraq": {
-          "pld": 2,
+          "pld": 3,
           "w": 0,
           "d": 0,
-          "l": 2,
+          "l": 3,
           "gf": 1,
-          "ga": 7,
-          "gd": 6,
+          "ga": 12,
+          "gd": 11,
           "pts": 0,
           "pos": 4
         }
@@ -611,50 +616,50 @@
         "Algeria",
         "Jordan"
       ],
-      "matches_played": 4,
-      "complete": false,
+      "matches_played": 6,
+      "complete": true,
       "standings": {
         "Argentina": {
-          "pld": 2,
-          "w": 2,
+          "pld": 3,
+          "w": 3,
           "d": 0,
           "l": 0,
-          "gf": 5,
-          "ga": 0,
-          "gd": 5,
-          "pts": 6,
+          "gf": 8,
+          "ga": 1,
+          "gd": 7,
+          "pts": 9,
           "pos": 1
         },
         "Austria": {
-          "pld": 2,
+          "pld": 3,
           "w": 1,
-          "d": 0,
+          "d": 1,
           "l": 1,
-          "gf": 3,
-          "ga": 3,
+          "gf": 6,
+          "ga": 6,
           "gd": 0,
-          "pts": 3,
+          "pts": 4,
           "pos": 2
         },
         "Algeria": {
-          "pld": 2,
+          "pld": 3,
           "w": 1,
-          "d": 0,
+          "d": 1,
           "l": 1,
-          "gf": 2,
-          "ga": 4,
+          "gf": 5,
+          "ga": 7,
           "gd": 2,
-          "pts": 3,
+          "pts": 4,
           "pos": 3
         },
         "Jordan": {
-          "pld": 2,
+          "pld": 3,
           "w": 0,
           "d": 0,
-          "l": 2,
-          "gf": 2,
-          "ga": 5,
-          "gd": 3,
+          "l": 3,
+          "gf": 3,
+          "ga": 8,
+          "gd": 5,
           "pts": 0,
           "pos": 4
         }
@@ -667,50 +672,50 @@
         "DR Congo",
         "Uzbekistan"
       ],
-      "matches_played": 4,
-      "complete": false,
+      "matches_played": 6,
+      "complete": true,
       "standings": {
         "Colombia": {
-          "pld": 2,
+          "pld": 3,
           "w": 2,
-          "d": 0,
+          "d": 1,
           "l": 0,
           "gf": 4,
           "ga": 1,
           "gd": 3,
-          "pts": 6,
+          "pts": 7,
           "pos": 1
         },
         "Portugal": {
-          "pld": 2,
+          "pld": 3,
           "w": 1,
-          "d": 1,
+          "d": 2,
           "l": 0,
           "gf": 6,
           "ga": 1,
           "gd": 5,
-          "pts": 4,
+          "pts": 5,
           "pos": 2
         },
         "DR Congo": {
-          "pld": 2,
-          "w": 0,
+          "pld": 3,
+          "w": 1,
           "d": 1,
           "l": 1,
-          "gf": 1,
-          "ga": 2,
+          "gf": 4,
+          "ga": 3,
           "gd": 1,
-          "pts": 1,
+          "pts": 4,
           "pos": 3
         },
         "Uzbekistan": {
-          "pld": 2,
+          "pld": 3,
           "w": 0,
           "d": 0,
-          "l": 2,
-          "gf": 1,
-          "ga": 8,
-          "gd": 7,
+          "l": 3,
+          "gf": 2,
+          "ga": 11,
+          "gd": 9,
           "pts": 0,
           "pos": 4
         }
@@ -719,54 +724,54 @@
     "L": {
       "provisional_order": [
         "England",
-        "Ghana",
         "Croatia",
+        "Ghana",
         "Panama"
       ],
-      "matches_played": 4,
-      "complete": false,
+      "matches_played": 6,
+      "complete": true,
       "standings": {
         "England": {
-          "pld": 2,
-          "w": 1,
+          "pld": 3,
+          "w": 2,
           "d": 1,
           "l": 0,
-          "gf": 4,
+          "gf": 6,
           "ga": 2,
-          "gd": 2,
-          "pts": 4,
+          "gd": 4,
+          "pts": 7,
           "pos": 1
         },
-        "Ghana": {
-          "pld": 2,
-          "w": 1,
-          "d": 1,
-          "l": 0,
-          "gf": 1,
-          "ga": 0,
-          "gd": 1,
-          "pts": 4,
-          "pos": 2
-        },
         "Croatia": {
-          "pld": 2,
-          "w": 1,
+          "pld": 3,
+          "w": 2,
           "d": 0,
           "l": 1,
-          "gf": 3,
-          "ga": 4,
-          "gd": 1,
-          "pts": 3,
+          "gf": 5,
+          "ga": 5,
+          "gd": 0,
+          "pts": 6,
+          "pos": 2
+        },
+        "Ghana": {
+          "pld": 3,
+          "w": 1,
+          "d": 1,
+          "l": 1,
+          "gf": 2,
+          "ga": 2,
+          "gd": 0,
+          "pts": 4,
           "pos": 3
         },
         "Panama": {
-          "pld": 2,
+          "pld": 3,
           "w": 0,
           "d": 0,
-          "l": 2,
+          "l": 3,
           "gf": 0,
-          "ga": 2,
-          "gd": 2,
+          "ga": 4,
+          "gd": 4,
           "pts": 0,
           "pos": 4
         }
@@ -781,7 +786,7 @@
     },
     "espn_cross_check": {
       "ok": true,
-      "matches_compared": 54,
+      "matches_compared": 72,
       "issues": []
     }
   }

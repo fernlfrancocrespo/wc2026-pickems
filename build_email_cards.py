@@ -45,26 +45,28 @@ def highlights(conf, lang):
 def make_body(lang, first, tier, rank, total, inplay, conf, link, tutorial, n):
     hl = highlights(conf, lang)   # "" if nothing confirmed yet
     if lang == "pt":
-        if tier == "contend":     lead = f"Você está na briga — atualmente em #{rank} de {n}, com {total} pontos. {hl}"
-        elif tier == "field":     lead = f"Você está no jogo, com {total} pontos. {hl}"
-        elif tier == "rising":    lead = f"Obrigado por jogar! {hl}Você está com {total} pontos."
-        else:                     lead = f"Obrigado por jogar! {hl if hl else 'Você começou bem.'}".strip()
-        if tier in ("contend", "field"):
-            push = "A chave do mata-mata já está aberta e ainda há {inplay} pontos em jogo — dá pra subir (ou defender). Preencha sua chave aqui:"
-        else:
-            push = "E o melhor: ainda há {inplay} pontos em jogo no mata-mata — mais que suficiente pra fazer uma grande arrancada. Preencha sua chave e siga no jogo:"
-        return (f"Oi {first},\n\n{lead}\n\n{push.format(inplay=inplay)}\n{link}\n\n"
-                f"Primeira vez? Este tutorial rápido te ajuda: {tutorial}\n\nBoa sorte,\nFernando")
-    if tier == "contend":   lead = f"You're right in the mix — currently #{rank} of {n} with {total} points. {hl}"
-    elif tier == "field":   lead = f"You're in it, sitting on {total} points. {hl}"
-    elif tier == "rising":  lead = f"Thanks for playing! {hl}You're on {total} points."
-    else:                   lead = f"Thanks for playing! {hl if hl else 'You got off to a solid start.'}".strip()
-    if tier in ("contend", "field"):
-        push = "The knockout bracket is open now, and there are still {inplay} points up for grabs — plenty to climb (or defend). Fill out your bracket here:"
-    else:
-        push = "Here's the fun part: there are still {inplay} points up for grabs in the knockouts — more than enough to make a real run at the top. Fill out your bracket and stay in it:"
-    return (f"Hi {first},\n\n{lead}\n\n{push.format(inplay=inplay)}\n{link}\n\n"
-            f"New to it? This quick tutorial walks you through it: {tutorial}\n\nGood luck,\nFernando")
+        intro = "Obrigado por jogar no nosso bolão da Copa 2026 — a fase de grupos chegou ao fim!"
+        if tier == "contend":   lead = f"E você está na briga: {rank}º de {n}, com {total} pontos. {hl}"
+        elif tier == "field":   lead = f"E você está bem no jogo, com {total} pontos. {hl}"
+        elif tier == "rising":  lead = f"Você está com {total} pontos até aqui. {hl}"
+        else:                   lead = (hl or "Você está no placar e a diversão está só começando.")
+        push = ("Agora a chave do mata-mata está aberta, com {inplay} pontos ainda em jogo — dá pra subir (ou defender). Preencha sua chave antes do apito dos 16 avos:"
+                if tier in ("contend", "field") else
+                "E o melhor: ainda há {inplay} pontos em jogo no mata-mata — mais que suficiente pra uma grande arrancada. Preencha sua chave antes do apito dos 16 avos:")
+        return (f"Oi {first},\n\n{intro}\n\n{lead}\n\n{push.format(inplay=inplay)}\n\n{link}\n\n"
+                f"Primeira vez? Este tutorial rápido (2 min) te ajuda: {tutorial}\n\n"
+                f"Boa sorte!\n— Fernando\n\nP.S. O card em anexo mostra como você está indo até agora.")
+    intro = "Thanks for playing our World Cup 2026 pick-'ems — the group stage is in the books!"
+    if tier == "contend":   lead = f"And you're right in the mix: #{rank} of {n}, with {total} points. {hl}"
+    elif tier == "field":   lead = f"And you're well in it, sitting on {total} points. {hl}"
+    elif tier == "rising":  lead = f"You're on {total} points so far. {hl}"
+    else:                   lead = (hl or "You're on the board and the fun's just getting started.")
+    push = ("The knockout bracket is open now, with {inplay} points still up for grabs — plenty to climb or defend. Lock in your bracket before the Round of 32 kicks off:"
+            if tier in ("contend", "field") else
+            "And here's the fun part — there are {inplay} points still up for grabs in the knockouts, more than enough to make a real run. Fill out your bracket before the Round of 32 kicks off:")
+    return (f"Hi {first},\n\n{intro}\n\n{lead}\n\n{push.format(inplay=inplay)}\n\n{link}\n\n"
+            f"New to it? Here's a quick 2-minute walkthrough: {tutorial}\n\n"
+            f"Good luck!\n— Fernando\n\nP.S. The attached card shows how you're doing so far.")
 
 NAVY=(13,27,42); CARD=(26,45,64); TRACK=(15,34,53); LINE=(70,90,112)
 GOLD=(201,168,76); GOLDL=(232,198,106); WHITE=(255,255,255)
