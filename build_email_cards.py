@@ -24,6 +24,10 @@ PACKETS.mkdir(parents=True, exist_ok=True)
 # ── EDIT THESE before sending ────────────────────────────────────────────────
 TUTORIAL_EN = "https://YOUTUBE-LINK-EN"
 TUTORIAL_PT = "https://YOUTUBE-LINK-PT"
+# Who gets the Portuguese email. Everyone submitted in English, so we key PT off the
+# Family tag (your Brazilian family). Add/remove tags, or list specific emails.
+PT_TAGS = {"Family"}
+PT_EMAILS = set()   # e.g. {"someone@email.com"}  — lowercased
 SUBJECT_EN = "{first} — it's time to fill out your bracket"
 SUBJECT_PT = "{first} — hora de preencher sua chave"
 TOP_N = 15   # ranks 1..15 get the "in contention" email; the rest get the "anyone can win" email
@@ -177,13 +181,16 @@ def main():
         first=(fullname.split() or ["there"])[0]
         token=rr.get("edit_token","")
         link=f"https://wc2026-pickems.com/p/{slug}?k={token}" if token else f"https://wc2026-pickems.com/p/{slug}"
-        pt = lang=="pt"
+        # Portuguese for anyone who chose PT, plus the configured PT tags/emails (the
+        # Brazilian family all submitted in English, so we key PT off the Family tag).
+        pt = (lang == "pt") or (tag in PT_TAGS) or ((rr.get("email") or "").lower() in PT_EMAILS)
+        blang = "pt" if pt else "en"
         subj=(SUBJECT_PT if pt else SUBJECT_EN).format(first=first)
         tut=(TUTORIAL_PT if pt else TUTORIAL_EN)
-        body=make_body(lang, first, tier, rank, total, inplay, conf, link, tut, N)
+        body=make_body(blang, first, tier, rank, total, inplay, conf, link, tut, N)
         (PACKETS/f"{base}.txt").write_text(
-            f"TO: {rr.get('email','')}\nSUBJECT: {subj}\nATTACH: email_cards/{base}.png\nLANG: {lang}\n\n{body}\n", encoding="utf-8")
-        rows.append({"rank":rank,"name":fullname,"email":rr.get("email",""),"lang":lang,"tag":tag or "",
+            f"TO: {rr.get('email','')}\nSUBJECT: {subj}\nATTACH: email_cards/{base}.png\nLANG: {blang}\n\n{body}\n", encoding="utf-8")
+        rows.append({"rank":rank,"name":fullname,"email":rr.get("email",""),"lang":blang,"tag":tag or "",
                      "total":total,"tier":tier,"subject":subj,
                      "body":body,"card_file":f"{base}.png","link":link})
 
