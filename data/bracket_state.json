@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-28T05:28:24+00:00",
+  "updated": "2026-06-28T22:12:59+00:00",
   "provisional": false,
   "group_stage_complete": true,
   "qualifying_third_groups": [
@@ -79,6 +79,8 @@
       "s2": "Egypt"
     }
   },
-  "results": {},
+  "results": {
+    "73": "Canada"
+  },
   "results_warnings": []
 }

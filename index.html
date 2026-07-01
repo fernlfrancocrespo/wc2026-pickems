@@ -134,12 +134,22 @@
     .sc-out.red { color:#e8857f; background:var(--sc-red-soft); } .sc-out.red .dot { background:var(--red); }
     /* ── knockout bracket (two-sided, final in the centre) ───────── */
     .br-intro { font-size:.8rem; color:var(--grey-light); line-height:1.6; margin-bottom:10px; }
+    .br-key { display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin-bottom:12px; }
+    .br-key-lbl { font-size:.62rem; letter-spacing:1px; text-transform:uppercase; color:var(--grey-mid); margin-right:3px; }
+    .bk { display:inline-flex; align-items:center; gap:5px; background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:999px; padding:4px 10px; font-size:.72rem; color:var(--grey-light); white-space:nowrap; }
+    .bk b { font-family:'Bebas Neue',sans-serif; font-size:.95rem; letter-spacing:.5px; color:var(--gold); }
+    .bk.boost { background:rgba(201,168,76,.14); border-color:rgba(201,168,76,.45); color:var(--gold-light); }
+    .bk.boost b { display:inline-flex; align-items:center; gap:1px; }
+    .bk.boost b i { font-style:normal; color:var(--grey-mid); font-family:'Inter',sans-serif; font-size:.72rem; }
+    .br-bonus { display:flex; align-items:center; gap:9px; background:rgba(201,168,76,.10); border:1px solid rgba(201,168,76,.30); border-radius:10px; padding:9px 13px; font-size:.78rem; color:var(--gold-light); line-height:1.45; margin-bottom:14px; }
+    .br-bonus-spark { flex:none; display:inline-flex; align-items:center; justify-content:center; min-width:30px; height:24px; padding:0 7px; border-radius:999px; background:var(--gold); color:#15233a; font-weight:800; font-size:.82rem; letter-spacing:.3px; }
     .br-scroll { overflow:auto; -webkit-overflow-scrolling:touch; border:1px solid var(--border); border-radius:10px; background:var(--navy); padding:10px 6px; }
     .br-tree { display:flex; align-items:stretch; min-width:1180px; height:600px; }
     .bc { display:flex; flex-direction:column; flex:0 0 142px; }
     .bcen { display:flex; flex-direction:column; flex:0 0 158px; justify-content:center; align-items:center; }
-    .blab { font-family:'Bebas Neue',sans-serif; letter-spacing:1.5px; color:var(--gold); font-size:.85rem; text-align:center; height:20px; }
-    .blab em { font-style:normal; font-family:'Inter',sans-serif; font-size:.58rem; color:var(--grey-mid); margin-left:4px; }
+    .blab { font-family:'Bebas Neue',sans-serif; letter-spacing:1.5px; color:var(--gold); font-size:.85rem; text-align:center; height:22px; display:flex; align-items:center; justify-content:center; gap:5px; }
+    .blab em { font-style:normal; font-family:'Inter',sans-serif; font-weight:700; font-size:.62rem; color:var(--gold); background:rgba(201,168,76,.14); border:1px solid rgba(201,168,76,.30); border-radius:999px; padding:1px 6px; letter-spacing:.3px; }
+    .blab em.boost { color:#15233a; background:var(--gold); border-color:var(--gold); }
     .bcw { display:flex; flex-direction:column; justify-content:space-around; flex:1; }
     .bm { position:relative; display:flex; flex-direction:column; gap:3px; flex:1; justify-content:center; }
     .bc.L .bm::after { content:""; position:absolute; right:-7px; top:50%; width:7px; height:2px; background:rgba(255,255,255,.13); }
@@ -707,17 +717,22 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
-<script src="/i18n.js?v=7"></script>
-<script src="/scoring.js?v=8"></script>
+<script src="/i18n.js?v=9"></script>
+<script src="/scoring.js?v=9"></script>
 <script>
 // ═══════════════════════════════════════ CONFIG
 const LOCK_TIME  = new Date('2026-06-11T19:00:00Z');   // group-stage picks lock (opening kickoff)
-const BRACKET_LOCK = new Date('2026-06-28T20:00:00Z'); // bracket picks lock (first R32 kickoff) — adjust if needed
+const BRACKET_LOCK = new Date('2026-06-29T17:00:00Z'); // FINAL bracket submission close: Mon Jun 29, 1:00 PM ET (stage-2 deadline). Per-game lock handles games already played (e.g. Sun 3pm Canada v South Africa).
 // Second intake window: AFTER group lock, knockout bracket can still be filled — but
 // only once the host opens it (data/bracket.json "open": true). Group picks stay locked.
 function bracketWindow() {
   return !!(typeof bracketStruct !== 'undefined' && bracketStruct && bracketStruct.open)
          && Date.now() < BRACKET_LOCK;
+}
+// Late window: bracket still open, but the first R32 game has kicked off (Sun 3pm ET).
+// Anyone submitting now earns the semifinal compensation (SF picks score 3, not 2).
+function isLateWindow() {
+  return bracketWindow() && typeof FIRST_R32_KICKOFF !== 'undefined' && Date.now() > FIRST_R32_KICKOFF;
 }
 // Secret edit token from a person's emailed link (/p/<slug>?k=<token>). Present = this
 // is YOUR link, so you may edit/submit; absent = view-only (you can't edit others').
@@ -758,6 +773,7 @@ let bracketState  = {}; // populated R32 teams (data/bracket_state.json) — { r
 let cinderellaSet = new Set();
 let VIEW_MODE     = false; // true when rendering a shared, read-only entry
 let hideEntry     = false; // user opted to hide their entry from the public leaderboard
+let scMode        = 'current'; // scorecard view: 'current' (live total) | 'group' (group-stage-final total, frozen)
 
 // All answer keys that go into a shareable link (email is deliberately excluded).
 const SHARE_Q_KEYS = [
@@ -1858,14 +1874,17 @@ function scRow(qid, bd, key, isLive) {
 }
 
 // Compute this entry's rank by scoring every public entry the same way.
-async function computeRank(key, myTotal) {
+// `mode`: 'current' ranks by the live total; 'group' ranks by the frozen group-stage-only score.
+async function computeRank(key, myMetric, mode) {
   try {
     const r = await fetch('/api/results'); const d = await r.json();
     if (!d || !d.ok || !d.submissions) return null;
     let better = 0;
     d.submissions.forEach(s => {
       const dg = isDefaultGroupOrder(s.answers.q8, groupsData);
-      if (scoreEntry(s.answers, key, { defaultGroup: dg }).total > myTotal + 1e-6) better++;
+      const sc = scoreEntry(s.answers, key, { defaultGroup: dg });
+      const val = mode === 'group' ? sc.lockedGroup : sc.total;
+      if (val > myMetric + 1e-6) better++;
     });
     return { rank: better + 1, of: d.submissions.length };
   } catch { return null; }
@@ -1880,22 +1899,27 @@ async function renderScorecard() {
   const bdKeyFor = (q) => (q === 'q3a' || q === 'q3b') ? 'q3' : q;
 
   const order = Object.keys(SC_LABELS);
-  const scored = order.filter(q => { const b = res.breakdown[q]; return b && b.graded && !b.skipped; })
+  // In group-stage mode, only the group-settling questions (q8/q9/q10) are in view —
+  // they're frozen final, so nothing else from that bucket is relevant.
+  const inScope = q => scMode !== 'group' || GROUP_QS.includes(q);
+  const scored = order.filter(q => { const b = res.breakdown[q]; return b && b.graded && !b.skipped && inScope(q); })
     .sort((a, b) => {
       const rank = s => s === 'hit' ? 0 : s === 'partial' ? 1 : 2;
       const ra = rank(scStatus(res.breakdown[a])), rb = rank(scStatus(res.breakdown[b]));
       return ra - rb || res.breakdown[b].max - res.breakdown[a].max;
     });
-  const pending = order.filter(q => { const b = res.breakdown[q]; return b && !b.graded && !b.skipped; })
+  const pending = order.filter(q => { const b = res.breakdown[q]; return b && !b.graded && !b.skipped && inScope(q); })
     .sort((a, b) => res.breakdown[b].max - res.breakdown[a].max);
 
   // bracket = bonus on top of the 251 main entry (not rebalanced); only counts once open
-  const brkActive = bracketStruct && bracketStruct.open && typeof scoreBracket === 'function';
+  const brkActive = scMode !== 'group' && bracketStruct && bracketStruct.open && typeof scoreBracket === 'function';
   const late = (typeof isLateBracket === 'function') && isLateBracket(ENTRY_CREATED_AT);
   const brk = brkActive
     ? scoreBracket(answers.bracket, bracketStruct, (bracketState && bracketState.results) || {}, { lateSfBonus: late ? 1 : 0 }) : { pts: 0, max: 0, byRound: {} };
-  const total = Math.round(res.total + brk.pts), pend = Math.round(res.pendingMax + (brk.max - brk.pts));
-  const earnW = Math.max(2, Math.round(total / (FULL_MAX + brk.max) * 100));
+  const total = scMode === 'group' ? Math.round(res.lockedGroup) : Math.round(res.total + brk.pts);
+  const pend = scMode === 'group' ? 0 : Math.round(res.pendingMax + (brk.max - brk.pts));
+  const earnW = scMode === 'group' ? 100 : Math.max(2, Math.round(total / (FULL_MAX + brk.max) * 100));
+  const rankMetric = scMode === 'group' ? res.lockedGroup : res.total;
 
   const app = document.getElementById('app');
   app.innerHTML = '';
@@ -1905,11 +1929,17 @@ async function renderScorecard() {
     entryToggleHtml() +
     `<div class="sc-id"><span class="lbl">${t('sc_entry')}</span><span class="name">${escapeHtml(displayName(answers.name))}</span>` +
       `<button class="btn-make-own own" id="sc-makeown">${bracketWindow() && EDIT_TOKEN ? t('bracket_cta') : t('make_own')}</button></div>` +
+    `<div class="lb-toggle lb-mode-toggle">` +
+      `<button data-mode="current" class="${scMode === 'current' ? 'on' : ''}">${t('lb_mode_current')}</button>` +
+      `<button data-mode="group" class="${scMode === 'group' ? 'on' : ''}">${t('lb_mode_group')}</button>` +
+    `</div>` +
     `<div class="sc-hero">` +
       `<div class="sc-hero-tot"><div class="big">${total}</div><div class="cap">${t('sc_points')}</div><div class="rank" id="sc-rank"></div></div>` +
       `<div class="sc-hero-r">` +
-        `<div class="sc-barlbl"><span>${t('sc_earned')} ${total}</span><span>${t('sc_inplay')} ${pend}</span></div>` +
-        `<div class="sc-bar"><div class="e" style="width:${earnW}%"></div></div>` +
+        (scMode === 'group'
+          ? `<div class="sc-barlbl"><span>${t('lb_group_note')}</span></div><div class="sc-bar"><div class="e" style="width:100%"></div></div>`
+          : `<div class="sc-barlbl"><span>${t('sc_earned')} ${total}</span><span>${t('sc_inplay')} ${pend}</span></div>` +
+            `<div class="sc-bar"><div class="e" style="width:${earnW}%"></div></div>`) +
         `<div class="sc-mini">` +
           `<div><div class="v">${Math.round(res.lockedGroup)}</div><div class="k">${t('sc_group')}</div></div>` +
           `<div><div class="v">${Math.round(res.lockedKO + brk.pts)}</div><div class="k">${t('sc_ko')}</div></div>` +
@@ -1926,7 +1956,7 @@ async function renderScorecard() {
   scored.forEach(q => sc.appendChild(scRow(q, res.breakdown[q], key, live.has(bdKeyFor(q)))));
   if (!scored.length && !(brk.max && Object.keys(answers.bracket || {}).length))
     sc.innerHTML = `<div class="sc-row"><div class="q"><div class="qd" style="color:var(--grey-mid)">${t('sc_nothing')}</div></div></div>`;
-  // bracket summary row — only once they've made bracket picks
+  // bracket summary row — only once they've made bracket picks (hidden in group-stage view)
   if (brk.max && Object.keys(answers.bracket || {}).length) {
     const decided = Object.values(brk.byRound).reduce((a, r) => a + r.decided, 0);
     const st = !decided ? 'partial' : (brk.pts > 0 ? (brk.pts >= brk.max ? 'hit' : 'partial') : 'miss');
@@ -1948,7 +1978,9 @@ async function renderScorecard() {
   });
 
   wrap.querySelector('#sc-makeown').addEventListener('click', startOwnEntry);
-  computeRank(key, res.total).then(r => {
+  wrap.querySelectorAll('.lb-mode-toggle button').forEach(b =>
+    b.addEventListener('click', () => { scMode = b.dataset.mode; renderScorecard(); }));
+  computeRank(key, rankMetric, scMode).then(r => {
     if (!r) return;
     const rankTxt = getLang() === 'pt' ? `${r.rank}º ${t('sc_of')} ${r.of}` : `${ordinal(r.rank)} ${t('sc_of')} ${r.of}`;
     wrap.querySelector('#sc-rank').textContent = rankTxt;
@@ -2005,7 +2037,9 @@ const BR_RIGHT = [
   { rk: 'R16', label: 'R16',  ids: [91, 92, 95, 96] },
   { rk: 'R32', label: 'R32',  ids: [76, 78, 79, 80, 86, 88, 85, 87] },
 ];
-const BR_PTS = (() => { const o = {}; (bracketStruct.rounds || []).forEach(r => o[r.key] = r.points); return o; })();
+// Points per round, read LIVE from bracketStruct (it's fetched async, so a value
+// captured at parse time would be empty — always look it up at render time).
+function brPts(rk) { const r = (bracketStruct.rounds || []).find(x => x.key === rk); return r ? r.points : null; }
 
 function brSideHtml(mid, team) {
   const tm = team && teamsData[team];
@@ -2021,7 +2055,8 @@ function brSideHtml(mid, team) {
 function brColEl(c, side) {
   const el = document.createElement('div');
   el.className = `bc ${side}${c.rk === 'SF' ? ' sf' : ''}`;
-  el.innerHTML = `<div class="blab">${c.label}<em>+${BR_PTS[c.rk] || ''}</em></div>`;
+  const sfBoost = c.rk === 'SF' && isLateWindow();
+  el.innerHTML = `<div class="blab">${c.label}<em${sfBoost ? ' class="boost"' : ''}>+${sfBoost ? '3' : (brPts(c.rk) || '')}</em></div>`;
   const wrap = document.createElement('div');
   wrap.className = 'bcw';
   c.ids.forEach(n => {
@@ -2042,7 +2077,7 @@ function renderBracketTree(tree) {
   const cen = document.createElement('div');
   cen.className = 'bcen';
   cen.innerHTML =
-    `<div class="blab">${t('br_final')}<em>+${BR_PTS.final || 20}</em></div>` +
+    `<div class="blab">${t('br_final')}<em>+${brPts('final') || ''}</em></div>` +
     `<div class="bm fin">${brSideHtml('104', fa)}${brSideHtml('104', fb)}</div>` +
     `<div class="trophy">` +
       (champ ? `<div class="tcup">🏆</div><div class="tname">${teamLabel(champ)}</div><div class="tsub">${t('sc_champion')}</div>`
@@ -2060,6 +2095,27 @@ function buildBracketSection() {
   intro.textContent = t('bracket_intro') ||
     'Optional bonus: tap a team to advance them through the bracket — winners flow to the centre. Points grow each round (Round of 32 → final). Scroll sideways to see it all.';
   body.appendChild(intro);
+  // Points key: spell out what each round is worth so the bracket's scoring is obvious.
+  // Built from BR_PTS (data/bracket.json) so it never drifts from the real values.
+  const late = isLateWindow();
+  const rounds = [['R32','R32'],['R16','R16'],['QF','QF'],['SF','SF'],['final', t('br_pts_final') || 'Final']];
+  const key = document.createElement('div');
+  key.className = 'br-key';
+  key.innerHTML = `<span class="br-key-lbl">${t('br_pts_lbl') || 'Points per correct pick'}</span>` +
+    rounds.map(([rk, lab]) => {
+      const p = brPts(rk); if (p == null) return '';
+      const boost = late && rk === 'SF';
+      return `<span class="bk${boost ? ' boost' : ''}">${lab} <b>${boost ? `2<i>→</i>3` : p}</b></span>`;
+    }).join('');
+  body.appendChild(key);
+  // Once the first R32 game has kicked off (Sun 3pm ET), anyone still submitting before
+  // the Monday 1pm lock gets the semifinal compensation — explain it isn't a penalty.
+  if (late) {
+    const bonus = document.createElement('div');
+    bonus.className = 'br-bonus';
+    bonus.innerHTML = `<span class="br-bonus-spark">+1</span>${t('br_sf_bonus')}`;
+    body.appendChild(bonus);
+  }
   const scroll = document.createElement('div');
   scroll.className = 'br-scroll';
   const tree = document.createElement('div');

@@ -226,13 +226,14 @@
   <div class="spinner"></div>
 </div>
 
-<script src="i18n.js?v=7"></script>
-<script src="scoring.js?v=8"></script>
+<script src="i18n.js?v=9"></script>
+<script src="scoring.js?v=9"></script>
 <script>
 let teamsData = {}, results = [], answerKey = null, liveStats = null, ballStats = null, tagsMap = {}, groupsData = {};
 let bracketStruct = {}, bracketState = {};
 let lbTag = ''; // leaderboard tag filter: '' (all) | 'SDC' | 'Lastinger'
 let lbExpanded = false; // top-10 by default; toggle shows the full field
+let lbMode = 'current'; // 'current' (live total) | 'group' (group-stage-final total, frozen)
 
 async function init() {
   const g = (p) => fetch(p).then(r => r.ok ? r.json() : null).catch(() => null);
@@ -361,10 +362,19 @@ function render() {
   const total = results.length;
   app.innerHTML = '';
 
-  const scored = computeScores();   // ranked array (projected/live) or null pre-grading
+  const scored = computeScores();   // ranked array (projected/live), or null pre-grading
+
+  // ── view for the selected mode: 'current' keeps the live-total order; 'group'
+  // re-ranks by the frozen group-stage-only score (lockedGroup never changes once
+  // the group stage is done, so it doubles as the "final group stage" leaderboard) ──
+  const scoredView = scored && (lbMode === 'group'
+    ? [...scored].sort((a, b) => b.s.lockedGroup - a.s.lockedGroup ||
+        (a.e.display_name || '').localeCompare(b.e.display_name || ''))
+    : scored);
+  const modeVal = s => lbMode === 'group' ? s.lockedGroup : s.total;
 
   // ── summary: entries + current leader (or consensus champion pre-grading) ──
-  const leader = scored && scored[0];
+  const leader = scoredView && scoredView[0];
   const champTally = tally(e => e.answers.q1);
   const champ = champTally[0];
   const summary = document.createElement('div');
@@ -375,12 +385,12 @@ function render() {
       <div class="stat-label">${t('lb_entries')}</div>
     </div>
     <div class="champ-card">
-      <div class="ttl">${leader ? t('lb_leader') : t('lb_champ')}</div>
+      <div class="ttl">${leader ? (lbMode === 'group' ? t('lb_leader_group') : t('lb_leader')) : t('lb_champ')}</div>
       <div class="champ-row">
         ${leader ? '' : (champ ? teamFlag(champ[0]) : '')}
         <div>
           <div class="champ-name">${leader ? (leader.e.display_name || 'anon') : (champ ? teamLabel(champ[0]) : '—')}</div>
-          <div class="champ-pct">${leader ? Math.round(leader.s.total) + ' ' + t('lb_pts_short') : (champ ? Math.round(champ[1]/total*100)+'% · '+champ[1]+'/'+total : '')}</div>
+          <div class="champ-pct">${leader ? Math.round(modeVal(leader.s)) + ' ' + t('lb_pts_short') : (champ ? Math.round(champ[1]/total*100)+'% · '+champ[1]+'/'+total : '')}</div>
         </div>
       </div>
     </div>`;
@@ -394,17 +404,21 @@ function render() {
   app.appendChild(stLink);
 
   // ── THE LEADERBOARD (ranked, projected/live; tag-filterable) ──
-  if (scored) {
+  if (scoredView) {
     const sec = section('🏆', t('nav_board'));
     const body = sec.querySelector('.section-body');
     body.innerHTML =
-      `<div style="font-size:.74rem;color:var(--grey-mid);margin-bottom:10px">${t('lb_proj_note')}</div>` +
+      `<div style="font-size:.74rem;color:var(--grey-mid);margin-bottom:10px">${lbMode === 'group' ? t('lb_group_note') : t('lb_proj_note')}</div>` +
+      `<div class="lb-toggle lb-mode-toggle">` +
+        `<button data-mode="current" class="${lbMode === 'current' ? 'on' : ''}">${t('lb_mode_current')}</button>` +
+        `<button data-mode="group" class="${lbMode === 'group' ? 'on' : ''}">${t('lb_mode_group')}</button>` +
+      `</div>` +
       `<div class="lb-toggle">` +
         `<button data-tag="" class="${lbTag === '' ? 'on' : ''}">${t('lb_all')}</button>` +
         `<button data-tag="SDC" class="${lbTag === 'SDC' ? 'on' : ''}">SDC</button>` +
         `<button data-tag="Lastinger" class="${lbTag === 'Lastinger' ? 'on' : ''}">Lastinger</button>` +
       `</div><div class="plist" id="lblist"></div>`;
-    const rows = scored.filter(r => !lbTag || r.tag === lbTag);
+    const rows = scoredView.filter(r => !lbTag || r.tag === lbTag);
     const shown = lbExpanded ? rows : rows.slice(0, 10);   // top 10 by default
     body.querySelector('#lblist').innerHTML = shown.map((r, i) => {
       const e = r.e, s = r.s;
@@ -412,7 +426,7 @@ function render() {
         <span class="rank">${i + 1}</span>
         <span class="who"><span class="nm">${e.display_name || 'anon'}</span>${r.tag ? `<span class="tag ${r.tag}">${r.tag}</span>` : ''}</span>
         <span class="lb-sub">${Math.round(s.lockedGroup)} ${t('sc_group')} · ${Math.round(s.lockedKO)} ${t('sc_ko')}</span>
-        <span class="lb-tot">${Math.round(s.total)}</span>
+        <span class="lb-tot">${Math.round(modeVal(s))}</span>
       </a>`;
     }).join('') || `<div style="color:var(--grey-mid);padding:14px">${t('lb_empty')}</div>`;
     if (rows.length > 10) {
@@ -422,7 +436,9 @@ function render() {
       more.addEventListener('click', () => { lbExpanded = !lbExpanded; render(); });
       body.appendChild(more);
     }
-    body.querySelectorAll('.lb-toggle button').forEach(b =>
+    body.querySelectorAll('.lb-mode-toggle button').forEach(b =>
+      b.addEventListener('click', () => { lbMode = b.dataset.mode; lbExpanded = false; render(); }));
+    body.querySelectorAll('.lb-toggle:not(.lb-mode-toggle) button').forEach(b =>
       b.addEventListener('click', () => { lbTag = b.dataset.tag; lbExpanded = false; render(); }));
     app.appendChild(sec);
   } else {

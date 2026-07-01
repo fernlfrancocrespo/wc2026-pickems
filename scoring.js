@@ -188,7 +188,7 @@ function scoreEntry(answers, key, opts) {
 
 // First Round-of-32 kickoff. An entry submitted AFTER this couldn't pick the games
 // already played, so it's a "late" entry and gets the semifinal compensation below.
-const FIRST_R32_KICKOFF = Date.parse('2026-06-28T20:00:00Z'); // adjust to the real first R32 kickoff
+const FIRST_R32_KICKOFF = Date.parse('2026-06-28T19:00:00Z'); // Sun Jun 28, 3:00 PM ET — first R32 kickoff (Canada v South Africa). Submit after = late = SF comp.
 function isLateBracket(createdAtISO) {
   const t = Date.parse(createdAtISO || '');
   return !isNaN(t) && t > FIRST_R32_KICKOFF;

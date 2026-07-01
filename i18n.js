@@ -208,10 +208,14 @@ const I18N = {
     lb_stats_head:'SUBMISSION STATS',
     lb_correct:   'got it right',
     lb_leader:    'Current leader',
+    lb_leader_group: 'Group stage leader',
     lb_total:     'Total',
     lb_no_scores: 'Live scoring begins as results are confirmed.',
     lb_confirmed: 'CONFIRMED SO FAR',
     lb_proj_note: 'Projected — live as results come in; final once each question settles.',
+    lb_group_note:'Group stage is done — these totals are final and won\'t change.',
+    lb_mode_current: 'Live Now',
+    lb_mode_group:'Group Stage Final',
 
     // standings page
     nav_standings:'Standings',
@@ -277,6 +281,9 @@ const I18N = {
     // knockout bracket
     sec_bracket:    'KNOCKOUT BRACKET',
     bracket_intro:  'Optional bonus: tap a team to advance them through the bracket — winners flow to the centre. Points grow each round (Round of 32 → final). Scroll sideways to see it all.',
+    br_pts_lbl:     'Points per correct pick',
+    br_pts_final:   'Final',
+    br_sf_bonus:    'Late bonus: your semi-finals score 3 instead of 2 — making up for the Sunday match that\'s already locked.',
     br_tbd:         'TBD',
     br_picked:      'picked',
     br_final:       'FINAL',
@@ -459,10 +466,14 @@ const I18N = {
     lb_stats_head:'ESTATÍSTICAS DOS PALPITES',
     lb_correct:   'acertaram',
     lb_leader:    'Líder atual',
+    lb_leader_group: 'Líder da fase de grupos',
     lb_total:     'Total',
     lb_no_scores: 'A pontuação ao vivo começa conforme os resultados são confirmados.',
     lb_confirmed: 'CONFIRMADO ATÉ AGORA',
     lb_proj_note: 'Projetada — ao vivo conforme os resultados; final quando cada questão é decidida.',
+    lb_group_note:'A fase de grupos terminou — esses totais são finais e não vão mudar.',
+    lb_mode_current: 'Ao Vivo Agora',
+    lb_mode_group:'Final da Fase de Grupos',
 
     // standings page
     nav_standings:'Classificação',
@@ -528,6 +539,9 @@ const I18N = {
     // chave do mata-mata
     sec_bracket:    'CHAVE DO MATA-MATA',
     bracket_intro:  'Bônus opcional: toque num time para avançá-lo na chave — os vencedores seguem para o centro. A pontuação cresce a cada fase (16 avos → final). Arraste para o lado para ver tudo.',
+    br_pts_lbl:     'Pontos por acerto',
+    br_pts_final:   'Final',
+    br_sf_bonus:    'Bônus de atraso: suas semifinais valem 3 em vez de 2 — compensando o jogo de domingo que já está travado.',
     br_tbd:         'A definir',
     br_picked:      'escolhidos',
     br_final:       'FINAL',
