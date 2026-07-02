@@ -738,17 +738,30 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 <script src="/i18n.js?v=10"></script>
-<script src="/scoring.js?v=9"></script>
+<script src="/scoring.js?v=10"></script>
 <script>
 // ═══════════════════════════════════════ CONFIG
 const LOCK_TIME  = new Date('2026-06-11T19:00:00Z');   // group-stage picks lock (opening kickoff)
 const BRACKET_LOCK = new Date('2026-06-29T17:00:00Z'); // FINAL bracket submission close: Mon Jun 29, 1:00 PM ET (stage-2 deadline). Per-game lock handles games already played (e.g. Sun 3pm Canada v South Africa).
 const FINAL_DATE = new Date('2026-07-19T00:00:00Z');   // used only for the closed-entries home hub's "days to the final" stat
+
+// ── One-off late-entrant unlock (Jennifer Perez, 7/2) ─────────────────────
+// A colleague missed the whole bracket window and asked in after most of the R32 had
+// already played. This narrow, time-boxed link reopens JUST the submit UI up to the
+// Spain–Austria kickoff — it grants no scoring edge (R32 scores 0 for this entry
+// regardless; see data/late_entrants.json + scoring.js bracketScoreOpts), so there's
+// nothing to protect beyond a soft honor-system gate. Safe to delete after she's in.
+const LATE_PARAM = 'late', LATE_TOKEN = 'perez0702';
+const LATE_DEADLINE = new Date('2026-07-02T19:00:00Z'); // 3:00 PM ET — Spain v Austria kickoff
+function isLateOverrideActive() {
+  return new URLSearchParams(location.search).get(LATE_PARAM) === LATE_TOKEN && Date.now() < LATE_DEADLINE;
+}
+function lateSfBonusAmount() { return isLateOverrideActive() ? 2 : 1; } // shown in the UI so the copy matches what she'll actually score
 // Second intake window: AFTER group lock, knockout bracket can still be filled — but
 // only once the host opens it (data/bracket.json "open": true). Group picks stay locked.
 function bracketWindow() {
   return !!(typeof bracketStruct !== 'undefined' && bracketStruct && bracketStruct.open)
-         && Date.now() < BRACKET_LOCK;
+         && (Date.now() < BRACKET_LOCK || isLateOverrideActive());
 }
 // Late window: bracket still open, but the first R32 game has kicked off (Sun 3pm ET).
 // Anyone submitting now earns the semifinal compensation (SF picks score 3, not 2).
@@ -791,6 +804,7 @@ let formData     = {}; // last-10-games per team — optional, loads gracefully
 let scheduleData = {}; // per-group fixtures — optional, loads gracefully
 let bracketStruct = {}; // knockout tree (data/bracket.json) — { open, rounds, matches }
 let bracketState  = {}; // populated R32 teams (data/bracket_state.json) — { r32_teams, ... }
+let lateOverrides = {}; // one-off manual bracket-scoring overrides, keyed by slug (data/late_entrants.json)
 let cinderellaSet = new Set();
 let VIEW_MODE     = false; // true when rendering a shared, read-only entry
 let hideEntry     = false; // user opted to hide their entry from the public leaderboard
@@ -833,6 +847,7 @@ async function init() {
     scheduleData = await fetch('/data/schedule.json').then(r => r.ok ? r.json() : {}).catch(() => ({}));
     bracketStruct = await fetch('/data/bracket.json').then(r => r.ok ? r.json() : {}).catch(() => ({}));
     bracketState  = await fetch('/data/bracket_state.json').then(r => r.ok ? r.json() : {}).catch(() => ({}));
+    lateOverrides = await fetch('/data/late_entrants.json').then(r => r.ok ? r.json() : {}).catch(() => ({}));
   } catch(e) {
     document.getElementById('app').innerHTML = `
       <div class="loading" style="grid-column:1/-1">
@@ -1949,9 +1964,10 @@ async function renderScorecard() {
 
   // bracket = bonus on top of the 251 main entry (not rebalanced); only counts once open
   const brkActive = scMode !== 'group' && bracketStruct && bracketStruct.open && typeof scoreBracket === 'function';
-  const late = (typeof isLateBracket === 'function') && isLateBracket(ENTRY_CREATED_AT);
+  const brkOpts = (typeof bracketScoreOpts === 'function')
+    ? bracketScoreOpts({ slug: getShareSlug(), created_at: ENTRY_CREATED_AT }, lateOverrides) : {};
   const brk = brkActive
-    ? scoreBracket(answers.bracket, bracketStruct, (bracketState && bracketState.results) || {}, { lateSfBonus: late ? 1 : 0 }) : { pts: 0, max: 0, byRound: {} };
+    ? scoreBracket(answers.bracket, bracketStruct, (bracketState && bracketState.results) || {}, brkOpts) : { pts: 0, max: 0, byRound: {} };
   const total = scMode === 'group' ? Math.round(res.lockedGroup) : Math.round(res.total + brk.pts);
   const pend = scMode === 'group' ? 0 : Math.round(res.pendingMax + (brk.max - brk.pts));
   const earnW = scMode === 'group' ? 100 : Math.max(2, Math.round(total / (FULL_MAX + brk.max) * 100));
@@ -2092,7 +2108,7 @@ function brColEl(c, side) {
   const el = document.createElement('div');
   el.className = `bc ${side}${c.rk === 'SF' ? ' sf' : ''}`;
   const sfBoost = c.rk === 'SF' && isLateWindow();
-  el.innerHTML = `<div class="blab">${c.label}<em${sfBoost ? ' class="boost"' : ''}>+${sfBoost ? '3' : (brPts(c.rk) || '')}</em></div>`;
+  el.innerHTML = `<div class="blab">${c.label}<em${sfBoost ? ' class="boost"' : ''}>+${sfBoost ? (2 + lateSfBonusAmount()) : (brPts(c.rk) || '')}</em></div>`;
   const wrap = document.createElement('div');
   wrap.className = 'bcw';
   c.ids.forEach(n => {
@@ -2141,7 +2157,7 @@ function buildBracketSection() {
     rounds.map(([rk, lab]) => {
       const p = brPts(rk); if (p == null) return '';
       const boost = late && rk === 'SF';
-      return `<span class="bk${boost ? ' boost' : ''}">${lab} <b>${boost ? `2<i>→</i>3` : p}</b></span>`;
+      return `<span class="bk${boost ? ' boost' : ''}">${lab} <b>${boost ? `2<i>→</i>${2 + lateSfBonusAmount()}` : p}</b></span>`;
     }).join('');
   body.appendChild(key);
   // Once the first R32 game has kicked off (Sun 3pm ET), anyone still submitting before
@@ -2149,7 +2165,7 @@ function buildBracketSection() {
   if (late) {
     const bonus = document.createElement('div');
     bonus.className = 'br-bonus';
-    bonus.innerHTML = `<span class="br-bonus-spark">+1</span>${t('br_sf_bonus')}`;
+    bonus.innerHTML = `<span class="br-bonus-spark">+${lateSfBonusAmount()}</span>${t('br_sf_bonus')}`;
     body.appendChild(bonus);
   }
   const scroll = document.createElement('div');
@@ -2600,7 +2616,8 @@ function startCountdown() {
     if (diff <= 0) {
       // Group stage locked. If the bracket window is open, submission stays enabled.
       if (bracketWindow()) {
-        el.textContent = `${t('bracket_closes')} ${fmtCountdown(BRACKET_LOCK - Date.now())}`;
+        const lockAt = isLateOverrideActive() ? LATE_DEADLINE : BRACKET_LOCK;
+        el.textContent = `${t('bracket_closes')} ${fmtCountdown(lockAt - Date.now())}`;
         el.style.color = 'var(--gold)';
         const btn = document.getElementById('btn-submit');
         if (btn) { btn.disabled = false; }

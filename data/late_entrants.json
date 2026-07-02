@@ -1,0 +1,3 @@
+{
+  "_note": "One-off manual bracket-scoring overrides, keyed by slug (the /p/<slug> code), for people who joined the knockout bracket long after the window closed. See scoring.js bracketScoreOpts(). Add an entry once the person has submitted and you know their slug — find it via the D1 export or their /api/entry confirmation. Example: \"Xa9k2\": { \"lateSfBonus\": 2, \"zeroRounds\": [\"R32\"] }"
+}

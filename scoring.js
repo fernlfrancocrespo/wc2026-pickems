@@ -200,26 +200,41 @@ function isLateBracket(createdAtISO) {
 // Each match: you earn its round's points if your pick equals the real winner.
 // opts.lateSfBonus: extra points per SEMIFINAL match for late entrants (who couldn't
 // pick the early games) — Fernando's +1-per-SF fairness rule.
+// opts.zeroRounds: round keys (e.g. ['R32']) that score 0 pts / 0 max for this entry —
+// for a one-off late entrant who joined with most/all of that round already decided, so
+// letting it count (right or wrong) would be free information, not a real pick.
 function scoreBracket(picks, struct, results, opts) {
   picks = picks || {}; results = results || {}; opts = opts || {};
   const sfBonus = opts.lateSfBonus || 0;
+  const zeroRounds = new Set(opts.zeroRounds || []);
   const out = { pts: 0, max: 0, graded: false, byRound: {} };
   if (!struct || !struct.rounds) return out;
   struct.rounds.forEach(rd => {
     const ptsPer = rd.points + (rd.key === 'SF' ? sfBonus : 0);
-    const r = { pts: 0, max: 0, correct: 0, decided: 0, points: ptsPer };
+    const zeroed = zeroRounds.has(rd.key);
+    const per = zeroed ? 0 : ptsPer;
+    const r = { pts: 0, max: 0, correct: 0, decided: 0, points: ptsPer, zeroed };
     rd.matches.forEach(mid => {
       const id = String(mid);
-      r.max += ptsPer; out.max += ptsPer;
+      r.max += per; out.max += per;
       const real = results[id];
       if (real != null && real !== '') {
         out.graded = true; r.decided++;
-        if (picks[id] === real) { r.pts += ptsPer; r.correct++; out.pts += ptsPer; }
+        if (!zeroed && picks[id] === real) { r.pts += per; r.correct++; out.pts += per; }
       }
     });
     out.byRound[rd.key] = r;
   });
   return out;
+}
+
+// Per-entry bracket-scoring options, honoring a one-off manual override (data/late_entrants.json,
+// keyed by slug) if present — this REPLACES the generic date-based late bonus, it doesn't stack.
+function bracketScoreOpts(entry, overrides) {
+  const o = overrides && entry && entry.slug && overrides[entry.slug];
+  if (o) return { lateSfBonus: o.lateSfBonus || 0, zeroRounds: o.zeroRounds || [] };
+  const late = isLateBracket(entry && entry.created_at);
+  return { lateSfBonus: late ? 1 : 0, zeroRounds: [] };
 }
 
 // True if the answer key has at least one real (graded) outcome.
@@ -237,6 +252,6 @@ function keyHasData(key) {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     POINTS, FULL_MAX, NON_Q8_MAX, DEFAULT_GROUP_SCALE, GROUP_QS,
-    isDefaultGroupOrder, scoreEntry, scoreBracket, isLateBracket, FIRST_R32_KICKOFF, keyHasData, scoreBand, bandIndexFor, bandRange,
+    isDefaultGroupOrder, scoreEntry, scoreBracket, bracketScoreOpts, isLateBracket, FIRST_R32_KICKOFF, keyHasData, scoreBand, bandIndexFor, bandRange,
   };
 }

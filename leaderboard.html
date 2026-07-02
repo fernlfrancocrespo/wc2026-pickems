@@ -227,10 +227,10 @@
 </div>
 
 <script src="i18n.js?v=10"></script>
-<script src="scoring.js?v=9"></script>
+<script src="scoring.js?v=10"></script>
 <script>
 let teamsData = {}, results = [], answerKey = null, liveStats = null, ballStats = null, tagsMap = {}, groupsData = {};
-let bracketStruct = {}, bracketState = {};
+let bracketStruct = {}, bracketState = {}, lateOverrides = {};
 let lbTag = ''; // leaderboard tag filter: '' (all) | 'SDC' | 'Lastinger'
 let lbExpanded = false; // top-10 by default; toggle shows the full field
 let lbMode = 'current'; // 'current' (live total) | 'group' (group-stage-final total, frozen)
@@ -245,6 +245,7 @@ async function init() {
   groupsData = await g('/data/groups.json') || {};
   bracketStruct = await g('/data/bracket.json') || {};
   bracketState  = await g('/data/bracket_state.json') || {};
+  lateOverrides = await g('/data/late_entrants.json') || {};
   try {
     const r = await fetch('/api/results');
     const data = await r.json();
@@ -324,8 +325,8 @@ function computeScores() {
     .map(e => {
       const dg = (typeof isDefaultGroupOrder === 'function') && isDefaultGroupOrder(e.answers.q8, groupsData);
       const s = scoreEntry(e.answers, key, { defaultGroup: dg });
-      const late = (typeof isLateBracket === 'function') && isLateBracket(e.created_at);
-      const brk = (typeof scoreBracket === 'function') ? scoreBracket(e.answers.bracket, bracketStruct, bResults, { lateSfBonus: late ? 1 : 0 }) : { pts: 0 };
+      const brkOpts = (typeof bracketScoreOpts === 'function') ? bracketScoreOpts(e, lateOverrides) : {};
+      const brk = (typeof scoreBracket === 'function') ? scoreBracket(e.answers.bracket, bracketStruct, bResults, brkOpts) : { pts: 0 };
       s.total += brk.pts; s.lockedKO += brk.pts; s.bracketPts = brk.pts;   // bracket = bonus on top
       return { e, tag: tagOf(e), s };
     })
