@@ -174,6 +174,7 @@ const I18N = {
     picks_label:  'picks',
     locked_view:  'Locked entry · read-only',
     make_own:     '+ Make your own',
+    view_bracket: 'View the bracket →',
     notfound:     "That entry couldn't be found.",
     go_home:      'Go to the form →',
     hide_label:   'Hide my entry from the public leaderboard',
@@ -187,7 +188,7 @@ const I18N = {
     save_warn:    "Couldn't reach the server. Your link still works — share it so you're counted.",
 
     // leaderboard
-    nav_form:     'Make a pick',
+    nav_form:     'Home',
     nav_board:    'Leaderboard',
     lb_subtitle:  'Consensus & standings',
     lb_entries:   'entries',
@@ -253,6 +254,23 @@ const I18N = {
     st_third_final_sub:'These 8 third-placed teams advanced to the Round of 32.',
     st_third_q:    'Best-3rd (advanced)',
     st_final_tag:  'FINAL',
+
+    // home hub (default "/" once entries are closed — replaces the submission form)
+    home_kicker:    'KNOCKOUT STAGE',
+    home_headline:  "The bracket's live.",
+    home_sub:       "Group-stage picks locked back in June — track how the real tournament is playing out and see where everyone stands.",
+    home_stat_ko:   'knockout games decided',
+    home_stat_group:'Group stage',
+    home_stat_group_val:'Complete',
+    home_stat_final:'to the final',
+    home_cta_standings_t:'Bracket & Standings',
+    home_cta_standings_d:'The live knockout bracket, final group tables, and a pulse check on everyone’s picks.',
+    home_cta_board_t:'Leaderboard',
+    home_cta_board_d:'Rankings, live scores, and how the field’s picks are trending.',
+    home_cta_faq_t: 'FAQ',
+    home_cta_faq_d: 'Scoring rules, deadlines, and how points are awarded.',
+    home_picks_note:'Got a personal picks link in your confirmation email? Open it to see your scorecard.',
+
     lb_scores:    'Live scores',
     lb_provisional:'Provisional — updated as results come in',
     lb_pts_short: 'pts',
@@ -454,6 +472,7 @@ const I18N = {
     picks_label:  'palpites',
     locked_view:  'Palpite travado · somente leitura',
     make_own:     '+ Faça o seu',
+    view_bracket: 'Ver a chave →',
     notfound:     'Esse palpite não foi encontrado.',
     go_home:      'Ir para o formulário →',
     hide_label:   'Ocultar meu palpite do placar público',
@@ -467,7 +486,7 @@ const I18N = {
     save_warn:    'Não foi possível contatar o servidor. Seu link funciona — compartilhe para entrar no placar.',
 
     // leaderboard
-    nav_form:     'Fazer palpite',
+    nav_form:     'Início',
     nav_board:    'Placar',
     lb_subtitle:  'Consenso e classificação',
     lb_entries:   'palpites',
@@ -533,6 +552,23 @@ const I18N = {
     st_third_final_sub:'Estes 8 terceiros colocados avançaram para os 16 avos.',
     st_third_q:    'Melhor 3º (avançou)',
     st_final_tag:  'FINAL',
+
+    // página inicial (padrão em "/" após o encerramento das entradas — substitui o formulário)
+    home_kicker:    'FASE ELIMINATÓRIA',
+    home_headline:  'A chave está ao vivo.',
+    home_sub:       'Os palpites da fase de grupos travaram em junho — acompanhe como o torneio real está indo e veja como todos estão se saindo.',
+    home_stat_ko:   'jogos do mata-mata decididos',
+    home_stat_group:'Fase de grupos',
+    home_stat_group_val:'Encerrada',
+    home_stat_final:'até a final',
+    home_cta_standings_t:'Chave & Classificação',
+    home_cta_standings_d:'A chave do mata-mata ao vivo, as tabelas finais dos grupos e uma prévia dos palpites de todos.',
+    home_cta_board_t:'Placar',
+    home_cta_board_d:'Classificação, pontuação ao vivo e como os palpites da galera estão indo.',
+    home_cta_faq_t: 'Dúvidas',
+    home_cta_faq_d: 'Regras de pontuação, prazos e como os pontos são atribuídos.',
+    home_picks_note:'Recebeu um link pessoal no e-mail de confirmação? Abra-o para ver seu placar.',
+
     lb_scores:    'Pontuação ao vivo',
     lb_provisional:'Provisória — atualizada conforme os resultados',
     lb_pts_short: 'pts',

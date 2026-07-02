@@ -69,6 +69,26 @@
     .layout { display: grid; grid-template-columns: 1fr 300px; gap: 24px; max-width: 1300px; margin: 0 auto; padding: 28px 24px 48px; align-items: start; }
     .form-main { display: flex; flex-direction: column; gap: 20px; }
 
+    /* ── Home hub (default "/" once entries are closed) ── */
+    .hub-wrap { max-width: 760px; margin: 0 auto; padding: 12px 4px 40px; }
+    .hub-hero { text-align: center; padding: 34px 20px 30px; }
+    .hub-kicker { display: inline-block; font-size: 0.66rem; font-weight: 800; letter-spacing: 1.4px; color: var(--gold); background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.32); border-radius: 20px; padding: 5px 14px; margin-bottom: 16px; }
+    .hub-headline { font-family: 'Bebas Neue', sans-serif; font-size: 2.6rem; letter-spacing: 1.5px; line-height: 1.05; margin-bottom: 12px; }
+    .hub-sub { color: var(--grey-light); font-size: 0.92rem; line-height: 1.6; max-width: 520px; margin: 0 auto; }
+    .hub-stats { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+    .hub-chip { background: var(--navy-card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 20px; text-align: center; min-width: 130px; }
+    .hub-chip .n { font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem; color: var(--gold); line-height: 1; }
+    .hub-chip .l { font-size: 0.62rem; color: var(--grey-mid); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; line-height: 1.4; }
+    .hub-ctas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 8px; }
+    .hub-card { background: var(--navy-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 18px; text-decoration: none; color: var(--white); transition: border-color 0.15s, transform 0.15s; display: flex; flex-direction: column; gap: 6px; }
+    .hub-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+    .hub-card.primary { background: linear-gradient(160deg, rgba(201,168,76,0.14), var(--navy-card) 60%); border-color: rgba(201,168,76,0.4); }
+    .hub-card .ic { font-size: 1.4rem; }
+    .hub-card .t { font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; letter-spacing: 1px; }
+    .hub-card .d { font-size: 0.78rem; color: var(--grey-mid); line-height: 1.5; }
+    .hub-note { text-align: center; font-size: 0.78rem; color: var(--grey-mid); margin-top: 26px; }
+    @media (max-width: 640px) { .hub-ctas { grid-template-columns: 1fr; } .hub-headline { font-size: 2.1rem; } }
+
     /* ── Section card ── */
     .section-card { background: var(--navy-card); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; }
     .section-header { padding: 15px 20px; display: flex; align-items: center; gap: 11px; border-bottom: 1px solid var(--border); background: linear-gradient(90deg, rgba(255,255,255,0.025) 0%, transparent 100%); }
@@ -723,6 +743,7 @@
 // ═══════════════════════════════════════ CONFIG
 const LOCK_TIME  = new Date('2026-06-11T19:00:00Z');   // group-stage picks lock (opening kickoff)
 const BRACKET_LOCK = new Date('2026-06-29T17:00:00Z'); // FINAL bracket submission close: Mon Jun 29, 1:00 PM ET (stage-2 deadline). Per-game lock handles games already played (e.g. Sun 3pm Canada v South Africa).
+const FINAL_DATE = new Date('2026-07-19T00:00:00Z');   // used only for the closed-entries home hub's "days to the final" stat
 // Second intake window: AFTER group lock, knockout bracket can still be filled — but
 // only once the host opens it (data/bracket.json "open": true). Group picks stay locked.
 function bracketWindow() {
@@ -857,16 +878,23 @@ async function init() {
   applyChrome();
   if (VIEW_MODE) {
     renderEntry();                  // scorecard ⇆ original picks (toggle); falls back to picks if nothing graded
-  } else {
+  } else if (bracketWindow()) {
     renderPage();
     setupDrawer();
     applyBracketWindowLock();       // freeze locked group picks if the bracket window is open
+  } else {
+    renderHome();                   // entries closed — default landing is the bracket/leaderboard hub
   }
   startCountdown(); // keep the live timer on read-only /p/ pages too
 
   // Re-render the whole form on language switch. Builders are answers-aware,
   // so in-progress picks (selects, drag order, bands, players) are preserved.
-  onLangChange(() => { applyChrome(); if (VIEW_MODE) renderEntry(); else { renderPage(); setupDrawer(); applyBracketWindowLock(); } });
+  onLangChange(() => {
+    applyChrome();
+    if (VIEW_MODE) renderEntry();
+    else if (bracketWindow()) { renderPage(); setupDrawer(); applyBracketWindowLock(); }
+    else renderHome();
+  });
 }
 
 // ═══════════════════════════════════════ LANGUAGE CHROME
@@ -1936,7 +1964,7 @@ async function renderScorecard() {
   wrap.innerHTML =
     entryToggleHtml() +
     `<div class="sc-id"><span class="lbl">${t('sc_entry')}</span><span class="name">${escapeHtml(displayName(answers.name))}</span>` +
-      `<button class="btn-make-own own" id="sc-makeown">${bracketWindow() && EDIT_TOKEN ? t('bracket_cta') : t('make_own')}</button></div>` +
+      `<button class="btn-make-own own" id="sc-makeown">${bracketWindow() && EDIT_TOKEN ? t('bracket_cta') : t('view_bracket')}</button></div>` +
     `<div class="lb-toggle lb-mode-toggle">` +
       `<button data-mode="current" class="${scMode === 'current' ? 'on' : ''}">${t('lb_mode_current')}</button>` +
       `<button data-mode="group" class="${scMode === 'group' ? 'on' : ''}">${t('lb_mode_group')}</button>` +
@@ -2145,6 +2173,37 @@ function buildBracketSection() {
   return sec;
 }
 
+// ═══════════════════════════════════════ HOME HUB
+// Default "/" once no one can submit or edit (bracketWindow() closed, no shared link).
+// Replaces the submission form with a status snapshot + routes to Standings/Leaderboard/FAQ.
+function renderHome() {
+  const app = document.getElementById('app');
+  const cb = document.querySelector('.countdown-box');
+  if (cb) cb.style.display = 'none'; // no active deadline to show on the hub
+  const decided = Object.keys((bracketState && bracketState.results) || {}).length;
+  const totalKO = Object.keys((bracketStruct && bracketStruct.matches) || {}).length || 31;
+  const daysLeft = Math.max(0, Math.ceil((FINAL_DATE - Date.now()) / 86400000));
+  app.innerHTML = `
+    <div class="hub-wrap" style="grid-column:1/-1">
+      <div class="hub-hero">
+        <span class="hub-kicker">${t('home_kicker')}</span>
+        <h2 class="hub-headline">${t('home_headline')}</h2>
+        <p class="hub-sub">${t('home_sub')}</p>
+        <div class="hub-stats">
+          <div class="hub-chip"><div class="n">${decided} / ${totalKO}</div><div class="l">${t('home_stat_ko')}</div></div>
+          <div class="hub-chip"><div class="n">${t('home_stat_group_val')}</div><div class="l">${t('home_stat_group')}</div></div>
+          <div class="hub-chip"><div class="n">${daysLeft}d</div><div class="l">${t('home_stat_final')}</div></div>
+        </div>
+      </div>
+      <div class="hub-ctas">
+        <a class="hub-card primary" href="/standings.html"><span class="ic">🏆</span><span class="t">${t('home_cta_standings_t')}</span><span class="d">${t('home_cta_standings_d')}</span></a>
+        <a class="hub-card" href="/leaderboard.html"><span class="ic">📊</span><span class="t">${t('home_cta_board_t')}</span><span class="d">${t('home_cta_board_d')}</span></a>
+        <a class="hub-card" href="/faq.html"><span class="ic">❓</span><span class="t">${t('home_cta_faq_t')}</span><span class="d">${t('home_cta_faq_d')}</span></a>
+      </div>
+      <p class="hub-note">${t('home_picks_note')}</p>
+    </div>`;
+}
+
 // ═══════════════════════════════════════ PAGE RENDER
 function renderPage() {
   const app = document.getElementById('app');
@@ -2172,7 +2231,7 @@ function renderPage() {
         <div class="view-banner-name">${displayName(answers.name)}</div>
         <div class="view-banner-sub">${t('locked_view')}</div>
       </div>
-      <button class="btn-make-own" id="btn-make-own">${bracketWindow() && EDIT_TOKEN ? t('bracket_cta') : t('make_own')}</button>`;
+      <button class="btn-make-own" id="btn-make-own">${bracketWindow() && EDIT_TOKEN ? t('bracket_cta') : t('view_bracket')}</button>`;
     formMain.appendChild(banner);
     banner.querySelector('#btn-make-own').addEventListener('click', startOwnEntry);
   }
