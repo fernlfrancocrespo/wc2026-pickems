@@ -226,7 +226,7 @@
   <div class="spinner"></div>
 </div>
 
-<script src="i18n.js?v=9"></script>
+<script src="i18n.js?v=10"></script>
 <script src="scoring.js?v=9"></script>
 <script>
 let teamsData = {}, results = [], answerKey = null, liveStats = null, ballStats = null, tagsMap = {}, groupsData = {};
@@ -303,6 +303,9 @@ function buildLiveKey() {
     key.q8 = key.q8 || {};
     Object.entries(liveStats.groups || {}).forEach(([L, gg]) => { if (!key.q8[L]) { key.q8[L] = gg.provisional_order; if (!complete) live.add('q8'); } });
     setL('q9', liveStats.group_goals_total, !complete);
+    setL('q11', liveStats.tournament_goals_total, true);
+    setL('q12', liveStats.penalty_shootouts, true);
+    setL('q13', liveStats.extra_time_matches, true);
     if (liveStats.hat_trick_in_group_stage) setL('q10', 'Yes', false);
     const gt = liveStats.goal_timing || {}; setL('q14', gt.added_time_goals, true); setL('q16', gt.fastest_goal_seconds, true);
     if (liveStats.top_scorers && liveStats.top_scorers[0]) setL('q18_player', liveStats.top_scorers[0].player, true);

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-28T22:12:59+00:00",
+  "updated": "2026-07-02T11:37:39+00:00",
   "provisional": false,
   "group_stage_complete": true,
   "qualifying_third_groups": [
@@ -80,7 +80,16 @@
     }
   },
   "results": {
-    "73": "Canada"
+    "73": "Canada",
+    "74": "Paraguay",
+    "75": "Morocco",
+    "76": "Brazil",
+    "77": "France",
+    "78": "Norway",
+    "79": "Mexico",
+    "80": "England",
+    "81": "United States",
+    "82": "Belgium"
   },
   "results_warnings": []
 }

@@ -1,8 +1,12 @@
 {
-  "updated": "2026-06-28T05:28:22+00:00",
+  "updated": "2026-07-02T11:37:39+00:00",
   "source": "wikipedia",
-  "matches_played": 72,
+  "knockout_note": "Knockout tallies (tournament_goals_total, penalty_shootouts, extra_time_matches, knockout goal_timing add-ons, knockout goals in top_scorers) are MANUALLY MAINTAINED from match reports — the group-page scraper does not see knockout games and will regress them if re-run. Groups are final, so prefer ./deploy.sh --no-scrape.",
+  "matches_played": 82,
   "group_goals_total": 215,
+  "tournament_goals_total": 241,
+  "penalty_shootouts": 2,
+  "extra_time_matches": 3,
   "top_scorers": [
     {
       "player": "Lionel Messi",
@@ -10,17 +14,27 @@
       "goals": 6
     },
     {
-      "player": "Ousmane Dembélé",
+      "player": "Kylian Mbappé",
       "team": "France",
-      "goals": 5
+      "goals": 6
     },
     {
       "player": "Erling Haaland",
       "team": "Norway",
+      "goals": 5
+    },
+    {
+      "player": "Harry Kane",
+      "team": "England",
+      "goals": 5
+    },
+    {
+      "player": "Ismaïla Sarr",
+      "team": "Senegal",
       "goals": 4
     },
     {
-      "player": "Kylian Mbappé",
+      "player": "Ousmane Dembélé",
       "team": "France",
       "goals": 4
     },
@@ -35,6 +49,11 @@
       "goals": 3
     },
     {
+      "player": "Cody Gakpo",
+      "team": "Netherlands",
+      "goals": 3
+    },
+    {
       "player": "Deniz Undav",
       "team": "Germany",
       "goals": 3
@@ -45,18 +64,13 @@
       "goals": 3
     },
     {
-      "player": "Harry Kane",
-      "team": "England",
+      "player": "Folarin Balogun",
+      "team": "United States",
       "goals": 3
     },
     {
       "player": "Ismael Saibari",
       "team": "Morocco",
-      "goals": 3
-    },
-    {
-      "player": "Ismaïla Sarr",
-      "team": "Senegal",
       "goals": 3
     },
     {
@@ -67,6 +81,16 @@
     {
       "player": "Jonathan David",
       "team": "Canada",
+      "goals": 3
+    },
+    {
+      "player": "Julián Quiñones",
+      "team": "Mexico",
+      "goals": 3
+    },
+    {
+      "player": "Kai Havertz",
+      "team": "Germany",
       "goals": 3
     },
     {
@@ -99,9 +123,9 @@
     }
   ],
   "goal_timing": {
-    "goals_counted": 215,
+    "goals_counted": 241,
     "fastest_goal_seconds": 64.0,
-    "added_time_goals": 23
+    "added_time_goals": 27
   },
   "group_stage_complete": true,
   "groups": {

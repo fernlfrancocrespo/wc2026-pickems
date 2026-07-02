@@ -1,12 +1,12 @@
 {
-  "updated": "2026-06-23",
-  "source": "Adidas Trionda connected-ball telemetry (FIFA match pages / media). MANUALLY MAINTAINED — there is no free structured API for shot speed / goal distance, so update these from FIFA's match center or matchday recap articles. This is the ONLY part of the data layer not auto-validated.",
-  "q15_longest_range_m": 28.0,
+  "updated": "2026-07-02",
+  "source": "Adidas Trionda connected-ball telemetry (FIFA match pages / media). MANUALLY MAINTAINED — there is no free structured API for shot speed / goal distance, so update these from FIFA's match center or matchday recap articles. This is the ONLY part of the data layer not auto-validated. 7/2 refresh from the tournament top-5 recaps (Tribune/ANI, 6/29): earlier file had Mbappé 28.0m as the leader and missed Pina/Elanga entirely — corrected below.",
+  "q15_longest_range_m": 31.23,
   "longest_range_goals": [
-    {"player": "Kylian Mbappé", "team": "France", "opponent": "Senegal", "meters": 28.0, "feet": 91.9, "matchday": 1},
-    {"player": "Connor Metcalfe", "team": "Australia", "opponent": "Türkiye", "meters": 23.4, "feet": 76.8, "matchday": 1},
-    {"player": "Yasin Ayari", "team": "Sweden", "opponent": "Tunisia", "meters": 22.7, "feet": 74.5, "matchday": 1},
-    {"player": "Ismael Saibari", "team": "Morocco", "opponent": "Brazil", "meters": 22.6, "feet": 74.1, "matchday": 1},
-    {"player": "Yasin Ayari", "team": "Sweden", "opponent": "Tunisia", "meters": 22.6, "feet": 74.1, "matchday": 1}
+    {"player": "Kevin Pina", "team": "Cape Verde", "opponent": "Uruguay", "meters": 31.23, "feet": 102.5, "matchday": 2},
+    {"player": "Anthony Elanga", "team": "Sweden", "opponent": "Japan", "meters": 29.17, "feet": 95.7, "matchday": 3},
+    {"player": "Kylian Mbappé", "team": "France", "opponent": "Senegal", "meters": 27.06, "feet": 88.8, "matchday": 1},
+    {"player": "Petar Sučić", "team": "Croatia", "opponent": "Ghana", "meters": 27.04, "feet": 88.7, "matchday": 3},
+    {"player": "William Isidor", "team": "Haiti", "opponent": "Morocco", "meters": 25.39, "feet": 83.3, "matchday": 3}
   ]
 }

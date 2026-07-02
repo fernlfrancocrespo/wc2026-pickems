@@ -1,5 +1,5 @@
 {
-  "updated": null,
+  "updated": "2026-07-02",
   "final": false,
   "note": "Host-maintained truth for grading pick-ems. Fill values in as outcomes are known; nulls are 'not graded yet'. q8 = real final group order per letter. q3a/q3b = the two losing semifinalists (order-agnostic).",
   "answers": {
@@ -13,7 +13,7 @@
     "q7": null,
     "q8": {},
     "q9": null,
-    "q10": null,
+    "q10": "Yes",
     "q11": null,
     "q12": null,
     "q13": null,

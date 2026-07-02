@@ -717,7 +717,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
-<script src="/i18n.js?v=9"></script>
+<script src="/i18n.js?v=10"></script>
 <script src="/scoring.js?v=9"></script>
 <script>
 // ═══════════════════════════════════════ CONFIG
@@ -1780,6 +1780,9 @@ async function loadScoreData() {
       if (!key.q8[L]) { key.q8[L] = g.provisional_order; if (!complete) live.add('q8'); }
     });
     setLive('q9', ls.group_goals_total, !complete);
+    setLive('q11', ls.tournament_goals_total, true);
+    setLive('q12', ls.penalty_shootouts, true);
+    setLive('q13', ls.extra_time_matches, true);
     if (ls.hat_trick_in_group_stage) setLive('q10', 'Yes', false); // locked once it happens
     const gt = ls.goal_timing || {};
     setLive('q14', gt.added_time_goals, true);
@@ -1808,6 +1811,11 @@ function scOutlook(qid) {
   const gt = ls.goal_timing || {};
   if (qid === 'q9' && played) { const p = Math.round(ls.group_goals_total / played * TOTAL_GROUP_MATCHES); return bandOutlook('q9', p, `${t('sc_trend')} ~${p}`); }
   if (qid === 'q14' && played && gt.added_time_goals != null) { const p = Math.round(gt.added_time_goals / played * TOTAL_MATCHES); return bandOutlook('q14', p, `${t('sc_onpace')} ~${p} ${t('sc_byfinal')}`); }
+  // Knockout-only paces: extrapolate the knockout rate over all 32 knockout games.
+  const koPlayed = played - TOTAL_GROUP_MATCHES, KO_TOTAL = TOTAL_MATCHES - TOTAL_GROUP_MATCHES;
+  if (qid === 'q11' && koPlayed > 0 && ls.tournament_goals_total != null) { const p = Math.round(ls.group_goals_total + (ls.tournament_goals_total - ls.group_goals_total) / koPlayed * KO_TOTAL); return bandOutlook('q11', p, `${t('sc_onpace')} ~${p} ${t('sc_byfinal')}`); }
+  if (qid === 'q12' && koPlayed > 0 && ls.penalty_shootouts != null) { const p = Math.round(ls.penalty_shootouts / koPlayed * KO_TOTAL); return bandOutlook('q12', p, `${t('sc_onpace')} ~${p} ${t('sc_byfinal')}`); }
+  if (qid === 'q13' && koPlayed > 0 && ls.extra_time_matches != null) { const p = Math.round(ls.extra_time_matches / koPlayed * KO_TOTAL); return bandOutlook('q13', p, `${t('sc_onpace')} ~${p} ${t('sc_byfinal')}`); }
   if (qid === 'q16') return { cls: 'amber', label: t('sc_faster') };
   if (qid === 'q15') return { cls: 'amber', label: t('sc_longer') };
   if (qid === 'q8') return { cls: 'amber', label: `${TOTAL_GROUP_MATCHES - played} ${t('sc_games_left')}` };
