@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-02T11:37:39+00:00",
+  "updated": "2026-07-05T12:00:00+00:00",
   "provisional": false,
   "group_stage_complete": true,
   "qualifying_third_groups": [
@@ -89,7 +89,15 @@
     "79": "Mexico",
     "80": "England",
     "81": "United States",
-    "82": "Belgium"
+    "82": "Belgium",
+    "83": "Portugal",
+    "84": "Spain",
+    "85": "Switzerland",
+    "86": "Argentina",
+    "87": "Colombia",
+    "88": "Egypt",
+    "89": "France",
+    "90": "Morocco"
   },
   "results_warnings": []
 }

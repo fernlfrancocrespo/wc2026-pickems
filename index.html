@@ -737,7 +737,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
-<script src="/i18n.js?v=10"></script>
+<script src="/i18n.js?v=11"></script>
 <script src="/scoring.js?v=10"></script>
 <script>
 // ═══════════════════════════════════════ CONFIG
@@ -2218,6 +2218,17 @@ function renderHome() {
       </div>
       <p class="hub-note">${t('home_picks_note')}</p>
     </div>`;
+  // Tournament over? The finale page becomes the hub's headline destination.
+  fetch('/data/answer_key.json').then(r => r.ok ? r.json() : null).then(ak => {
+    if (!ak || !ak.final) return;
+    const ctas = app.querySelector('.hub-ctas');
+    if (!ctas) return;
+    const fin = document.createElement('a');
+    fin.className = 'hub-card primary';
+    fin.href = '/finale.html';
+    fin.innerHTML = `<span class="ic">🏆</span><span class="t">${t('fn_tag')}</span><span class="d">${t('fn_see_final')}</span>`;
+    ctas.prepend(fin);
+  }).catch(() => {});
 }
 
 // ═══════════════════════════════════════ PAGE RENDER

@@ -127,7 +127,7 @@
     .lb-row .lb-sub{font-size:.7rem;color:var(--grey-mid);white-space:nowrap}
     .lb-row .lb-tot{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--gold);min-width:42px;text-align:right}
     .tag{font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:20px;border:1px solid var(--border);color:var(--grey-light);text-transform:uppercase}
-    .tag.SDC{color:#7dd3fc;border-color:#7dd3fc55}.tag.Lastinger{color:#fca5a5;border-color:#fca5a555}
+    .tag.SDC{color:#7dd3fc;border-color:#7dd3fc55}.tag.Lastinger{color:#fca5a5;border-color:#fca5a555}.tag.Family{color:#86efac;border-color:#86efac55}
     .bar-fill.correct{background:var(--green,#22c55e)!important}
     .qcorrect{color:var(--green,#22c55e);font-weight:700;font-size:.72rem;margin-left:auto}
     .stats-head{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;color:var(--grey-light);margin:30px 0 4px}
@@ -226,7 +226,7 @@
   <div class="spinner"></div>
 </div>
 
-<script src="i18n.js?v=10"></script>
+<script src="i18n.js?v=11"></script>
 <script src="scoring.js?v=10"></script>
 <script>
 let teamsData = {}, results = [], answerKey = null, liveStats = null, ballStats = null, tagsMap = {}, groupsData = {};
@@ -400,6 +400,15 @@ function render() {
     </div>`;
   app.appendChild(summary);
 
+  // ── once the tournament is over, the finale page takes center stage ──
+  if (answerKey && answerKey.final) {
+    const fin = document.createElement('a');
+    fin.href = '/finale.html';
+    fin.style.cssText = 'display:block;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.45);border-radius:10px;padding:14px 18px;margin-bottom:18px;color:var(--gold-light);font-weight:700;font-size:.9rem;text-decoration:none;text-align:center';
+    fin.textContent = '🏆 ' + t('fn_see_final');
+    app.appendChild(fin);
+  }
+
   // ── link to the live group standings ──
   const stLink = document.createElement('a');
   stLink.href = '/standings.html';
@@ -421,6 +430,7 @@ function render() {
         `<button data-tag="" class="${lbTag === '' ? 'on' : ''}">${t('lb_all')}</button>` +
         `<button data-tag="SDC" class="${lbTag === 'SDC' ? 'on' : ''}">SDC</button>` +
         `<button data-tag="Lastinger" class="${lbTag === 'Lastinger' ? 'on' : ''}">Lastinger</button>` +
+        `<button data-tag="Family" class="${lbTag === 'Family' ? 'on' : ''}">Family</button>` +
       `</div><div class="plist" id="lblist"></div>`;
     const rows = scoredView.filter(r => !lbTag || r.tag === lbTag);
     const shown = lbExpanded ? rows : rows.slice(0, 10);   // top 10 by default

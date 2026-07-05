@@ -1,23 +1,25 @@
 # 🏁 Conclusion Plan — knockout stage → final grading → wind-down
 
-The road from today (July 2) to crowning a winner. Companion to `SUNDAY_RUNBOOK.md`
-(which covers the email machinery). Run everything from the project folder in Git Bash.
+The road to crowning a winner. Run everything from the project folder in Git Bash.
 
----
+> **7/5 pivot: no more emails.** The percentile-card email machinery (SUNDAY_RUNBOOK.md,
+> `build_email_cards.py`, `--cards`) is retired — kept in the repo for history only.
+> The site is now fully self-serve: every page refreshes itself as results land, and
+> **/finale.html** is the closer — it runs in PREVIEW mode today and becomes the official
+> celebration page the moment `answer_key.json` gets `"final": true` (the leaderboard and
+> home hub start linking to it automatically at the same moment).
 
-## 📍 Where things stand (July 2)
+## 📍 Where things stand (July 5)
 
-- ✅ Group stage complete (72 matches), tables final, R32 fully populated (16/16).
-- ✅ 61 entries in D1; bracket window closed June 29 — everything is now read-only for players.
-- ✅ `data/bracket_state.json` has all **10 decided R32 results** (through July 1's USA and
-  Belgium wins). Still to play: M83 Portugal–Croatia, M84 Spain–Austria, M85 Switzerland–Algeria
-  (tonight, July 2) and M86 Argentina–Cape Verde, M87 Colombia–Ghana, M88 Australia–Egypt (July 3).
-- ✅ Live stat tallies current through July 1: 241 tournament goals, 2 shootouts, 3 extra-time
-  matches, 27 added-time goals, longest goal 31.23m (Pina), Golden Boot Messi/Mbappé 6.
-- ✅ `answer_key.json`: q10 = Yes (hat-tricks happened — settled). Everything else null,
-  with the fill-by dates below.
-- ✅ standings.html now shows the real bracket + the Pick-'Ems Pulse (champion picks
-  alive/out, field consensus on undecided games).
+- ✅ Group stage complete (72 matches); 61 entries; everything read-only for players.
+- ✅ R32 complete (16/16 results in `bracket_state.json`); R16 underway — France (M89)
+  and Morocco (M90) through. Still to play: M91 Brazil–Norway, M92 Mexico–England (today),
+  M93–96 (Jul 6–7).
+- ✅ Live tallies current through M90: 261 tournament goals, 3 shootouts, 5 extra-time
+  matches, 28 added-time goals, longest goal 31.23m (Pina), Golden Boot Messi/Mbappé 7.
+- ✅ `answer_key.json`: q10 = Yes. Everything else null, with the fill-by dates below.
+- ✅ Pages: standings.html (bracket + pulse), leaderboard.html (live ranking),
+  finale.html (podium/honors/full-field — preview mode until the final).
 
 ## 🗓️ Tournament calendar (what triggers work)
 
@@ -28,7 +30,7 @@ The road from today (July 2) to crowning a winner. Companion to `SUNDAY_RUNBOOK.
 | Quarter-finals | Jul 9 – Jul 11 | same |
 | Semi-finals | Jul 14 – Jul 15 | same + fill q3a/q3b (losing semifinalists) |
 | Third-place game | Jul 18 | nothing scored (bracket has no M103 — intentional) |
-| **Final** | **Jul 19** | fill everything, final deploy, winner email |
+| **Final** | **Jul 19** | fill everything, flip `"final": true`, final deploy — finale.html goes official |
 
 ## 🔁 After every knockout matchday (~10 min)
 
@@ -68,13 +70,16 @@ Filling them early keeps the leaderboard honest and the group chat noisy.
 
 ## 🏆 Final day (July 19) — closing checklist
 
-1. Enter the final's result in `results_source.txt` + fill `q1, q2, q11–q16, q17–q22`.
-2. Set `"final": true` and `"updated"` in `answer_key.json`.
-3. `./deploy.sh --cards` → regenerates the 61 cards/packets with **final** standings.
-4. Verify: leaderboard total for the top entry matches `run-eval.js` output
-   (`node run-eval.js` cross-checks scoring); no `results_warnings` in `bracket_state.json`.
-5. Send the finale emails (SUNDAY_RUNBOOK.md § Send the emails) — winner + percentile
-   tiers are automatic. Announce the champion in the group chats.
+1. `python populate_bracket.py` for the final's result + fill `q1, q2, q11–q16, q17–q22`
+   in `answer_key.json` (final knockout tallies in `live_stats.json` too).
+2. Set `"final": true` and `"updated"` in `answer_key.json`. **This one flag is the switch:**
+   finale.html drops its preview banner, gets confetti, reveals "Called the champion,"
+   and the leaderboard + home hub start linking to it.
+3. `./deploy.sh --no-scrape`.
+4. Verify: finale.html podium matches `node run-eval.js` output (the scoring referee);
+   no `results_warnings` in `bracket_state.json`.
+5. Drop the link in the group chats: **wc2026-pickems.com/finale.html**. That's the
+   announcement — no emails.
 6. Prize handoff per whatever you promised. 🎉
 
 ## 📦 Wind-down (week after the final)
@@ -86,9 +91,9 @@ Filling them early keeps the leaderboard honest and the group chat noisy.
 4. Decide the domain's fate (wc2026-pickems.com renews in 2027 — let lapse or keep as
    a trophy page). The Pages site itself is free to leave up as a museum.
 5. Optional: strip emails from D1 (`UPDATE submissions SET email=NULL;`) once the
-   prize is settled — nothing on the site needs them after the last send.
+   prize is settled — with the email plan retired, nothing needs them at all.
 
 ## 🆘 Same failure modes as always
 
 Scrape flaky → wait + retry or `--no-scrape`; API blip → redeploy pins `wrangler.toml`;
-score disputes → `node run-eval.js` is the referee; lost links → `_mailmerge.csv`.
+score disputes → `node run-eval.js` is the referee.

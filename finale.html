@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>World Cup 2026 Pick-'Ems · Final Results</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--navy:#0D1B2A;--navy-card:#1A2D40;--navy-input:#0F2235;--red:#C8102E;--gold:#C9A84C;--gold-light:#E8C66A;--silver:#C0C4CC;--bronze:#CD7F32;--white:#fff;--grey-light:#B8C5D0;--grey-mid:#6B8099;--border:rgba(255,255,255,0.08);--radius:12px;--green:#22c55e}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;overflow-x:hidden}
+    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--navy)}::-webkit-scrollbar-thumb{background:var(--navy-card);border-radius:3px}
+    a{color:inherit}
+    .site-header{background:linear-gradient(120deg,#080f18,#1a0812 50%,#080f18);border-bottom:2px solid var(--gold);padding:18px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .header-left{display:flex;align-items:center;gap:14px}
+    .header-logo{width:6px;height:38px;border-radius:3px;background:var(--gold)}
+    .header-titles h1{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:3px;line-height:1}
+    .header-titles h1 span{color:var(--gold)}
+    .header-titles p{font-size:.7rem;color:var(--grey-mid);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+    .header-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .nav-link{display:flex;align-items:center;gap:6px;color:var(--grey-light);text-decoration:none;font-size:.78rem;font-weight:600;padding:7px 12px;border:1px solid var(--border);border-radius:8px;transition:all .15s;white-space:nowrap}
+    .nav-link:hover{color:var(--gold);border-color:var(--gold)}
+    .lang-toggle{display:flex;gap:4px;background:rgba(255,255,255,.05);border-radius:8px;padding:3px}
+    .lang-btn{display:flex;align-items:center;gap:5px;background:transparent;border:none;cursor:pointer;padding:5px 9px;border-radius:6px;color:var(--grey-light);font-family:'Inter',sans-serif;font-size:.72rem;font-weight:700;transition:all .15s}
+    .lang-btn img{width:20px;border-radius:2px;display:block}.lang-btn.active{background:var(--gold);color:var(--navy)}
+    .wrap{max-width:900px;margin:0 auto;padding:26px 18px 80px;position:relative}
+
+    .preview-note{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.4);border-radius:10px;padding:12px 16px;font-size:.8rem;color:var(--gold-light);line-height:1.5;margin-bottom:24px;text-align:center;font-weight:600}
+
+    /* hero + podium */
+    .hero{text-align:center;padding:26px 10px 10px}
+    .hero .kick{display:inline-block;font-size:.66rem;font-weight:800;letter-spacing:1.6px;color:var(--gold);background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.32);border-radius:20px;padding:5px 14px;margin-bottom:14px;text-transform:uppercase}
+    .hero h2{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;letter-spacing:2px;line-height:1.08;margin-bottom:8px}
+    .hero .sub{color:var(--grey-mid);font-size:.88rem;max-width:520px;margin:0 auto}
+    .podium{display:flex;align-items:flex-end;justify-content:center;gap:12px;margin:34px 0 8px;min-height:250px}
+    .step{flex:0 1 200px;display:flex;flex-direction:column;align-items:center;gap:0}
+    .step .who{text-align:center;margin-bottom:10px}
+    .step .medal{font-size:2rem;line-height:1}
+    .step .nm{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:1px;margin-top:4px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .step .pts{font-size:.86rem;font-weight:700}
+    .step .lbl{font-size:.6rem;letter-spacing:1.2px;color:var(--grey-mid);text-transform:uppercase;margin-top:2px}
+    .step .block{width:100%;border-radius:10px 10px 0 0;border:1px solid var(--border);border-bottom:none;background:var(--navy-card)}
+    .step.p1 .block{height:120px;background:linear-gradient(180deg,rgba(201,168,76,.45),rgba(201,168,76,.08));border-color:rgba(201,168,76,.5)}
+    .step.p2 .block{height:84px;background:linear-gradient(180deg,rgba(192,196,204,.35),rgba(192,196,204,.05));border-color:rgba(192,196,204,.4)}
+    .step.p3 .block{height:60px;background:linear-gradient(180deg,rgba(205,127,50,.35),rgba(205,127,50,.05));border-color:rgba(205,127,50,.4)}
+    .step.p1 .pts{color:var(--gold)} .step.p2 .pts{color:var(--silver)} .step.p3 .pts{color:var(--bronze)}
+    .step.p1 .nm{font-size:1.9rem}
+    .podium-base{height:2px;background:var(--gold);max-width:660px;margin:0 auto 30px;border-radius:2px;opacity:.6}
+    .tag{font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:20px;border:1px solid var(--border);color:var(--grey-light);text-transform:uppercase;vertical-align:middle}
+    .tag.SDC{color:#7dd3fc;border-color:#7dd3fc55}.tag.Lastinger{color:#fca5a5;border-color:#fca5a555}.tag.Family{color:#86efac;border-color:#86efac55}
+
+    /* confetti (final mode only) */
+    .cf{position:absolute;top:-14px;font-size:.85rem;animation:fall linear infinite;pointer-events:none;z-index:1}
+    @keyframes fall{to{transform:translateY(108vh) rotate(660deg)}}
+
+    /* stat chips */
+    .chips{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:30px}
+    .chip{background:var(--navy-card);border:1px solid var(--border);border-radius:10px;padding:11px 20px;text-align:center;min-width:120px}
+    .chip .n{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--gold);line-height:1}
+    .chip .l{font-size:.62rem;color:var(--grey-mid);text-transform:uppercase;letter-spacing:.5px;margin-top:4px;line-height:1.4}
+
+    /* sections */
+    .sec{background:var(--navy-card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:24px;overflow:hidden}
+    .sec-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .sec-head h2{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:2px}
+    .sec-accent{width:4px;height:16px;border-radius:2px;background:var(--gold);flex-shrink:0}
+    .sec-sub{width:100%;font-size:.78rem;color:var(--grey-mid);line-height:1.5}
+    .sec-body{padding:16px 18px}
+
+    /* honors */
+    .hn-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+    .hn{background:var(--navy);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+    .hn .ic{font-size:1.3rem}
+    .hn .t{font-weight:700;font-size:.85rem;margin:6px 0 2px;color:var(--gold-light)}
+    .hn .w{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:.5px;margin:2px 0}
+    .hn .v{font-size:.74rem;color:var(--gold);font-weight:700}
+    .hn .d{font-size:.7rem;color:var(--grey-mid);line-height:1.45;margin-top:6px}
+    .hn.pending .w{color:var(--grey-mid);font-size:1rem;font-family:'Inter',sans-serif;font-weight:600}
+
+    /* full field */
+    .lb-toggle{display:inline-flex;gap:4px;background:rgba(255,255,255,.05);border-radius:8px;padding:4px;margin-bottom:14px}
+    .lb-toggle button{background:transparent;border:none;color:var(--grey-light);font-weight:700;font-size:.8rem;padding:7px 16px;border-radius:6px;cursor:pointer}
+    .lb-toggle button.on{background:var(--gold);color:var(--navy)}
+    .row{display:flex;align-items:center;gap:12px;padding:11px 12px;border-bottom:1px solid var(--border);text-decoration:none;color:var(--white)}
+    .row:hover{background:rgba(255,255,255,.03)}
+    .row .rank{font-family:'Bebas Neue',sans-serif;color:var(--grey-mid);width:34px;font-size:1.15rem;text-align:center;flex-shrink:0}
+    .row.m1 .rank{color:var(--gold)}.row.m2 .rank{color:var(--silver)}.row.m3 .rank{color:var(--bronze)}
+    .row.m1{background:rgba(201,168,76,.06)}
+    .row .who{flex:1;font-weight:600;display:flex;align-items:center;gap:8px;min-width:0}
+    .row .who .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .row .split{font-size:.7rem;color:var(--grey-mid);white-space:nowrap}
+    .row .tot{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--gold);min-width:46px;text-align:right}
+    @media(max-width:560px){.row .split{display:none}.podium{gap:6px}.step .nm{font-size:1.2rem}.step.p1 .nm{font-size:1.5rem}}
+    .spinner{width:34px;height:34px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .75s linear infinite;margin:50px auto}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .empty{text-align:center;padding:60px 20px;color:var(--grey-mid)}
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-left">
+    <div class="header-logo"></div>
+    <div class="header-titles">
+      <a href="/" style="text-decoration:none;color:inherit"><h1>WORLD CUP 2026 <span id="hdr-tag">FINAL RESULTS</span></h1></a>
+      <p id="hdr-sub">How everyone fared</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <a class="nav-link" href="/standings.html" id="nav-standings">Standings</a>
+    <a class="nav-link" href="/leaderboard.html" id="nav-board">Leaderboard</a>
+    <a class="nav-link" href="/" id="nav-form">Home</a>
+    <div class="lang-toggle" id="lang-toggle">
+      <button class="lang-btn" data-lang="en" title="English"><img src="https://flagcdn.com/w40/gb.png" alt="EN"><span>EN</span></button>
+      <button class="lang-btn" data-lang="pt" title="Português"><img src="https://flagcdn.com/w40/br.png" alt="PT"><span>PT</span></button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap" id="app"><div class="spinner"></div></div>
+
+<script src="i18n.js?v=11"></script>
+<script src="scoring.js?v=10"></script>
+<script>
+let teamsData = {}, entries = [], answerKey = null, liveStats = null, ballStats = null,
+    tagsMap = {}, groupsData = {}, bracketStruct = {}, bracketState = {}, lateOverrides = {};
+let fnTag = ''; // tag filter: '' | 'SDC' | 'Lastinger'
+
+async function init() {
+  const g = p => fetch(p).then(r => r.ok ? r.json() : null).catch(() => null);
+  [teamsData, answerKey, liveStats, ballStats, tagsMap, groupsData, bracketStruct, bracketState, lateOverrides] =
+    await Promise.all([
+      g('/data/teams.json').then(v=>v||{}), g('/data/answer_key.json'), g('/data/live_stats.json'),
+      g('/data/ball_stats.json'), g('/data/tags.json').then(v=>v||{}), g('/data/groups.json').then(v=>v||{}),
+      g('/data/bracket.json').then(v=>v||{}), g('/data/bracket_state.json').then(v=>v||{}),
+      g('/data/late_entrants.json').then(v=>v||{}),
+    ]);
+  try {
+    const r = await fetch('/api/results'); const d = await r.json();
+    entries = (d && d.submissions) || [];
+  } catch(e){ entries = []; }
+  if (!entries.length) { const f = await g('/data/_preview_results.json'); if (f && f.submissions) entries = f.submissions; }
+  document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
+  onLangChange(()=>{applyChrome();render();});
+  applyChrome(); render();
+}
+function applyChrome(){
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===getLang()));
+  document.getElementById('hdr-tag').textContent = t('fn_tag');
+  document.getElementById('hdr-sub').textContent = t('fn_sub');
+  document.getElementById('nav-standings').textContent = t('nav_standings');
+  document.getElementById('nav-board').textContent = t('nav_board');
+  document.getElementById('nav-form').textContent = t('nav_form');
+}
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+function tagOf(e){ return tagsMap[e.slug] || tagsMap[(e.email||'').toLowerCase()] || ''; }
+function viewUrl(e){ return e.slug ? '/p/'+e.slug : '#'; }
+function isFinal(){ return !!(answerKey && answerKey.final); }
+
+// Effective key = confirmed outcomes + live projections (same recipe as the leaderboard).
+function buildLiveKey(){
+  const ak = (answerKey && (answerKey.answers || answerKey)) || {};
+  const key = JSON.parse(JSON.stringify(ak));
+  const setL = (k,v)=>{ if (key[k]==null) key[k]=v; };
+  if (liveStats){
+    key.q8 = key.q8 || {};
+    Object.entries(liveStats.groups||{}).forEach(([L,gg])=>{ if(!key.q8[L]) key.q8[L]=gg.provisional_order; });
+    setL('q9', liveStats.group_goals_total);
+    setL('q11', liveStats.tournament_goals_total);
+    setL('q12', liveStats.penalty_shootouts);
+    setL('q13', liveStats.extra_time_matches);
+    if (liveStats.hat_trick_in_group_stage) setL('q10','Yes');
+    const gt = liveStats.goal_timing||{};
+    setL('q14', gt.added_time_goals); setL('q16', gt.fastest_goal_seconds);
+    if (liveStats.top_scorers && liveStats.top_scorers[0]) setL('q18_player', liveStats.top_scorers[0].player);
+  }
+  if (ballStats && ballStats.q15_longest_range_m != null) setL('q15', ballStats.q15_longest_range_m);
+  return key;
+}
+
+const PROP_QS = ['q9','q10','q11','q12','q13','q14','q15','q16'];
+function computeAll(){
+  const key = buildLiveKey();
+  if (typeof keyHasData !== 'function' || !keyHasData({answers:key})) return null;
+  const bResults = (bracketState && bracketState.results) || {};
+  const rows = entries.filter(e=>!e.hidden).map(e=>{
+    const dg = isDefaultGroupOrder(e.answers.q8, groupsData);
+    const s = scoreEntry(e.answers, key, { defaultGroup: dg });
+    const brk = scoreBracket(e.answers.bracket, bracketStruct, bResults, bracketScoreOpts(e, lateOverrides));
+    s.total += brk.pts; s.lockedKO += brk.pts;
+    const propsPts = PROP_QS.reduce((a,q)=>a+((s.breakdown[q]&&s.breakdown[q].pts)||0),0);
+    let perfect = 0;
+    Object.entries(key.q8||{}).forEach(([L,real])=>{
+      const mine=(e.answers.q8||{})[L];
+      if(Array.isArray(mine)&&Array.isArray(real)&&mine.length===4&&mine.every((tm,i)=>tm===real[i])) perfect++;
+    });
+    return { e, tag: tagOf(e), s, brkPts: brk.pts, propsPts, perfect };
+  });
+  rows.sort((a,b)=>b.s.total-a.s.total||b.s.graded-a.s.graded||(a.e.display_name||'').localeCompare(b.e.display_name||''));
+  rows.forEach((r,i)=>r.finalRank=i+1);
+  const byGroup=[...rows].sort((a,b)=>b.s.lockedGroup-a.s.lockedGroup||(a.e.display_name||'').localeCompare(b.e.display_name||''));
+  byGroup.forEach((r,i)=>r.groupRank=i+1);
+  rows.forEach(r=>r.climb=r.groupRank-r.finalRank);
+  return rows;
+}
+
+function podiumHtml(rows){
+  const p = rows.slice(0,3);
+  const step = (r, cls, medal, lbl) => r ? `
+    <div class="step ${cls}">
+      <div class="who"><div class="medal">${medal}</div>
+        <div class="nm">${esc(r.e.display_name||'anon')}</div>
+        ${r.tag?`<span class="tag ${r.tag}">${r.tag}</span>`:''}
+        <div class="pts">${Math.round(r.s.total)} ${t('lb_pts_short')}</div>
+        <div class="lbl">${lbl}</div></div>
+      <div class="block"></div>
+    </div>` : '';
+  return `<div class="podium">${step(p[1],'p2','🥈',t('fn_second'))}${step(p[0],'p1','🏆',t('fn_champ_label'))}${step(p[2],'p3','🥉',t('fn_third'))}</div><div class="podium-base"></div>`;
+}
+
+function honorsHtml(rows){
+  const key = buildLiveKey();
+  const best = (metric, fmt) => {
+    const r = [...rows].sort((a,b)=>metric(b)-metric(a))[0];
+    return r && metric(r) > 0 ? { name: r.e.display_name||'anon', tag: r.tag, val: fmt(metric(r)) } : null;
+  };
+  const card = (ic, titleK, descK, winner, pendingText) => `
+    <div class="hn${winner?'':' pending'}"><span class="ic">${ic}</span>
+      <div class="t">${t(titleK)}</div>
+      <div class="w">${winner ? esc(winner.name) + (winner.tag?` <span class="tag ${winner.tag}">${winner.tag}</span>`:'') : (pendingText||t('fn_pending'))}</div>
+      ${winner && winner.val ? `<div class="v">${winner.val}</div>` : ''}
+      <div class="d">${t(descK)}</div></div>`;
+
+  const groupChamp = best(r=>r.s.lockedGroup, v=>`${Math.round(v)} ${t('lb_pts_short')}`);
+  const bracket    = best(r=>r.brkPts,        v=>`${Math.round(v)} ${t('lb_pts_short')}`);
+  const props      = best(r=>r.propsPts,      v=>`${Math.round(v)} ${t('lb_pts_short')}`);
+  const perfect    = best(r=>r.perfect,       v=>`${v} ${t('fn_perfect_unit')}`);
+  const climber    = best(r=>r.climb,         v=>`▲ ${v} ${t('fn_spots')}`);
+
+  // Called the champion: only from the OFFICIAL key (never the projection).
+  const realChamp = answerKey && answerKey.answers && answerKey.answers.q1;
+  let prophet = null;
+  if (realChamp) {
+    const names = rows.filter(r=>r.e.answers.q1===realChamp).map(r=>r.e.display_name||'anon');
+    prophet = { name: names.length ? names.join(', ') : '—', tag:'', val: `${teamLabel(realChamp)} 🏆` };
+  }
+
+  return `<div class="sec"><div class="sec-head"><span class="sec-accent"></span><h2>${t('fn_honors')}</h2>
+    <div class="sec-sub">${t('fn_honors_sub')}</div></div><div class="sec-body"><div class="hn-grid">
+    ${card('🗂️','fn_h_group','fn_h_group_d',groupChamp,'—')}
+    ${card('🔮','fn_h_prophet','fn_h_prophet_d',prophet)}
+    ${card('🌳','fn_h_bracket','fn_h_bracket_d',bracket,'—')}
+    ${card('🎯','fn_h_props','fn_h_props_d',props,'—')}
+    ${card('🤫','fn_h_perfect','fn_h_perfect_d',perfect,'—')}
+    ${card('📈','fn_h_climber','fn_h_climber_d',climber,'—')}
+  </div></div></div>`;
+}
+
+function fieldHtml(rows){
+  const shown = rows.filter(r=>!fnTag||r.tag===fnTag);
+  return `<div class="sec"><div class="sec-head"><span class="sec-accent"></span><h2>${t('fn_field')}</h2>
+    <div class="sec-sub">${t('fn_field_sub')}</div></div><div class="sec-body">
+    <div class="lb-toggle" id="fn-tags">
+      <button data-tag="" class="${fnTag===''?'on':''}">${t('lb_all')}</button>
+      <button data-tag="SDC" class="${fnTag==='SDC'?'on':''}">SDC</button>
+      <button data-tag="Lastinger" class="${fnTag==='Lastinger'?'on':''}">Lastinger</button>
+      <button data-tag="Family" class="${fnTag==='Family'?'on':''}">Family</button>
+    </div>
+    ${shown.map(r=>{
+      const m = r.finalRank<=3 ? ` m${r.finalRank}` : '';
+      const medal = ['🏆','🥈','🥉'][r.finalRank-1] || r.finalRank;
+      return `<a class="row${m}" href="${viewUrl(r.e)}">
+        <span class="rank">${medal}</span>
+        <span class="who"><span class="nm">${esc(r.e.display_name||'anon')}</span>${r.tag?`<span class="tag ${r.tag}">${r.tag}</span>`:''}</span>
+        <span class="split">${Math.round(r.s.lockedGroup)} ${t('sc_group')} · ${Math.round(r.s.lockedKO-r.brkPts)} ${t('sc_ko')} · ${r.brkPts} ${t('fn_br')}</span>
+        <span class="tot">${Math.round(r.s.total)}</span>
+      </a>`;
+    }).join('') || `<div class="empty">${t('lb_empty')}</div>`}
+  </div></div>`;
+}
+
+function confetti(){
+  const pieces = ['🎉','✨','⚽','🏆','🎊'];
+  return Array.from({length:18},(_,i)=>{
+    const left = Math.round(Math.random()*98), dur = 7+Math.random()*8, delay = Math.random()*9;
+    return `<span class="cf" style="left:${left}%;animation-duration:${dur}s;animation-delay:${delay}s">${pieces[i%pieces.length]}</span>`;
+  }).join('');
+}
+
+function render(){
+  const app = document.getElementById('app');
+  const rows = computeAll();
+  if (!rows || !rows.length){ app.innerHTML = `<div class="empty">${t('lb_empty')}</div>`; return; }
+  const fin = isFinal();
+  const realChamp = answerKey && answerKey.answers && answerKey.answers.q1;
+  const champPct = realChamp
+    ? Math.round(rows.filter(r=>r.e.answers.q1===realChamp).length / rows.length * 100) : null;
+  app.innerHTML =
+    (fin ? confetti() : `<div class="preview-note">${t('fn_preview')}</div>`) +
+    `<div class="hero">
+       <span class="kick">${fin ? t('fn_hero_final') : t('fn_hero_preview')}</span>
+       <h2>${esc((rows[0].e.display_name||'anon').toUpperCase())} 🏆</h2>
+       <p class="sub">${t('fn_sub')}</p>
+     </div>` +
+    podiumHtml(rows) +
+    `<div class="chips">
+       <div class="chip"><div class="n">${rows.length}</div><div class="l">${t('lb_entries')}</div></div>
+       ${champPct != null ? `<div class="chip"><div class="n">${champPct}%</div><div class="l">${t('fn_picked_champ')}</div></div>` : ''}
+       <div class="chip"><div class="n">${Math.round(rows[0].s.total)}</div><div class="l">${t('lb_pts_short')} · ${esc(rows[0].e.display_name||'anon')}</div></div>
+     </div>` +
+    honorsHtml(rows) +
+    fieldHtml(rows);
+  document.querySelectorAll('#fn-tags button').forEach(b=>
+    b.addEventListener('click',()=>{ fnTag=b.dataset.tag; render(); }));
+}
+init();
+</script>
+</body>
+</html>
