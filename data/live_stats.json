@@ -1,10 +1,10 @@
 {
-  "updated": "2026-07-05T12:00:00+00:00",
+  "updated": "2026-07-06T12:09:53+00:00",
   "source": "wikipedia",
-  "knockout_note": "Knockout tallies (tournament_goals_total, penalty_shootouts, extra_time_matches, knockout goal_timing add-ons, knockout goals in top_scorers) are MANUALLY MAINTAINED from match reports — the group-page scraper does not see knockout games and will regress them if re-run. Groups are final, so prefer ./deploy.sh --no-scrape. 7/5: R32 complete (16), R16 through M90 (France, Morocco). Shootouts: GER-PAR, NED-MAR, EGY-AUS. ET also in BEL-SEN, ARG-CPV.",
-  "matches_played": 90,
+  "knockout_note": "Knockout tallies (tournament_goals_total, penalty_shootouts, extra_time_matches, knockout goal_timing add-ons, knockout goals in top_scorers) are MANUALLY MAINTAINED from match reports — the group-page scraper does not see knockout games and will regress them if re-run. Groups are final, so prefer ./deploy.sh --no-scrape. 7/6: R16 through M92 (Norway, England both beat co-hosts/favorites — Brazil and Mexico out). Shootouts so far: GER-PAR, NED-MAR, EGY-AUS. ET so far: BEL-SEN, ARG-CPV.",
+  "matches_played": 92,
   "group_goals_total": 215,
-  "tournament_goals_total": 261,
+  "tournament_goals_total": 269,
   "penalty_shootouts": 3,
   "extra_time_matches": 5,
   "top_scorers": [
@@ -21,12 +21,17 @@
     {
       "player": "Erling Haaland",
       "team": "Norway",
-      "goals": 5
+      "goals": 7
     },
     {
       "player": "Harry Kane",
       "team": "England",
       "goals": 5
+    },
+    {
+      "player": "Jude Bellingham",
+      "team": "England",
+      "goals": 4
     },
     {
       "player": "Ismaïla Sarr",
@@ -123,9 +128,9 @@
     }
   ],
   "goal_timing": {
-    "goals_counted": 261,
+    "goals_counted": 269,
     "fastest_goal_seconds": 64.0,
-    "added_time_goals": 28
+    "added_time_goals": 29
   },
   "group_stage_complete": true,
   "groups": {

@@ -189,7 +189,10 @@
     .bs.lost { opacity:.4; text-decoration:line-through; }
     .bs img { width:18px; border-radius:2px; flex-shrink:0; }
     .bs i { width:18px; height:12px; border-radius:2px; background:var(--navy-input); flex-shrink:0; display:inline-block; }
-    .bs span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .bs span { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .bs-score { flex-shrink:0; font-family:'Bebas Neue',sans-serif; font-size:.85rem; color:var(--grey-light); letter-spacing:.5px; }
+    .bs-score small { font-family:'Inter',sans-serif; font-size:.58rem; color:var(--grey-mid); margin-left:3px; font-weight:600; }
+    .bs.won .bs-score { color:var(--sc-green,#22c55e); }
     .bm.fin { flex:0 0 auto; width:100%; gap:4px; }
     .bm.fin .bs { background:var(--navy-card); border-color:rgba(201,168,76,.3); }
     .trophy { margin-top:14px; text-align:center; }
@@ -2093,7 +2096,15 @@ const BR_RIGHT = [
 // captured at parse time would be empty — always look it up at render time).
 function brPts(rk) { const r = (bracketStruct.rounds || []).find(x => x.key === rk); return r ? r.points : null; }
 
-function brSideHtml(mid, team) {
+// Goals for one side of a decided match, plus a penalty-shootout sub-score if that's
+// what actually settled it (regulation/ET score still shown as the main number).
+function brScoreHtml(mid, sideKey) {
+  const s = bracketState.scores && bracketState.scores[mid];
+  if (!s || s[sideKey] == null) return '';
+  const pens = s.pens && s.pens[sideKey];
+  return `<b class="bs-score">${s[sideKey]}${pens != null ? `<small>(${pens})</small>` : ''}</b>`;
+}
+function brSideHtml(mid, team, sideKey) {
   const tm = team && teamsData[team];
   const flag = tm && flagUrl(tm.iso2);
   const result = brResult(mid);                 // played? then the match is locked
@@ -2102,7 +2113,9 @@ function brSideHtml(mid, team) {
   const tbd = team ? '' : ' tbd';
   return `<div class="bs${cls}${tbd}" data-m="${mid}" data-t="${team ? escapeAttr(team) : ''}">` +
          (flag ? `<img src="${flag}" alt="">` : '<i></i>') +
-         `<span>${team ? teamLabel(team) : t('br_tbd')}</span></div>`;
+         `<span>${team ? teamLabel(team) : t('br_tbd')}</span>` +
+         (result ? brScoreHtml(mid, sideKey) : '') +
+         `</div>`;
 }
 function brColEl(c, side) {
   const el = document.createElement('div');
@@ -2115,7 +2128,7 @@ function brColEl(c, side) {
     const mid = String(n), [t1, t2] = brMatchTeams(mid);
     const mt = document.createElement('div');
     mt.className = 'bm';
-    mt.innerHTML = brSideHtml(mid, t1) + brSideHtml(mid, t2);
+    mt.innerHTML = brSideHtml(mid, t1, 's1') + brSideHtml(mid, t2, 's2');
     wrap.appendChild(mt);
   });
   el.appendChild(wrap);
@@ -2130,7 +2143,7 @@ function renderBracketTree(tree) {
   cen.className = 'bcen';
   cen.innerHTML =
     `<div class="blab">${t('br_final')}<em>+${brPts('final') || ''}</em></div>` +
-    `<div class="bm fin">${brSideHtml('104', fa)}${brSideHtml('104', fb)}</div>` +
+    `<div class="bm fin">${brSideHtml('104', fa, 's1')}${brSideHtml('104', fb, 's2')}</div>` +
     `<div class="trophy">` +
       (champ ? `<div class="tcup">🏆</div><div class="tname">${teamLabel(champ)}</div><div class="tsub">${t('sc_champion')}</div>`
              : `<div class="tsub">${picked} / 31 ${t('br_picked')}</div>`) +
