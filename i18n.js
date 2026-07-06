@@ -359,6 +359,8 @@ const I18N = {
     br_tbd:         'TBD',
     br_picked:      'picked',
     br_final:       'FINAL',
+    br_called_it:   'You called it — correct pick',
+    br_missed:      'Missed — this pick lost',
   },
 
   pt: {
@@ -689,6 +691,8 @@ const I18N = {
     br_tbd:         'A definir',
     br_picked:      'escolhidos',
     br_final:       'FINAL',
+    br_called_it:   'Você acertou — palpite correto',
+    br_missed:      'Errou — este palpite perdeu',
   },
 };
 

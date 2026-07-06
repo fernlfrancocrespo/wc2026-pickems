@@ -143,6 +143,7 @@
     .sc-row .ql .tag { font-weight:600; }
     .sc-row .ql .tag.live { color:var(--gold); } .sc-row .ql .tag.locked { color:var(--sc-green); }
     .sc-row .qd { font-size:.92rem; margin-top:3px; } .sc-row .qd b { color:var(--white); }
+    .sc-row .qd b.br-hit { color:var(--sc-green,#22c55e); } .sc-row .qd b.br-miss { color:var(--red); }
     .sc-row .qd .ok { color:var(--sc-green); } .sc-row .qd .par { color:var(--gold); } .sc-row .qd .no { color:#e8857f; }
     .sc-row .pts { font-family:'Bebas Neue',sans-serif; font-size:1.9rem; min-width:56px; text-align:right; line-height:1; }
     .sc-row.hit .pts { color:var(--sc-green); } .sc-row.partial .pts { color:var(--gold); } .sc-row.miss .pts { color:var(--red); }
@@ -193,7 +194,20 @@
     .bs-score { flex-shrink:0; font-family:'Bebas Neue',sans-serif; font-size:.85rem; color:var(--grey-light); letter-spacing:.5px; }
     .bs-score small { font-family:'Inter',sans-serif; font-size:.58rem; color:var(--grey-mid); margin-left:3px; font-weight:600; }
     .bs.won .bs-score { color:var(--sc-green,#22c55e); }
+    /* pick-mark: a SIBLING of the two .bs rows (not nested inside either), so it's
+       never dimmed by .bs.lost's opacity — the whole point is staying legible on a
+       faded, struck-through wrong pick. */
+    .pick-mark { position:absolute; right:2px; width:15px; height:15px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.6rem; font-weight:800; font-style:normal; line-height:1; z-index:2; box-shadow:0 1px 3px rgba(0,0,0,.5); }
+    .pick-mark.top { top:1px; }
+    .pick-mark.bottom { bottom:1px; }
+    .pick-mark.hit { background:var(--sc-green,#22c55e); color:#0a1420; }
+    .pick-mark.miss { background:var(--red); color:#fff; }
+    .bm.fin .pick-mark { right:6px; }
+    .bm.fin .pick-mark.top { top:4px; }
+    .bm.fin .pick-mark.bottom { bottom:4px; }
     .bm.fin { flex:0 0 auto; width:100%; gap:4px; }
+    .br-legend { display:flex; align-items:center; flex-wrap:wrap; gap:6px; font-size:.74rem; color:var(--grey-light); margin-bottom:12px; }
+    .br-legend .pick-mark { display:inline-flex; box-shadow:none; }
     .bm.fin .bs { background:var(--navy-card); border-color:rgba(201,168,76,.3); }
     .trophy { margin-top:14px; text-align:center; }
     .tcup { font-size:1.8rem; } .tname { font-family:'Bebas Neue',sans-serif; font-size:1.3rem; color:var(--gold); letter-spacing:1px; }
@@ -740,7 +754,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
-<script src="/i18n.js?v=11"></script>
+<script src="/i18n.js?v=12"></script>
 <script src="/scoring.js?v=10"></script>
 <script>
 // ═══════════════════════════════════════ CONFIG
@@ -2015,11 +2029,20 @@ async function renderScorecard() {
   if (brk.max && Object.keys(answers.bracket || {}).length) {
     const decided = Object.values(brk.byRound).reduce((a, r) => a + r.decided, 0);
     const st = !decided ? 'partial' : (brk.pts > 0 ? (brk.pts >= brk.max ? 'hit' : 'partial') : 'miss');
+    // Match-by-match hit/miss, so the tally is visible here without opening "Their picks".
+    let hits = 0, misses = 0;
+    Object.keys(answers.bracket || {}).forEach(mid => {
+      const real = (bracketState.results || {})[mid];
+      if (!real) return;
+      if (answers.bracket[mid] === real) hits++; else misses++;
+    });
     const row = document.createElement('div');
     row.className = `sc-row ${st}`;
     row.innerHTML =
       `<div class="q"><div class="ql">${t('sec_bracket')} <span class="tag ${decided ? 'locked' : 'live'}">· ${decided ? t('sc_locked') : t('sc_live')}</span></div>` +
-      `<div class="qd">${Object.keys(answers.bracket).length} ${t('br_picked')}${decided ? ` · ${decided} ${t('sc_decided') || 'decided'}` : ''}</div></div>` +
+      `<div class="qd">${Object.keys(answers.bracket).length} ${t('br_picked')}` +
+        (decided ? ` · <b class="br-hit">✓ ${hits}</b> <b class="br-miss">✗ ${misses}</b>` : '') +
+      `</div></div>` +
       `<div class="pts">${brk.pts > 0 ? '+' + Math.round(brk.pts) : '0'}<small>/${brk.max}</small></div>`;
     sc.appendChild(row);
   }
@@ -2117,6 +2140,19 @@ function brSideHtml(mid, team, sideKey) {
          (result ? brScoreHtml(mid, sideKey) : '') +
          `</div>`;
 }
+// Was THIS pick right or wrong? A small badge, a sibling of the two team rows (not
+// nested inside either), so it stays fully visible even on the faded/struck-through
+// losing side — that's the whole point: you need to see it was their pick AND that
+// it missed, in one glance, not a barely-visible icon at 40% opacity.
+function brPickBadgeHtml(mid, t1, t2) {
+  const result = brResult(mid);
+  if (!result) return '';
+  const pick = answers.bracket[mid];
+  if (!pick || (pick !== t1 && pick !== t2)) return ''; // no valid pick locked in for this match
+  const hit = pick === result;
+  const pos = pick === t1 ? 'top' : 'bottom';
+  return `<i class="pick-mark ${hit ? 'hit' : 'miss'} ${pos}" title="${hit ? t('br_called_it') : t('br_missed')}">${hit ? '✓' : '✗'}</i>`;
+}
 function brColEl(c, side) {
   const el = document.createElement('div');
   el.className = `bc ${side}${c.rk === 'SF' ? ' sf' : ''}`;
@@ -2128,7 +2164,7 @@ function brColEl(c, side) {
     const mid = String(n), [t1, t2] = brMatchTeams(mid);
     const mt = document.createElement('div');
     mt.className = 'bm';
-    mt.innerHTML = brSideHtml(mid, t1, 's1') + brSideHtml(mid, t2, 's2');
+    mt.innerHTML = brSideHtml(mid, t1, 's1') + brSideHtml(mid, t2, 's2') + brPickBadgeHtml(mid, t1, t2);
     wrap.appendChild(mt);
   });
   el.appendChild(wrap);
@@ -2143,7 +2179,7 @@ function renderBracketTree(tree) {
   cen.className = 'bcen';
   cen.innerHTML =
     `<div class="blab">${t('br_final')}<em>+${brPts('final') || ''}</em></div>` +
-    `<div class="bm fin">${brSideHtml('104', fa, 's1')}${brSideHtml('104', fb, 's2')}</div>` +
+    `<div class="bm fin">${brSideHtml('104', fa, 's1')}${brSideHtml('104', fb, 's2')}${brPickBadgeHtml('104', fa, fb)}</div>` +
     `<div class="trophy">` +
       (champ ? `<div class="tcup">🏆</div><div class="tname">${teamLabel(champ)}</div><div class="tsub">${t('sc_champion')}</div>`
              : `<div class="tsub">${picked} / 31 ${t('br_picked')}</div>`) +
@@ -2180,6 +2216,15 @@ function buildBracketSection() {
     bonus.className = 'br-bonus';
     bonus.innerHTML = `<span class="br-bonus-spark">+${lateSfBonusAmount()}</span>${t('br_sf_bonus')}`;
     body.appendChild(bonus);
+  }
+  // Once any knockout game is decided, explain the pick-mark badges up front — they're
+  // the whole answer to "did I get this one right", so don't make people guess at them.
+  if (bracketState && bracketState.results && Object.keys(bracketState.results).length) {
+    const legend = document.createElement('div');
+    legend.className = 'br-legend';
+    legend.innerHTML = `<i class="pick-mark hit" style="position:static">✓</i> ${t('br_called_it')}` +
+      `<i class="pick-mark miss" style="position:static;margin-left:14px">✗</i> ${t('br_missed')}`;
+    body.appendChild(legend);
   }
   const scroll = document.createElement('div');
   scroll.className = 'br-scroll';
