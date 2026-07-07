@@ -754,7 +754,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
-<script src="/i18n.js?v=12"></script>
+<script src="/i18n.js?v=13"></script>
 <script src="/scoring.js?v=10"></script>
 <script>
 // ═══════════════════════════════════════ CONFIG
@@ -908,8 +908,9 @@ async function init() {
 
   setupLangToggle();
   applyChrome();
+  if (VIEW_MODE && wantsBracketView()) entryView = 'bracket'; // direct /p/<slug>_bracket link
   if (VIEW_MODE) {
-    renderEntry();                  // scorecard ⇆ original picks (toggle); falls back to picks if nothing graded
+    renderEntry();                  // scorecard ⇆ original picks ⇆ bracket-only (toggle); falls back to picks if nothing graded
   } else if (bracketWindow()) {
     renderPage();
     setupDrawer();
@@ -1810,12 +1811,53 @@ function entryToggleHtml() {
   return `<div class="entry-toggle">` +
     `<button class="etog ${entryView === 'card' ? 'on' : ''}" data-v="card">${t('tab_scorecard')}</button>` +
     `<button class="etog ${entryView === 'picks' ? 'on' : ''}" data-v="picks">${t('tab_picks')}</button>` +
+    `<button class="etog ${entryView === 'bracket' ? 'on' : ''}" data-v="bracket">${t('tab_bracket')}</button>` +
     `</div>`;
 }
-// Dispatch the shared-entry view (scorecard vs. read-only original picks).
+// Dispatch the shared-entry view (scorecard / read-only original picks / just the bracket).
 function renderEntry() {
   if (entryView === 'picks') { renderPage(); setupDrawer(); }
+  else if (entryView === 'bracket') { renderBracketOnly(); }
   else { renderScorecard(); }
+}
+// True when the URL itself asks for the bracket-only view directly, e.g.
+// /p/<slug>_bracket — shareable, bookmarkable, lands straight on the tree.
+function wantsBracketView() {
+  return /\/p\/[0-9A-Za-z]+_bracket(?:[/?#]|$)/.test(location.pathname);
+}
+// Read-only: just this person's identity banner + the bracket tree (pick-vs-actual
+// badges included) — no 22-question form. This is what "View the bracket" shows,
+// and what a /p/<slug>_bracket link lands on directly.
+function renderBracketOnly() {
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+  const formMain = document.createElement('div');
+  formMain.className = 'form-main';
+  const tog = document.createElement('div');
+  tog.innerHTML = entryToggleHtml();
+  formMain.appendChild(tog.firstChild);
+  const banner = document.createElement('div');
+  banner.className = 'view-banner';
+  banner.innerHTML = `
+    <div class="view-banner-info">
+      <div class="view-banner-name">${displayName(answers.name)}</div>
+      <div class="view-banner-sub">${t('locked_view')}</div>
+    </div>`;
+  formMain.appendChild(banner);
+  formMain.appendChild(buildBracketSection());
+  app.appendChild(formMain);
+}
+// Switches to the bracket-only view AND updates the address bar to match, so the
+// resulting URL (/p/<slug>_bracket) is itself shareable — copy-paste lands here.
+function viewBracketOnly() {
+  entryView = 'bracket';
+  const slug = getShareSlug();
+  if (slug && history.pushState) {
+    const path = /\/p\//.test(location.pathname) ? `/p/${slug}_bracket` : `${location.pathname}?p=${slug}&view=bracket`;
+    history.pushState({}, '', path);
+  }
+  renderBracketOnly();
+  window.scrollTo(0, 0);
 }
 document.addEventListener('click', (e) => {
   const b = e.target.closest ? e.target.closest('.etog') : null;
@@ -2619,7 +2661,9 @@ function showShareScreen(url) {
   sec.scrollIntoView({ behavior:'smooth', block:'center' });
 }
 
-// "Make your own" from a shared view → go to the blank form at the site root.
+// "View the bracket" button (scorecard + picks views): during an active bracket
+// window on the owner's own link, drop into editing; otherwise just show the
+// bracket tree for THIS entry — never navigate away, that was the bug.
 function startOwnEntry() {
   // During the bracket window, editing a shared entry keeps its (locked) group
   // picks and lets the person add bracket picks in place — no fresh reload.
@@ -2631,6 +2675,7 @@ function startOwnEntry() {
     window.scrollTo(0, 0);
     return;
   }
+  if (VIEW_MODE) { viewBracketOnly(); return; }
   location.href = location.origin + '/';
 }
 
