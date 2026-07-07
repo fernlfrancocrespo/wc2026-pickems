@@ -1,12 +1,12 @@
 {
-  "updated": "2026-07-07T18:05:23+00:00",
+  "updated": "2026-07-08T00:35:00+00:00",
   "source": "wikipedia",
-  "knockout_note": "Knockout tallies (tournament_goals_total, penalty_shootouts, extra_time_matches, knockout goal_timing add-ons, knockout goals in top_scorers) are MANUALLY MAINTAINED from match reports — the group-page scraper does not see knockout games and will regress them if re-run. Groups are final, so prefer ./deploy.sh --no-scrape. 7/7: R16 complete except M96 (Switzerland-Colombia, 4pm today) — Spain beat Portugal (Merino 90+1', Ronaldo's last WC game), Belgium routed the US 4-1, Argentina beat Egypt 3-2 in a stoppage-time classic (Fernandez 90+2'). All 3 host nations (Mexico, Canada, USA) now eliminated in the SAME round (R16) — q4 in answer_key.json is a 3-way tie array. Shootouts so far: GER-PAR, NED-MAR, EGY-AUS. ET so far: BEL-SEN, ARG-CPV.",
-  "matches_played": 95,
+  "knockout_note": "Knockout tallies MANUALLY MAINTAINED — group scraper regresses them; use ./deploy.sh --no-scrape. 7/7: R16 COMPLETE. SUI 0-0 COL (4-3 pens). QFs: FRA-MAR, ESP-BEL, NOR-ENG, ARG-SUI. Shootouts: GER-PAR, NED-MAR, EGY-AUS, SUI-COL. ET: those + BEL-SEN, ARG-CPV. knockout_top_scorers = live q22 projection (post-group goals): Haaland/Mbappe/Kane 3 each.",
+  "matches_played": 96,
   "group_goals_total": 215,
   "tournament_goals_total": 280,
-  "penalty_shootouts": 3,
-  "extra_time_matches": 5,
+  "penalty_shootouts": 4,
+  "extra_time_matches": 6,
   "top_scorers": [
     {
       "player": "Lionel Messi",
@@ -26,7 +26,7 @@
     {
       "player": "Harry Kane",
       "team": "England",
-      "goals": 5
+      "goals": 6
     },
     {
       "player": "Jude Bellingham",
@@ -818,5 +818,10 @@
       "matches_compared": 72,
       "issues": []
     }
-  }
+  },
+  "knockout_top_scorers": [
+    "Erling Haaland",
+    "Kylian Mbappé",
+    "Harry Kane"
+  ]
 }

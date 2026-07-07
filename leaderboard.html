@@ -228,7 +228,7 @@
   <div class="spinner"></div>
 </div>
 
-<script src="i18n.js?v=14"></script>
+<script src="i18n.js?v=15"></script>
 <script src="scoring.js?v=10"></script>
 <script>
 let teamsData = {}, results = [], answerKey = null, liveStats = null, ballStats = null, tagsMap = {}, groupsData = {};
@@ -312,6 +312,7 @@ function buildLiveKey() {
     if (liveStats.hat_trick_in_group_stage) setL('q10', 'Yes', false);
     const gt = liveStats.goal_timing || {}; setL('q14', gt.added_time_goals, true); setL('q16', gt.fastest_goal_seconds, true);
     if (liveStats.top_scorers && liveStats.top_scorers[0]) setL('q18_player', liveStats.top_scorers[0].player, true);
+    if (liveStats.knockout_top_scorers && liveStats.knockout_top_scorers.length) setL('q22_player', liveStats.knockout_top_scorers, true);
   }
   if (ballStats && ballStats.q15_longest_range_m != null) setL('q15', ballStats.q15_longest_range_m, true);
   return { key, live };

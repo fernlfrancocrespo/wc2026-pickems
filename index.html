@@ -108,6 +108,12 @@
     .entry-toggle { display:flex; gap:4px; background:rgba(255,255,255,.05); border-radius:9px; padding:4px; max-width:680px; margin:0 auto 14px; }
     .entry-toggle .etog { flex:1; background:transparent; border:none; color:var(--grey-light); font-family:'Inter',sans-serif; font-weight:700; font-size:.8rem; padding:9px 12px; border-radius:6px; cursor:pointer; transition:background .12s,color .12s; }
     .entry-toggle .etog.on { background:var(--gold); color:var(--navy); }
+    /* scorecard mode pills (Live Now / Group Stage Final) — markup reuses the
+       leaderboard's .lb-toggle classes, whose CSS never existed on this page,
+       so the buttons rendered as bare unstyled <button>s. */
+    .lb-toggle { display:inline-flex; gap:4px; background:rgba(255,255,255,.05); border-radius:8px; padding:4px; margin-bottom:12px; }
+    .lb-toggle button { background:transparent; border:none; color:var(--grey-light); font-family:'Inter',sans-serif; font-weight:700; font-size:.8rem; padding:7px 16px; border-radius:6px; cursor:pointer; }
+    .lb-toggle button.on { background:var(--gold); color:var(--navy); }
     .bracket-note { background:rgba(201,168,76,.10); border:1px solid rgba(201,168,76,.35); border-radius:10px; padding:13px 16px; font-size:.86rem; color:var(--gold-light); line-height:1.5; margin-bottom:16px; }
     .locked-toggle { width:100%; background:var(--navy-card); border:1px solid var(--border); border-radius:10px; color:var(--grey-light); font-family:'Inter',sans-serif; font-weight:600; font-size:.84rem; padding:13px 16px; cursor:pointer; margin-bottom:16px; text-align:left; }
     .locked-toggle:hover { border-color:var(--gold); color:var(--gold); }
@@ -208,6 +214,11 @@
     .bm.fin { flex:0 0 auto; width:100%; gap:4px; }
     .br-legend { display:flex; align-items:center; flex-wrap:wrap; gap:6px; font-size:.74rem; color:var(--grey-light); margin-bottom:12px; }
     .br-legend .pick-mark { display:inline-flex; box-shadow:none; }
+    /* mine-mode: a wrong pick stays fully legible (no fade/strikethrough) with the real winner alongside */
+    .bs.misspick { background:rgba(200,16,46,.14); border-color:#f87171; font-weight:600; }
+    .real-hint { flex-shrink:0; font-style:normal; font-size:.6rem; font-weight:700; color:#f87171; white-space:nowrap; }
+    .leg-dot { width:11px; height:11px; border-radius:3px; display:inline-block; }
+    .leg-dot.won { background:rgba(34,197,94,.85); } .leg-dot.missp { background:#f87171; } .leg-dot.on { background:var(--gold); }
     .bm.fin .bs { background:var(--navy-card); border-color:rgba(201,168,76,.3); }
     .trophy { margin-top:14px; text-align:center; }
     .tcup { font-size:1.8rem; } .tname { font-family:'Bebas Neue',sans-serif; font-size:1.3rem; color:var(--gold); letter-spacing:1px; }
@@ -754,7 +765,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
-<script src="/i18n.js?v=14"></script>
+<script src="/i18n.js?v=15"></script>
 <script src="/scoring.js?v=10"></script>
 <script>
 // ═══════════════════════════════════════ CONFIG
@@ -1807,7 +1818,11 @@ document.addEventListener('click', (e) => {
 let SCORE_DATA = null; // cached { key, liveSet } so lang re-render needn't refetch
 let entryView = 'card'; // shared-entry view: 'card' (scorecard) | 'picks' (original submission)
 
+// Entered during the second window with no 22-question picks: the scorecard and
+// "their picks" tabs would just be a wall of zeros — for them the bracket IS the entry.
+function isBracketOnlyEntry() { return VIEW_MODE && !answers.q1; }
 function entryToggleHtml() {
+  if (isBracketOnlyEntry()) return '';   // no tabs — bracket is all there is
   return `<div class="entry-toggle">` +
     `<button class="etog ${entryView === 'card' ? 'on' : ''}" data-v="card">${t('tab_scorecard')}</button>` +
     `<button class="etog ${entryView === 'picks' ? 'on' : ''}" data-v="picks">${t('tab_picks')}</button>` +
@@ -1816,7 +1831,8 @@ function entryToggleHtml() {
 }
 // Dispatch the shared-entry view (scorecard / read-only original picks / just the bracket).
 function renderEntry() {
-  if (entryView === 'picks') { renderPage(); setupDrawer(); }
+  if (isBracketOnlyEntry()) { renderBracketOnly(); }
+  else if (entryView === 'picks') { renderPage(); setupDrawer(); }
   else if (entryView === 'bracket') { renderBracketOnly(); }
   else { renderScorecard(); }
 }
@@ -1835,7 +1851,7 @@ function renderBracketOnly() {
   formMain.className = 'form-main';
   const tog = document.createElement('div');
   tog.innerHTML = entryToggleHtml();
-  formMain.appendChild(tog.firstChild);
+  if (tog.firstChild) formMain.appendChild(tog.firstChild);   // bracket-only entries have no tabs
   const banner = document.createElement('div');
   banner.className = 'view-banner';
   banner.innerHTML = `
@@ -1844,6 +1860,12 @@ function renderBracketOnly() {
       <div class="view-banner-sub">${t('locked_view')}</div>
     </div>`;
   formMain.appendChild(banner);
+  if (isBracketOnlyEntry()) {
+    const note = document.createElement('div');
+    note.className = 'bracket-note';
+    note.textContent = t('sc_bracket_only_note');
+    formMain.appendChild(note);
+  }
   formMain.appendChild(buildBracketSection());
   app.appendChild(formMain);
 }
@@ -1890,6 +1912,7 @@ async function loadScoreData() {
     setLive('q14', gt.added_time_goals, true);
     setLive('q16', gt.fastest_goal_seconds, true);
     if (ls.top_scorers && ls.top_scorers[0]) setLive('q18_player', ls.top_scorers[0].player, true); // Golden Boot = q18
+    if (ls.knockout_top_scorers && ls.knockout_top_scorers.length) setLive('q22_player', ls.knockout_top_scorers, true); // post-group goals = q22 (array = current tie)
   }
   if (ball && ball.q15_longest_range_m != null) setLive('q15', ball.q15_longest_range_m, true);
   SCORE_DATA = { key, live, ls };
@@ -1954,10 +1977,9 @@ function scActual(qid, key) {
   if (qid === 'q3') return [key.q3a, key.q3b].filter(Boolean).map(teamLabel).join(' + ') || '—';
   if (qid === 'q10') return key.q10 || '—';
   if (BANDS[qid]) return key[qid] != null ? `${key[qid]}${SC_UNIT[qid] || ''}` : '—';
+  // A tie is an array — any one of these is "the" correct pick (q4 hosts, q6 AFC, live q22).
+  if (Array.isArray(key[qid])) return key[qid].map(v => qid.endsWith('_player') ? v : teamLabel(v)).join(' / ') || '—';
   if (qid.endsWith('_player')) return key[qid] || '—';
-  // A tie (e.g. q4 when every host nation goes out in the same round) is an array —
-  // any one of these was "the" correct pick.
-  if (Array.isArray(key[qid])) return key[qid].map(teamLabel).join(' / ') || '—';
   return key[qid] ? teamLabel(key[qid]) : '—';
 }
 function scStatus(bd) { return bd.pts >= bd.max ? 'hit' : (bd.pts > 0 ? 'partial' : 'miss'); }
@@ -2118,6 +2140,11 @@ function brResult(mid) { return (bracketState.results || {})[String(mid)] || nul
 // The two competing teams for a match (null where not yet known). A played match
 // advances its REAL winner to the next round (for everyone); an open one advances
 // whoever the user picked.
+// Bracket tab display mode for shared entries: 'mine' shows the bracket exactly as
+// the person drew it (their picks fill every slot, busted paths and all) with each
+// pick colored right/wrong; 'real' shows the actual tournament tree with ✓/✗ badges.
+let brTreeMode = 'mine';
+function mineMode() { return VIEW_MODE && entryView === 'bracket' && brTreeMode === 'mine'; }
 function brMatchTeams(mid) {
   const m = bracketStruct.matches[mid];
   if (!m) return [null, null];
@@ -2125,7 +2152,10 @@ function brMatchTeams(mid) {
     const r = (bracketState.r32_teams || {})[mid] || {};
     return [r.s1 || null, r.s2 || null];
   }
-  const w = (slot) => (slot.t === 'W' && slot.m) ? (brResult(slot.m) || answers.bracket[slot.m] || null) : null;
+  // mine: THEIR chain only (real results never overwrite their drawn path)
+  const w = mineMode()
+    ? (slot) => (slot.t === 'W' && slot.m) ? (answers.bracket[slot.m] || null) : null
+    : (slot) => (slot.t === 'W' && slot.m) ? (brResult(slot.m) || answers.bracket[slot.m] || null) : null;
   return [w(m.s1), w(m.s2)];
 }
 // Placeholder text for a slot whose team isn't known yet.
@@ -2176,13 +2206,26 @@ function brSideHtml(mid, team, sideKey) {
   const tm = team && teamsData[team];
   const flag = tm && flagUrl(tm.iso2);
   const result = brResult(mid);                 // played? then the match is locked
-  const cls = result ? (team && team === result ? ' won' : ' lost') + ' locked'
-                      : (team && answers.bracket[mid] === team ? ' on' : '');
+  let cls, extra = '';
+  if (mineMode()) {
+    // Their drawn bracket: color THEIR winner pick for this match by how it aged —
+    // green if that team really won this match, red (with the real winner alongside)
+    // if the match is decided and it didn't, gold while still in play. The team they
+    // advanced here but picked to LOSE stays neutral. Real scores don't apply to
+    // imaginary pairings, so no score chip in this mode.
+    const picked = team && answers.bracket[mid] === team;
+    cls = picked ? (result ? (team === result ? ' won' : ' misspick') : ' on') : '';
+    if (picked && result && team !== result) extra = `<i class="real-hint">→ ${teamLabel(result)}</i>`;
+  } else {
+    cls = result ? (team && team === result ? ' won' : ' lost') + ' locked'
+                 : (team && answers.bracket[mid] === team ? ' on' : '');
+    if (result) extra = brScoreHtml(mid, sideKey);
+  }
   const tbd = team ? '' : ' tbd';
   return `<div class="bs${cls}${tbd}" data-m="${mid}" data-t="${team ? escapeAttr(team) : ''}">` +
          (flag ? `<img src="${flag}" alt="">` : '<i></i>') +
          `<span>${team ? teamLabel(team) : t('br_tbd')}</span>` +
-         (result ? brScoreHtml(mid, sideKey) : '') +
+         extra +
          `</div>`;
 }
 // Was THIS pick right or wrong? A small badge, a sibling of the two team rows (not
@@ -2190,6 +2233,7 @@ function brSideHtml(mid, team, sideKey) {
 // losing side — that's the whole point: you need to see it was their pick AND that
 // it missed, in one glance, not a barely-visible icon at 40% opacity.
 function brPickBadgeHtml(mid, t1, t2) {
+  if (mineMode()) return '';   // mine mode colors the cells themselves instead
   const result = brResult(mid);
   if (!result) return '';
   const pick = answers.bracket[mid];
@@ -2262,15 +2306,32 @@ function buildBracketSection() {
     bonus.innerHTML = `<span class="br-bonus-spark">+${lateSfBonusAmount()}</span>${t('br_sf_bonus')}`;
     body.appendChild(bonus);
   }
-  // Once any knockout game is decided, explain the pick-mark badges up front — they're
-  // the whole answer to "did I get this one right", so don't make people guess at them.
-  if (bracketState && bracketState.results && Object.keys(bracketState.results).length) {
-    const legend = document.createElement('div');
-    legend.className = 'br-legend';
-    legend.innerHTML = `<i class="pick-mark hit" style="position:static">✓</i> ${t('br_called_it')}` +
-      `<i class="pick-mark miss" style="position:static;margin-left:14px">✗</i> ${t('br_missed')}`;
-    body.appendChild(legend);
+  // Mode toggle (shared entries' Bracket tab only): their drawn bracket vs. reality.
+  const decidedAny = bracketState && bracketState.results && Object.keys(bracketState.results).length;
+  const legend = document.createElement('div');
+  legend.className = 'br-legend';
+  const legendHtml = () => !decidedAny ? '' : (mineMode()
+    ? `<i class="leg-dot won"></i> ${t('br_called_it')}` +
+      `<i class="leg-dot missp" style="margin-left:14px"></i> ${t('br_leg_miss')}` +
+      `<i class="leg-dot on" style="margin-left:14px"></i> ${t('br_leg_open')}`
+    : `<i class="pick-mark hit" style="position:static">✓</i> ${t('br_called_it')}` +
+      `<i class="pick-mark miss" style="position:static;margin-left:14px">✗</i> ${t('br_missed')}`);
+  if (VIEW_MODE && entryView === 'bracket') {
+    const mt = document.createElement('div');
+    mt.className = 'lb-toggle';
+    mt.innerHTML = `<button data-m="mine" class="${brTreeMode === 'mine' ? 'on' : ''}">${t('br_mode_mine')}</button>` +
+      `<button data-m="real" class="${brTreeMode === 'real' ? 'on' : ''}">${t('br_mode_real')}</button>`;
+    mt.addEventListener('click', (e) => {
+      const b = e.target.closest('button'); if (!b) return;
+      brTreeMode = b.dataset.m;
+      mt.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+      legend.innerHTML = legendHtml();
+      renderBracketTree(tree);
+    });
+    body.appendChild(mt);
   }
+  legend.innerHTML = legendHtml();
+  if (decidedAny) body.appendChild(legend);
   const scroll = document.createElement('div');
   scroll.className = 'br-scroll';
   const tree = document.createElement('div');

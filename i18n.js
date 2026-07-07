@@ -364,6 +364,11 @@ const I18N = {
     br_final:       'FINAL',
     br_called_it:   'You called it — correct pick',
     br_missed:      'Missed — this pick lost',
+    br_mode_mine:   'Their bracket',
+    br_mode_real:   'Actual results',
+    br_leg_miss:    'Missed — real winner shown beside',
+    br_leg_open:    'Pick still in play',
+    sc_bracket_only_note: 'This entry joined at the knockout round — the original 22-question pick \'ems (251 pts) had already locked before they signed up. Bracket points only.',
   },
 
   pt: {
@@ -699,6 +704,11 @@ const I18N = {
     br_final:       'FINAL',
     br_called_it:   'Você acertou — palpite correto',
     br_missed:      'Errou — este palpite perdeu',
+    br_mode_mine:   'Chave escolhida',
+    br_mode_real:   'Resultados reais',
+    br_leg_miss:    'Errou — vencedor real ao lado',
+    br_leg_open:    'Palpite ainda em jogo',
+    sc_bracket_only_note: 'Esta pessoa entrou na fase do mata-mata — as 22 perguntas originais (251 pts) já estavam travadas quando ela se inscreveu. Só pontos da chave.',
   },
 };
 
