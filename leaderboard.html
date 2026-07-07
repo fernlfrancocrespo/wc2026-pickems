@@ -128,6 +128,8 @@
     .lb-row .lb-tot{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--gold);min-width:42px;text-align:right}
     .tag{font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:20px;border:1px solid var(--border);color:var(--grey-light);text-transform:uppercase}
     .tag.SDC{color:#7dd3fc;border-color:#7dd3fc55}.tag.Lastinger{color:#fca5a5;border-color:#fca5a555}.tag.Family{color:#86efac;border-color:#86efac55}
+    .br-flag{font-size:.58rem;font-weight:700;padding:2px 7px;border-radius:20px;border:1px solid;text-transform:uppercase;white-space:nowrap}
+    .br-flag.none{color:#f87171;border-color:#f8717155}.br-flag.partial{color:var(--gold);border-color:var(--gold)55}
     .bar-fill.correct{background:var(--green,#22c55e)!important}
     .qcorrect{color:var(--green,#22c55e);font-weight:700;font-size:.72rem;margin-left:auto}
     .stats-head{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;color:var(--grey-light);margin:30px 0 4px}
@@ -226,7 +228,7 @@
   <div class="spinner"></div>
 </div>
 
-<script src="i18n.js?v=13"></script>
+<script src="i18n.js?v=14"></script>
 <script src="scoring.js?v=10"></script>
 <script>
 let teamsData = {}, results = [], answerKey = null, liveStats = null, ballStats = null, tagsMap = {}, groupsData = {};
@@ -434,11 +436,15 @@ function render() {
       `</div><div class="plist" id="lblist"></div>`;
     const rows = scoredView.filter(r => !lbTag || r.tag === lbTag);
     const shown = lbExpanded ? rows : rows.slice(0, 10);   // top 10 by default
+    const brTotal = Object.keys(bracketStruct.matches || {}).length || 31;
     body.querySelector('#lblist').innerHTML = shown.map((r, i) => {
       const e = r.e, s = r.s;
+      const picked = Object.keys(e.answers.bracket || {}).length;
+      const brFlag = !picked ? `<span class="br-flag none">${t('lb_no_bracket')}</span>`
+        : picked < brTotal ? `<span class="br-flag partial">${t('lb_partial_bracket')} ${picked}/${brTotal}</span>` : '';
       return `<a class="lb-row" href="${viewUrl(e)}">
         <span class="rank">${i + 1}</span>
-        <span class="who"><span class="nm">${e.display_name || 'anon'}</span>${r.tag ? `<span class="tag ${r.tag}">${r.tag}</span>` : ''}</span>
+        <span class="who"><span class="nm">${e.display_name || 'anon'}</span>${r.tag ? `<span class="tag ${r.tag}">${r.tag}</span>` : ''}${brFlag}</span>
         <span class="lb-sub">${Math.round(s.lockedGroup)} ${t('sc_group')} · ${Math.round(s.lockedKO)} ${t('sc_ko')}</span>
         <span class="lb-tot">${Math.round(modeVal(s))}</span>
       </a>`;
