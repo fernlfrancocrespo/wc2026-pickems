@@ -1913,6 +1913,9 @@ function scActual(qid, key) {
   if (qid === 'q10') return key.q10 || '—';
   if (BANDS[qid]) return key[qid] != null ? `${key[qid]}${SC_UNIT[qid] || ''}` : '—';
   if (qid.endsWith('_player')) return key[qid] || '—';
+  // A tie (e.g. q4 when every host nation goes out in the same round) is an array —
+  // any one of these was "the" correct pick.
+  if (Array.isArray(key[qid])) return key[qid].map(teamLabel).join(' / ') || '—';
   return key[qid] ? teamLabel(key[qid]) : '—';
 }
 function scStatus(bd) { return bd.pts >= bd.max ? 'hit' : (bd.pts > 0 ? 'partial' : 'miss'); }

@@ -83,6 +83,16 @@ function scoreBand(qid, picked, value) {
   return 0;
 }
 
+// A key value is usually a single string, but supports an array for a genuine tie
+// (e.g. q4 when all three host nations are eliminated in the same round) — anyone
+// who picked ANY of the tied answers gets full credit.
+function keyIncludes(picked, real) {
+  return Array.isArray(real) ? real.includes(picked) : picked === real;
+}
+function keyIsGraded(real) {
+  return Array.isArray(real) ? real.length > 0 : (real != null && real !== '');
+}
+
 function scoreEntry(answers, key, opts) {
   answers = answers || {};
   key = key || {};
@@ -101,8 +111,8 @@ function scoreEntry(answers, key, opts) {
    ['q17_player', POINTS.q17], ['q18_player', POINTS.q18], ['q19_player', POINTS.q19],
    ['q20_player', POINTS.q20], ['q21_player', POINTS.q21], ['q22_player', POINTS.q22]].forEach(([qid, max]) => {
     const real = key[qid];
-    const graded_ = real != null && real !== '';
-    add(qid, graded_ && answers[qid] === real ? max : 0, max, graded_);
+    const graded_ = keyIsGraded(real);
+    add(qid, graded_ && keyIncludes(answers[qid], real) ? max : 0, max, graded_);
   });
 
   // Q3 — two losing semifinalists (order-agnostic, 6 each)
@@ -252,6 +262,6 @@ function keyHasData(key) {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     POINTS, FULL_MAX, NON_Q8_MAX, DEFAULT_GROUP_SCALE, GROUP_QS,
-    isDefaultGroupOrder, scoreEntry, scoreBracket, bracketScoreOpts, isLateBracket, FIRST_R32_KICKOFF, keyHasData, scoreBand, bandIndexFor, bandRange,
+    isDefaultGroupOrder, scoreEntry, scoreBracket, bracketScoreOpts, isLateBracket, FIRST_R32_KICKOFF, keyHasData, scoreBand, bandIndexFor, bandRange, keyIncludes, keyIsGraded,
   };
 }

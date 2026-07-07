@@ -538,11 +538,14 @@ function render() {
     }
     return v; // team / player name / 'Yes' | 'No'
   };
+  // correct may be a single value or an array (a genuine tie, e.g. q4 when every host
+  // nation is eliminated in the same round) — anyone who picked any tied answer is right.
+  const isCorrectVal = (val, correct) => correct != null && (Array.isArray(correct) ? correct.includes(val) : val === correct);
   const barHTML = (val, cnt, type, correct, qid) => {
     const pct = Math.round(cnt / total * 100);
     const isTeam = type === 'team';
     const disp = isTeam ? teamLabel(val) : type === 'band' ? tBand(val) : type === 'yesno' ? t(val.toLowerCase()) : val;
-    const ok = correct != null && val === correct ? ' correct' : '';
+    const ok = isCorrectVal(val, correct) ? ' correct' : '';
     return `<div class="bar${ok ? ' is-correct' : ''}" data-q="${qid}" data-v="${escapeHtml(String(val))}">${isTeam ? teamFlag(val) : ''}
         <span class="bar-name" title="${disp}">${disp}</span>
         <span class="bar-track"><span class="bar-fill${ok}" style="width:${pct}%"></span></span>
@@ -555,11 +558,12 @@ function render() {
     const allRows = tally(e => e.answers[key]);
     if (!allRows.length) return;
     const correct = correctFor(key, type);
-    const correctRow = correct != null ? allRows.find(([v]) => v === correct) : null;
+    // Sum counts across every tied correct answer (usually just one row).
+    const correctCount = correct != null ? allRows.filter(([v]) => isCorrectVal(v, correct)).reduce((a, [, c]) => a + c, 0) : 0;
     const top = allRows.slice(0, 5), rest = allRows.slice(5);
     const blk = document.createElement('div'); blk.className = 'qblock';
     blk.innerHTML = `<div class="qtitle"><span class="qn">${n}</span><span>${t(labelKey)}</span>`
-      + (correct != null ? `<span class="qcorrect" title="${correctRow ? correctRow[1] : 0} / ${total}">✓ ${correctRow ? correctRow[1] : 0} ${t('lb_correct')}</span>` : '')
+      + (correct != null ? `<span class="qcorrect" title="${correctCount} / ${total}">✓ ${correctCount} ${t('lb_correct')}</span>` : '')
       + `</div>`
       + top.map(([v, c]) => barHTML(v, c, type, correct, key)).join('')
       + (rest.length
