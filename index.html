@@ -228,6 +228,10 @@
     .sc-pcell .t { font-size:.84rem; color:var(--grey-light); min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     .sc-pcell .t b { color:var(--white); }
     .sc-pcell .m { font-family:'Bebas Neue',sans-serif; color:var(--grey-mid); flex-shrink:0; }
+    .sc-pcell.dead { opacity:.55; }
+    .sc-pcell.dead .t b { text-decoration:line-through; color:var(--grey-mid); }
+    .sc-pcell.dead .m { color:#f87171; }
+    .sc-pcell .deadtag { font-size:.58rem; font-weight:800; letter-spacing:.5px; color:#f87171; border:1px solid #f8717155; border-radius:20px; padding:1px 7px; text-transform:uppercase; white-space:nowrap; }
     @media(max-width:560px){ .sc-pend{grid-template-columns:1fr} .sc-hero-tot .big{font-size:3.6rem} }
     .q-head { display: flex; align-items: flex-start; gap: 10px; }
     .q-num { font-family: 'Bebas Neue', sans-serif; font-size: 1.05rem; color: var(--gold); min-width: 20px; line-height: 1.35; flex-shrink: 0; }
@@ -765,7 +769,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
-<script src="/i18n.js?v=15"></script>
+<script src="/i18n.js?v=16"></script>
 <script src="/scoring.js?v=10"></script>
 <script>
 // ═══════════════════════════════════════ CONFIG
@@ -2052,8 +2056,35 @@ async function renderScorecard() {
     ? bracketScoreOpts({ slug: getShareSlug(), created_at: ENTRY_CREATED_AT }, lateOverrides) : {};
   const brk = brkActive
     ? scoreBracket(answers.bracket, bracketStruct, (bracketState && bracketState.results) || {}, brkOpts) : { pts: 0, max: 0, byRound: {} };
+
+  // ── Dead points: a pick whose team is knocked out can no longer land, so it's
+  // not "still in play" — it's gone. Applies to champion (q1), runner-up (q2),
+  // each semifinalist (q3, 6 pts apiece), scores-in-the-final (q21, team-based),
+  // and every undecided bracket match whose picked team is out. Decided-but-missed
+  // bracket matches are gone too (they were previously overcounted as in play).
+  const alive = koAlive();
+  const deadFor = (q) => {
+    const b = res.breakdown[q];
+    if (!b) return 0;
+    if (q === 'q1' || q === 'q2') return (answers[q] && !alive(answers[q])) ? b.max : 0;
+    if (q === 'q3') return [answers.q3a, answers.q3b].filter(x => x && !alive(x)).length * POINTS.q3;
+    if (q === 'q21_player') return (answers.q21_team && !alive(answers.q21_team)) ? b.max : 0;
+    return 0;
+  };
+  let brkInPlay = 0, brkDead = 0;
+  if (brkActive) (bracketStruct.rounds || []).forEach(rd => {
+    const r = brk.byRound[rd.key]; if (!r || r.zeroed) return;
+    rd.matches.forEach(mid => {
+      const id = String(mid);
+      if ((bracketState.results || {})[id]) return;   // decided: earned or gone
+      const p = answers.bracket && answers.bracket[id];
+      if (p && alive(p)) brkInPlay += r.points; else if (p) brkDead += r.points;
+    });
+  });
   const total = scMode === 'group' ? Math.round(res.lockedGroup) : Math.round(res.total + brk.pts);
-  const pend = scMode === 'group' ? 0 : Math.round(res.pendingMax + (brk.max - brk.pts));
+  const deadQ = scMode === 'group' ? 0 : pending.reduce((a, q) => a + deadFor(q), 0);
+  const deadTotal = deadQ + brkDead;
+  const pend = scMode === 'group' ? 0 : Math.round(res.pendingMax - deadQ + brkInPlay);
   const earnW = scMode === 'group' ? 100 : Math.max(2, Math.round(total / (FULL_MAX + brk.max) * 100));
   const rankMetric = scMode === 'group' ? res.lockedGroup : res.total;
 
@@ -2084,7 +2115,7 @@ async function renderScorecard() {
     `<div class="sc-sec"><span class="h">${t('sc_scored_head')}</span><span class="ln"></span></div>` +
     `<div class="sc-rows" id="sc-scored"></div>` +
     `<div class="sc-sec"><span class="h" style="color:var(--grey-mid)">${t('sc_pending_head')}</span><span class="ln"></span>` +
-      `<span class="meta">${pend} ${t('sc_pts_inplay')}</span></div>` +
+      `<span class="meta">${pend} ${t('sc_pts_inplay')}${deadTotal > 0 ? ` · ${Math.round(deadTotal)} ${t('sc_dead')}` : ''}</span></div>` +
     `<div class="sc-pend" id="sc-pending"></div>`;
   app.appendChild(wrap);
 
@@ -2115,12 +2146,17 @@ async function renderScorecard() {
   }
 
   const pe = wrap.querySelector('#sc-pending');
-  pending.forEach(q => {
-    const cell = document.createElement('div');
-    cell.className = 'sc-pcell';
-    cell.innerHTML = `<span class="t">${scLabel(q)} · <b>${escapeHtml(scPick(q))}</b></span><span class="m">${res.breakdown[q].max}</span>`;
-    pe.appendChild(cell);
-  });
+  // Live picks first; picks whose team is already out sink to the bottom, struck
+  // through, showing only what's actually still winnable (0 for fully dead ones).
+  [...pending].sort((a, b) => (deadFor(a) >= res.breakdown[a].max ? 1 : 0) - (deadFor(b) >= res.breakdown[b].max ? 1 : 0))
+    .forEach(q => {
+      const b = res.breakdown[q], dead = deadFor(q), left = Math.max(0, b.max - dead);
+      const cell = document.createElement('div');
+      cell.className = 'sc-pcell' + (left === 0 ? ' dead' : '');
+      cell.innerHTML = `<span class="t">${scLabel(q)} · <b>${escapeHtml(scPick(q))}</b>` +
+        (left === 0 ? ` <span class="deadtag">${t('sc_dead')}</span>` : '') + `</span><span class="m">${left}</span>`;
+      pe.appendChild(cell);
+    });
 
   wrap.querySelector('#sc-makeown').addEventListener('click', startOwnEntry);
   wrap.querySelectorAll('.lb-mode-toggle button').forEach(b =>
@@ -2137,6 +2173,21 @@ function ordinal(n) { const s = ['th','st','nd','rd'], v = n % 100; return n + (
 // ═══════════════════════════════════════ KNOCKOUT BRACKET PICKER
 // The real winner of a match once it's been played (locks it). Null = still open.
 function brResult(mid) { return (bracketState.results || {})[String(mid)] || null; }
+// Teams still alive in the tournament: reached the R32 and haven't lost a decided
+// knockout game. (Same logic as the standings pulse — real results only.)
+function koAlive() {
+  const inKO = new Set();
+  Object.values(bracketState.r32_teams || {}).forEach(m => { if (m.s1) inKO.add(m.s1); if (m.s2) inKO.add(m.s2); });
+  const out = new Set();
+  Object.entries(bracketState.results || {}).forEach(([mid, w]) => {
+    const m = (bracketStruct.matches || {})[mid]; if (!m) return;
+    let t1, t2;
+    if (m.round === 'R32') { const r = (bracketState.r32_teams || {})[mid] || {}; t1 = r.s1; t2 = r.s2; }
+    else { t1 = brResult(String(m.s1.m)); t2 = brResult(String(m.s2.m)); }
+    [t1, t2].forEach(x => { if (x && x !== w) out.add(x); });
+  });
+  return team => !!team && inKO.has(team) && !out.has(team);
+}
 // The two competing teams for a match (null where not yet known). A played match
 // advances its REAL winner to the next round (for everyone); an open one advances
 // whoever the user picked.

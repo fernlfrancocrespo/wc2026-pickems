@@ -69,6 +69,12 @@
     .sec-sub{width:100%;font-size:.78rem;color:var(--grey-mid);line-height:1.5}
     .sec-body{padding:16px 18px}
 
+    /* gazette */
+    .nw-item{display:flex;gap:12px;align-items:flex-start;padding:10px 4px;border-bottom:1px solid var(--border)}
+    .nw-item:last-child{border-bottom:none}
+    .nw-item .ic{font-size:1.1rem;flex-shrink:0;line-height:1.4}
+    .nw-item p{margin:0;font-size:.88rem;line-height:1.55;color:var(--grey-light)}
+
     /* honors */
     .hn-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
     .hn{background:var(--navy);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
@@ -120,7 +126,7 @@
 
 <div class="wrap" id="app"><div class="spinner"></div></div>
 
-<script src="i18n.js?v=15"></script>
+<script src="i18n.js?v=16"></script>
 <script src="scoring.js?v=10"></script>
 <script>
 let teamsData = {}, entries = [], answerKey = null, liveStats = null, ballStats = null,
@@ -204,6 +210,85 @@ function computeAll(){
   byGroup.forEach((r,i)=>r.groupRank=i+1);
   rows.forEach(r=>r.climb=r.groupRank-r.finalRank);
   return rows;
+}
+
+/* ── the Gazette: an auto-written newsletter of the pool's story ── */
+const F = (k, o) => t(k).replace(/\{(\w+)\}/g, (_, m) => o[m]);
+function nwAlive(){
+  const inKO = new Set();
+  Object.values(bracketState.r32_teams||{}).forEach(m=>{ if(m.s1) inKO.add(m.s1); if(m.s2) inKO.add(m.s2); });
+  const out = new Set();
+  Object.entries(bracketState.results||{}).forEach(([mid,w])=>{
+    const [a,b] = nwRealPair(mid); [a,b].forEach(x=>{ if(x && x!==w) out.add(x); });
+  });
+  return tm => !!tm && inKO.has(tm) && !out.has(tm);
+}
+function nwRealPair(mid){
+  const m = (bracketStruct.matches||{})[mid]; if (!m) return [null,null];
+  if (m.round==='R32'){ const r=(bracketState.r32_teams||{})[mid]||{}; return [r.s1,r.s2]; }
+  return [(bracketState.results||{})[String(m.s1.m)], (bracketState.results||{})[String(m.s2.m)]];
+}
+function newsHtml(rows){
+  const items = [];
+  const alive = nwAlive();
+  const ak = (answerKey && answerKey.answers) || {};
+  const lead = rows[0];
+  items.push(['🏆', F(isFinal() ? 'fn_nw_winner' : 'fn_nw_leader',
+    { name: esc(lead.e.display_name||'anon'), g: Math.round(lead.s.lockedGroup),
+      k: Math.round(lead.s.lockedKO - lead.brkPts), b: Math.round(lead.brkPts) })]);
+
+  // champion picks: the favorite, the fallen, the most popular casualty
+  const champs = rows.filter(r=>r.e.answers.q1);
+  if (champs.length){
+    const tallies = {};
+    champs.forEach(r=>{ tallies[r.e.answers.q1]=(tallies[r.e.answers.q1]||0)+1; });
+    const [favTeam, favN] = Object.entries(tallies).sort((a,b)=>b[1]-a[1])[0];
+    items.push(['👑', F('fn_nw_fav', { p: Math.round(favN/champs.length*100), team: teamLabel(favTeam),
+      alive: t(alive(favTeam) ? 'fn_nw_alive_yes' : 'fn_nw_alive_no') })]);
+    const deadRows = champs.filter(r=>!alive(r.e.answers.q1));
+    if (deadRows.length){
+      items.push(['🪦', F('fn_nw_dead', { n: deadRows.length, t: champs.length, p: Math.round(deadRows.length/champs.length*100) })]);
+      const dt = {};
+      deadRows.forEach(r=>{ dt[r.e.answers.q1]=(dt[r.e.answers.q1]||0)+1; });
+      const [dTeam, dN] = Object.entries(dt).sort((a,b)=>b[1]-a[1])[0];
+      if (dN >= 2) items.push(['💔', F('fn_nw_popdead', { team: teamLabel(dTeam), n: dN })]);
+    }
+  }
+
+  // bracket shock + chalk among decided matches (min 10 pickers so it means something)
+  let shock = null, chalk = null;
+  Object.keys(bracketState.results||{}).forEach(mid=>{
+    const w = bracketState.results[mid], [a,b] = nwRealPair(mid);
+    const l = w === a ? b : a; if (!l) return;
+    const pickers = rows.filter(r=>(r.e.answers.bracket||{})[mid]);
+    if (pickers.length < 10) return;
+    const p = Math.round(pickers.filter(r=>r.e.answers.bracket[mid]===w).length / pickers.length * 100);
+    if (!shock || p < shock.p) shock = { p, w, l };
+    if (!chalk || p > chalk.p) chalk = { p, w, l };
+  });
+  if (shock) items.push(['🚨', F('fn_nw_upset', { p: shock.p, q: 100-shock.p, w: teamLabel(shock.w), l: teamLabel(shock.l) })]);
+  if (chalk && chalk.p > (shock ? shock.p : 0)) items.push(['🧊', F('fn_nw_chalk', { p: chalk.p, w: teamLabel(chalk.w), l: teamLabel(chalk.l) })]);
+
+  // the hosts' synchronized exit
+  if (Array.isArray(ak.q4) && ak.q4.length === 3) items.push(['🤝', t('fn_nw_hosts')]);
+
+  // best call / collective whiff among officially graded picks
+  const graded = ['q4','q5','q6','q10'].filter(q => Array.isArray(ak[q]) ? ak[q].length : (ak[q] != null && ak[q] !== ''));
+  const pcts = graded.map(q => {
+    const withA = rows.filter(r=>r.e.answers[q]);
+    if (withA.length < 10) return null;
+    const ok = withA.filter(r => Array.isArray(ak[q]) ? ak[q].includes(r.e.answers[q]) : r.e.answers[q] === ak[q]).length;
+    return { q, p: Math.round(ok/withA.length*100) };
+  }).filter(Boolean).sort((a,b)=>b.p-a.p);
+  if (pcts.length >= 2){
+    items.push(['🎯', F('fn_nw_ace',   { q: t(pcts[0].q), p: pcts[0].p })]);
+    items.push(['🙈', F('fn_nw_whiff', { q: t(pcts[pcts.length-1].q), p: pcts[pcts.length-1].p })]);
+  }
+
+  return `<div class="sec"><div class="sec-head"><span class="sec-accent"></span><h2>${t('fn_news')}</h2>
+    <div class="sec-sub">${t('fn_news_sub')}</div></div><div class="sec-body">
+    ${items.map(([ic, txt]) => `<div class="nw-item"><span class="ic">${ic}</span><p>${txt}</p></div>`).join('')}
+  </div></div>`;
 }
 
 function podiumHtml(rows){
@@ -310,6 +395,7 @@ function render(){
        ${champPct != null ? `<div class="chip"><div class="n">${champPct}%</div><div class="l">${t('fn_picked_champ')}</div></div>` : ''}
        <div class="chip"><div class="n">${Math.round(rows[0].s.total)}</div><div class="l">${t('lb_pts_short')} · ${esc(rows[0].e.display_name||'anon')}</div></div>
      </div>` +
+    newsHtml(rows) +
     honorsHtml(rows) +
     fieldHtml(rows);
   document.querySelectorAll('#fn-tags button').forEach(b=>

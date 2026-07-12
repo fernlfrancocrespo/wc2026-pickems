@@ -1,12 +1,12 @@
 {
-  "updated": "2026-07-08T00:35:00+00:00",
+  "updated": "2026-07-11T02:00:00+00:00",
   "source": "wikipedia",
-  "knockout_note": "Knockout tallies MANUALLY MAINTAINED — group scraper regresses them; use ./deploy.sh --no-scrape. 7/7: R16 COMPLETE. SUI 0-0 COL (4-3 pens). QFs: FRA-MAR, ESP-BEL, NOR-ENG, ARG-SUI. Shootouts: GER-PAR, NED-MAR, EGY-AUS, SUI-COL. ET: those + BEL-SEN, ARG-CPV. knockout_top_scorers = live q22 projection (post-group goals): Haaland/Mbappe/Kane 3 each.",
-  "matches_played": 96,
+  "knockout_note": "Knockout tallies MANUALLY MAINTAINED — use ./deploy.sh --no-scrape. 7/10: QFs through M99 (FRA 2-0 MAR, ESP 2-1 BEL, ENG 2-1 NOR aet — Bellingham brace). M100 ARG-SUI tonight. Shootouts: 4. ET: 7. knockout_top_scorers = live q22 (post-group goals): Mbappe 4, Bellingham 4.",
+  "matches_played": 99,
   "group_goals_total": 215,
-  "tournament_goals_total": 280,
+  "tournament_goals_total": 288,
   "penalty_shootouts": 4,
-  "extra_time_matches": 6,
+  "extra_time_matches": 7,
   "top_scorers": [
     {
       "player": "Lionel Messi",
@@ -16,7 +16,7 @@
     {
       "player": "Kylian Mbappé",
       "team": "France",
-      "goals": 7
+      "goals": 8
     },
     {
       "player": "Erling Haaland",
@@ -31,7 +31,7 @@
     {
       "player": "Jude Bellingham",
       "team": "England",
-      "goals": 4
+      "goals": 6
     },
     {
       "player": "Ismaïla Sarr",
@@ -128,7 +128,7 @@
     }
   ],
   "goal_timing": {
-    "goals_counted": 280,
+    "goals_counted": 288,
     "fastest_goal_seconds": 64.0,
     "added_time_goals": 32
   },
@@ -820,8 +820,7 @@
     }
   },
   "knockout_top_scorers": [
-    "Erling Haaland",
     "Kylian Mbappé",
-    "Harry Kane"
+    "Jude Bellingham"
   ]
 }
