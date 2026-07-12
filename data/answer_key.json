@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-08",
+  "updated": "2026-07-12",
   "final": false,
   "note": "Host-maintained truth for grading pick-ems. Fill values in as outcomes are known; nulls are 'not graded yet'. q8 = real final group order per letter. q3a/q3b = the two losing semifinalists (order-agnostic). q4 is an ARRAY here on purpose — all three host nations (Mexico, Canada, USA) were eliminated in the Round of 16, a genuine 3-way tie for furthest-advancing host, so anyone who picked any of the three is correct (see scoring.js keyIncludes/keyIsGraded).",
   "answers": {
@@ -17,7 +17,7 @@
       "Japan",
       "Australia"
     ],
-    "q7": null,
+    "q7": "Paraguay",
     "q8": {},
     "q9": null,
     "q10": "Yes",

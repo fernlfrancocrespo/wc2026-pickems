@@ -27,6 +27,9 @@ const DEFAULT_GROUP_SCALE = FULL_MAX / NON_Q8_MAX; // ≈ 1.402
 // Which questions settle when the GROUP STAGE ends (vs. over the knockout/whole tournament).
 const GROUP_QS = ['q8', 'q9', 'q10'];
 
+// Final-four half credit: right team, wrong slot (q1 25→12, q2 12→6, q3 6→3 each).
+const F4_HALF = { q1: 12, q2: 6, q3: 3 };
+
 // True if a submission's q8 is byte-for-byte the form's default order in every group
 // (i.e. the person never dragged anything). `groups` is data/groups.json.
 function isDefaultGroupOrder(q8, groups) {
@@ -106,7 +109,7 @@ function scoreEntry(answers, key, opts) {
   };
 
   // Exact team / player picks
-  [['q1', POINTS.q1], ['q2', POINTS.q2], ['q4', POINTS.q4], ['q5', POINTS.q5],
+  [['q4', POINTS.q4], ['q5', POINTS.q5],
    ['q6', POINTS.q6], ['q7', POINTS.q7],
    ['q17_player', POINTS.q17], ['q18_player', POINTS.q18], ['q19_player', POINTS.q19],
    ['q20_player', POINTS.q20], ['q21_player', POINTS.q21], ['q22_player', POINTS.q22]].forEach(([qid, max]) => {
@@ -115,13 +118,31 @@ function scoreEntry(answers, key, opts) {
     add(qid, graded_ && keyIncludes(answers[qid], real) ? max : 0, max, graded_);
   });
 
-  // Q3 — two losing semifinalists (order-agnostic, 6 each)
+  // Q1/Q2/Q3 — the Final Four block. Commissioner's half-credit rule (added at the
+  // semis, 7/12): right team, wrong slot still pays HALF — picking the eventual
+  // runner-up as your champion shouldn't score the same as picking Panama. Exact
+  // slot pays full. The form prevented duplicate teams across q1/q2/q3a/q3b, so a
+  // single team can never be credited twice.
+  const finalFour = [key.q1, key.q2, key.q3a, key.q3b].filter(Boolean);
+  [['q1', POINTS.q1, F4_HALF.q1], ['q2', POINTS.q2, F4_HALF.q2]].forEach(([qid, max, half]) => {
+    const real = key[qid];
+    const graded_ = keyIsGraded(real);
+    const pick = answers[qid];
+    const pts = !graded_ ? 0 : keyIncludes(pick, real) ? max : (pick && finalFour.includes(pick) ? half : 0);
+    add(qid, pts, max, graded_);
+  });
+
+  // Q3 — two losing semifinalists (order-agnostic, 6 each; half if the team made
+  // the final four but as a finalist rather than a semifinal loser)
   {
     const realSet = [key.q3a, key.q3b].filter(Boolean);
     const graded_ = realSet.length > 0;
     let pts = 0;
     if (graded_) {
-      [answers.q3a, answers.q3b].filter(Boolean).forEach(p => { if (realSet.includes(p)) pts += POINTS.q3; });
+      [answers.q3a, answers.q3b].filter(Boolean).forEach(p => {
+        if (realSet.includes(p)) pts += POINTS.q3;
+        else if (finalFour.includes(p)) pts += F4_HALF.q3;
+      });
     }
     add('q3', Math.min(pts, POINTS.q3 * 2), POINTS.q3 * 2, graded_);
   }
@@ -261,7 +282,7 @@ function keyHasData(key) {
 // names are already globals on window).
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
-    POINTS, FULL_MAX, NON_Q8_MAX, DEFAULT_GROUP_SCALE, GROUP_QS,
+    POINTS, FULL_MAX, NON_Q8_MAX, DEFAULT_GROUP_SCALE, GROUP_QS, F4_HALF,
     isDefaultGroupOrder, scoreEntry, scoreBracket, bracketScoreOpts, isLateBracket, FIRST_R32_KICKOFF, keyHasData, scoreBand, bandIndexFor, bandRange, keyIncludes, keyIsGraded,
   };
 }

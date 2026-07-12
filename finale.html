@@ -69,6 +69,9 @@
     .sec-sub{width:100%;font-size:.78rem;color:var(--grey-mid);line-height:1.5}
     .sec-body{padding:16px 18px}
 
+    .fn-more{display:block;width:100%;margin-top:12px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--gold);font-family:'Inter',sans-serif;font-weight:600;font-size:.82rem;padding:11px;cursor:pointer}
+    .fn-more:hover{border-color:var(--gold);background:rgba(201,168,76,.06)}
+
     /* gazette */
     .nw-item{display:flex;gap:12px;align-items:flex-start;padding:10px 4px;border-bottom:1px solid var(--border)}
     .nw-item:last-child{border-bottom:none}
@@ -127,11 +130,12 @@
 <div class="wrap" id="app"><div class="spinner"></div></div>
 
 <script src="i18n.js?v=16"></script>
-<script src="scoring.js?v=10"></script>
+<script src="scoring.js?v=11"></script>
 <script>
 let teamsData = {}, entries = [], answerKey = null, liveStats = null, ballStats = null,
     tagsMap = {}, groupsData = {}, bracketStruct = {}, bracketState = {}, lateOverrides = {};
-let fnTag = ''; // tag filter: '' | 'SDC' | 'Lastinger'
+let fnTag = ''; // tag filter: '' | 'SDC' | 'Lastinger' | 'Family'
+let fnExpanded = false; // full field shows top 10 until expanded
 
 async function init() {
   const g = p => fetch(p).then(r => r.ok ? r.json() : null).catch(() => null);
@@ -344,7 +348,8 @@ function honorsHtml(rows){
 }
 
 function fieldHtml(rows){
-  const shown = rows.filter(r=>!fnTag||r.tag===fnTag);
+  const filtered = rows.filter(r=>!fnTag||r.tag===fnTag);
+  const shown = fnExpanded ? filtered : filtered.slice(0, 10);   // top 10 unless expanded
   return `<div class="sec"><div class="sec-head"><span class="sec-accent"></span><h2>${t('fn_field')}</h2>
     <div class="sec-sub">${t('fn_field_sub')}</div></div><div class="sec-body">
     <div class="lb-toggle" id="fn-tags">
@@ -363,6 +368,7 @@ function fieldHtml(rows){
         <span class="tot">${Math.round(r.s.total)}</span>
       </a>`;
     }).join('') || `<div class="empty">${t('lb_empty')}</div>`}
+    ${filtered.length > 10 ? `<button class="fn-more" id="fn-more">${fnExpanded ? t('lb_showless') : `${t('lb_showall')} (${filtered.length})`}</button>` : ''}
   </div></div>`;
 }
 
@@ -399,7 +405,8 @@ function render(){
     honorsHtml(rows) +
     fieldHtml(rows);
   document.querySelectorAll('#fn-tags button').forEach(b=>
-    b.addEventListener('click',()=>{ fnTag=b.dataset.tag; render(); }));
+    b.addEventListener('click',()=>{ fnTag=b.dataset.tag; fnExpanded=false; render(); }));
+  document.getElementById('fn-more')?.addEventListener('click',()=>{ fnExpanded=!fnExpanded; render(); });
 }
 init();
 </script>

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-11T02:00:00+00:00",
+  "updated": "2026-07-12T12:00:00+00:00",
   "provisional": false,
   "group_stage_complete": true,
   "qualifying_third_groups": [
@@ -106,7 +106,8 @@
     "96": "Switzerland",
     "97": "France",
     "98": "Spain",
-    "99": "England"
+    "99": "England",
+    "100": "Argentina"
   },
   "scores_note": "Goals scored by s1/s2 (see bracket.json for who's s1/s2 in each match). 'pens' present only when the shootout, not regulation/ET, decided it.",
   "scores": {
@@ -233,6 +234,10 @@
     "99": {
       "s1": 1,
       "s2": 2
+    },
+    "100": {
+      "s1": 3,
+      "s2": 1
     }
   },
   "results_warnings": []
