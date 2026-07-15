@@ -66,7 +66,11 @@ def scrape_knockout_results(bracket, r32_teams, all_teams):
         elif as_ > hs:
             win = away
         else:  # level after regulation/ET → look for a penalty shootout score
-            pm = re.search(r"\(\s*(\d+)\s*[–\-]\s*(\d+)\s*\)", box.get_text(" ", strip=True))
+            txt = box.get_text(" ", strip=True)
+            pm = re.search(r"\(\s*(\d+)\s*[–\-]\s*(\d+)\s*\)", txt)
+            if not pm and "Penalties" in txt:
+                # footballbox pens: bare "3–4" score cell after the "Penalties" header
+                pm = re.search(r"(\d+)\s*[–\-]\s*(\d+)", txt[txt.find("Penalties"):])
             if not pm:
                 warnings.append(f"undetermined winner: {home} {hs}-{as_} {away} (no pen score found)")
                 continue
@@ -151,6 +155,18 @@ def main():
     all_teams = {t for ts in load("groups.json").values() for t in ts}
     ko_results, ko_warnings = scrape_knockout_results(bracket, r32_teams, all_teams)
 
+    # The scrape may only ADD to what's already recorded — a flaky/partial page must
+    # never erase known winners, and the hand-maintained scores block rides along.
+    try:
+        prev = load("bracket_state.json")
+    except Exception:
+        prev = {}
+    for mid, w in prev.get("results", {}).items():
+        if ko_results.get(mid, w) != w:
+            ko_warnings.append(f"M{mid}: scrape says {ko_results[mid]}, keeping recorded {w} (resolve by hand)")
+        ko_results[mid] = w
+    ko_results = {mid: ko_results[mid] for mid in sorted(ko_results, key=int)}
+
     state = {
         "updated": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "provisional": not complete,
@@ -161,13 +177,18 @@ def main():
         "results": ko_results,           # match# -> winning team (filled as knockouts play)
         "results_warnings": ko_warnings,
     }
+    for k in ("scores_note", "scores"):  # hand-maintained in bracket_state.json (see runbook)
+        if k in prev:
+            state[k] = prev[k]
     (DATA / "bracket_state.json").write_text(json.dumps(state, indent=2, ensure_ascii=False), encoding="utf-8")
 
     filled = sum(1 for v in r32_teams.values() if v["s1"] and v["s2"])
     print(f"bracket_state.json written — {'PROVISIONAL' if not complete else 'FINAL'}")
     print(f"  qualifying 3rd-place groups: {', '.join(qualifying)}  (allocation {'OK' if alloc else 'NOT FOUND'})")
     print(f"  R32 matches fully populated: {filled}/16")
-    print(f"  knockout results scraped: {len(ko_results)}" + (f"  ⚠ {len(ko_warnings)} warning(s)" if ko_warnings else ""))
+    print(f"  knockout results recorded: {len(ko_results)}" + (f"  [{len(ko_warnings)} warning(s)]" if ko_warnings else ""))
+    for w in ko_warnings:
+        print(f"    warning: {w}")
     if args.verbose:
         for mid in sorted(r32_teams, key=int):
             v = r32_teams[mid]
