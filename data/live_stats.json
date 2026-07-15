@@ -1,10 +1,10 @@
 {
-  "updated": "2026-07-14T12:00:00+00:00",
+  "updated": "2026-07-15T21:10:00+00:00",
   "source": "wikipedia",
-  "knockout_note": "Knockout tallies MANUALLY MAINTAINED — use ./deploy.sh --no-scrape. 7/14: SF1 done — France 0-2 Spain (M101, Oyarzabal 22' pen, Porro 58', regulation). Still to play: England-Argentina (M102, Jul 15). Shootouts: 4. ET: 8. knockout_top_scorers = live q22: Mbappe 4, Bellingham 4 (Oyarzabal now 3). Oyarzabal added to top_scorers at 5 (2 group vs KSA + 2 R32 + 1 SF — was missing from the list).",
-  "matches_played": 101,
+  "knockout_note": "Knockout tallies MANUALLY MAINTAINED — use ./deploy.sh --no-scrape. 7/15: SEMIS COMPLETE — SF1 France 0-2 Spain (Oyarzabal 22' pen, Porro 58'); SF2 England 1-2 Argentina (Gordon 55'; Fernandez 85', La. Martinez 90+2'). FINAL: Spain-Argentina (M104) Jul 19; third-place game not scored (no M103). Shootouts: 4. ET: 8. knockout_top_scorers = live q22: Mbappe 4, Bellingham 4 (Oyarzabal 3). q3a/q3b filled: France + England.",
+  "matches_played": 102,
   "group_goals_total": 215,
-  "tournament_goals_total": 294,
+  "tournament_goals_total": 297,
   "penalty_shootouts": 4,
   "extra_time_matches": 8,
   "top_scorers": [
@@ -104,6 +104,11 @@
       "goals": 3
     },
     {
+      "player": "Lautaro Martínez",
+      "team": "Argentina",
+      "goals": 3
+    },
+    {
       "player": "Matheus Cunha",
       "team": "Brazil",
       "goals": 3
@@ -133,9 +138,9 @@
     }
   ],
   "goal_timing": {
-    "goals_counted": 294,
+    "goals_counted": 297,
     "fastest_goal_seconds": 64.0,
-    "added_time_goals": 32
+    "added_time_goals": 33
   },
   "group_stage_complete": true,
   "groups": {
