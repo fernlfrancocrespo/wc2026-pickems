@@ -769,7 +769,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
-<script src="/i18n.js?v=16"></script>
+<script src="/i18n.js?v=18"></script>
 <script src="/scoring.js?v=11"></script>
 <script>
 // ═══════════════════════════════════════ CONFIG
@@ -978,7 +978,7 @@ function applyChrome() {
   const sub = document.getElementById('hdr-subtitle');
   if (sub) sub.textContent = t('subtitle');
   const cl = document.getElementById('countdown-label');
-  if (cl) cl.textContent = t('countdown_label');
+  if (cl) cl.textContent = t(POOL_FINAL ? 'countdown_over' : 'countdown_label');
   const fab = document.getElementById('teams-fab');
   if (fab) fab.textContent = '🏳️ ' + t('fab_teams');
   const navLabel = document.getElementById('nav-board-label');
@@ -1820,6 +1820,7 @@ document.addEventListener('click', (e) => {
 // answer, whether this person got it, and the points. Decided outcomes show as
 // LOCKED; still-in-play ones as LIVE. Additive: if no key data, nothing changes.
 let SCORE_DATA = null; // cached { key, liveSet } so lang re-render needn't refetch
+let POOL_FINAL = false; // answer_key.json "final" master switch (set in loadScoreData)
 let entryView = 'card'; // shared-entry view: 'card' (scorecard) | 'picks' (original submission)
 
 // Entered during the second window with no 22-question picks: the scorecard and
@@ -1895,7 +1896,11 @@ document.addEventListener('click', (e) => {
 async function loadScoreData() {
   if (SCORE_DATA) return SCORE_DATA;
   let ak = {}, ls = null, ball = null;
-  try { ak = (await (await fetch('/data/answer_key.json')).json()).answers || {}; } catch {}
+  try {
+    const akFile = await (await fetch('/data/answer_key.json')).json();
+    ak = (akFile && akFile.answers) || {};
+    POOL_FINAL = !!(akFile && akFile.final);
+  } catch {}
   try { ls = await (await fetch('/data/live_stats.json')).json(); } catch {}
   try { ball = await (await fetch('/data/ball_stats.json')).json(); } catch {}
   const key = JSON.parse(JSON.stringify(ak));
@@ -2014,24 +2019,37 @@ function scRow(qid, bd, key, isLive) {
 
 // Compute this entry's rank by scoring every public entry the same way.
 // `mode`: 'current' ranks by the live total; 'group' ranks by the frozen group-stage-only score.
+// Matches the leaderboard exactly: hidden entries excluded, bracket bonus included.
 async function computeRank(key, myMetric, mode) {
   try {
     const r = await fetch('/api/results'); const d = await r.json();
     if (!d || !d.ok || !d.submissions) return null;
+    const vis = d.submissions.filter(s => !s.hidden);
+    const bRes = (bracketState && bracketState.results) || {};
     let better = 0;
-    d.submissions.forEach(s => {
+    vis.forEach(s => {
       const dg = isDefaultGroupOrder(s.answers.q8, groupsData);
       const sc = scoreEntry(s.answers, key, { defaultGroup: dg });
-      const val = mode === 'group' ? sc.lockedGroup : sc.total;
+      let val = sc.lockedGroup;
+      if (mode !== 'group') {
+        const brk = (typeof scoreBracket === 'function')
+          ? scoreBracket(s.answers.bracket, bracketStruct, bRes, bracketScoreOpts(s, lateOverrides)) : { pts: 0 };
+        val = sc.total + brk.pts;
+      }
       if (val > myMetric + 1e-6) better++;
     });
-    return { rank: better + 1, of: d.submissions.length };
+    return { rank: better + 1, of: vis.length };
   } catch { return null; }
 }
 
 async function renderScorecard() {
   if (!VIEW_MODE) return;
   const { key, live } = await loadScoreData();
+  if (POOL_FINAL) {   // tournament over: the lock chip becomes the trophy chip
+    const cl = document.getElementById('countdown-label'), ct = document.getElementById('countdown');
+    if (cl) cl.textContent = t('countdown_over');
+    if (ct) { ct.textContent = t('countdown_final'); ct.style.color = 'var(--gold)'; }
+  }
   if (!keyHasData({ answers: key })) { renderPage(); setupDrawer(); return; } // pre-tournament: plain picks
   const dg = (typeof isDefaultGroupOrder === 'function') && isDefaultGroupOrder(answers.q8, groupsData);
   const res = scoreEntry(answers, key, { defaultGroup: dg });
@@ -2086,7 +2104,7 @@ async function renderScorecard() {
   const deadTotal = deadQ + brkDead;
   const pend = scMode === 'group' ? 0 : Math.round(res.pendingMax - deadQ + brkInPlay);
   const earnW = scMode === 'group' ? 100 : Math.max(2, Math.round(total / (FULL_MAX + brk.max) * 100));
-  const rankMetric = scMode === 'group' ? res.lockedGroup : res.total;
+  const rankMetric = scMode === 'group' ? res.lockedGroup : res.total + brk.pts;
 
   const app = document.getElementById('app');
   app.innerHTML = '';
@@ -2097,15 +2115,15 @@ async function renderScorecard() {
     `<div class="sc-id"><span class="lbl">${t('sc_entry')}</span><span class="name">${escapeHtml(displayName(answers.name))}</span>` +
       `<button class="btn-make-own own" id="sc-makeown">${bracketWindow() && EDIT_TOKEN ? t('bracket_cta') : t('view_bracket')}</button></div>` +
     `<div class="lb-toggle lb-mode-toggle">` +
-      `<button data-mode="current" class="${scMode === 'current' ? 'on' : ''}">${t('lb_mode_current')}</button>` +
+      `<button data-mode="current" class="${scMode === 'current' ? 'on' : ''}">${t(POOL_FINAL ? 'lb_mode_final' : 'lb_mode_current')}</button>` +
       `<button data-mode="group" class="${scMode === 'group' ? 'on' : ''}">${t('lb_mode_group')}</button>` +
     `</div>` +
     `<div class="sc-hero">` +
-      `<div class="sc-hero-tot"><div class="big">${total}</div><div class="cap">${t('sc_points')}</div><div class="rank" id="sc-rank"></div></div>` +
+      `<div class="sc-hero-tot"><div class="big">${total}</div><div class="cap">${t(POOL_FINAL ? 'sc_points_final' : 'sc_points')}</div><div class="rank" id="sc-rank"></div></div>` +
       `<div class="sc-hero-r">` +
         (scMode === 'group'
           ? `<div class="sc-barlbl"><span>${t('lb_group_note')}</span></div><div class="sc-bar"><div class="e" style="width:100%"></div></div>`
-          : `<div class="sc-barlbl"><span>${t('sc_earned')} ${total}</span><span>${t('sc_inplay')} ${pend}</span></div>` +
+          : `<div class="sc-barlbl"><span>${t('sc_earned')} ${total}</span>${pend > 0 ? `<span>${t('sc_inplay')} ${pend}</span>` : ''}</div>` +
             `<div class="sc-bar"><div class="e" style="width:${earnW}%"></div></div>`) +
         `<div class="sc-mini">` +
           `<div><div class="v">${Math.round(res.lockedGroup)}</div><div class="k">${t('sc_group')}</div></div>` +
@@ -2114,9 +2132,11 @@ async function renderScorecard() {
         `</div></div></div>` +
     `<div class="sc-sec"><span class="h">${t('sc_scored_head')}</span><span class="ln"></span></div>` +
     `<div class="sc-rows" id="sc-scored"></div>` +
-    `<div class="sc-sec"><span class="h" style="color:var(--grey-mid)">${t('sc_pending_head')}</span><span class="ln"></span>` +
-      `<span class="meta">${pend} ${t('sc_pts_inplay')}${deadTotal > 0 ? ` · ${Math.round(deadTotal)} ${t('sc_dead')}` : ''}</span></div>` +
-    `<div class="sc-pend" id="sc-pending"></div>`;
+    (pending.length || pend > 0
+      ? `<div class="sc-sec"><span class="h" style="color:var(--grey-mid)">${t('sc_pending_head')}</span><span class="ln"></span>` +
+          `<span class="meta">${pend} ${t('sc_pts_inplay')}${deadTotal > 0 ? ` · ${Math.round(deadTotal)} ${t('sc_dead')}` : ''}</span></div>` +
+        `<div class="sc-pend" id="sc-pending"></div>`
+      : '');
   app.appendChild(wrap);
 
   const sc = wrap.querySelector('#sc-scored');
@@ -2148,7 +2168,7 @@ async function renderScorecard() {
   const pe = wrap.querySelector('#sc-pending');
   // Live picks first; picks whose team is already out sink to the bottom, struck
   // through, showing only what's actually still winnable (0 for fully dead ones).
-  [...pending].sort((a, b) => (deadFor(a) >= res.breakdown[a].max ? 1 : 0) - (deadFor(b) >= res.breakdown[b].max ? 1 : 0))
+  if (pe) [...pending].sort((a, b) => (deadFor(a) >= res.breakdown[a].max ? 1 : 0) - (deadFor(b) >= res.breakdown[b].max ? 1 : 0))
     .forEach(q => {
       const b = res.breakdown[q], dead = deadFor(q), left = Math.max(0, b.max - dead);
       const cell = document.createElement('div');
@@ -2853,8 +2873,8 @@ function startCountdown() {
         setTimeout(tick, 1000);
         return;
       }
-      el.textContent  = t('countdown_locked');
-      el.style.color  = '#f87171';
+      el.textContent  = POOL_FINAL ? t('countdown_final') : t('countdown_locked');
+      el.style.color  = POOL_FINAL ? 'var(--gold)' : '#f87171';
       const btn = document.getElementById('btn-submit');
       if (btn) { btn.disabled = true; btn.textContent = t('submit_locked'); }
       return;

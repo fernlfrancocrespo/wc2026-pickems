@@ -164,7 +164,7 @@
 
 <div class="wrap" id="app"><div class="spinner"></div></div>
 
-<script src="i18n.js?v=16"></script>
+<script src="i18n.js?v=18"></script>
 <script>
 let teamsData = {}, live = null, bracketStruct = {}, bracketState = {}, entries = [];
 
@@ -188,11 +188,13 @@ async function init(){
 }
 
 function koStarted(){ return !!(bracketState && bracketState.group_stage_complete && bracketState.r32_teams && Object.keys(bracketState.r32_teams).length); }
+function koDone(){ return koStarted() && Object.keys(bracketState.results||{}).length >= 31; }
+function stSubText(){ return koDone() ? t('st_sub_done') : koStarted() ? t('st_sub_ko') : t('st_sub'); }
 
 function applyChrome(){
   document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===getLang()));
   document.getElementById('hdr-tag').textContent = (koStarted()? t('st_title_ko') : t('nav_standings')).toUpperCase();
-  document.getElementById('hdr-sub').textContent = koStarted()? t('st_sub_ko') : t('st_sub');
+  document.getElementById('hdr-sub').textContent = stSubText();
   document.getElementById('nav-board').textContent = t('nav_board');
   document.getElementById('nav-faq').textContent = t('nav_faq');
   document.getElementById('nav-form').textContent = t('nav_form');
@@ -412,7 +414,7 @@ function render(){
   const updated = ko ? bracketState.updated : (live && live.updated);
   let html = `<div class="topline"><div class="pagetitle">${ko?t('st_title_ko'):t('st_title')}</div>
     <div class="updated">${t('st_updated')}: ${updated?new Date(updated).toLocaleString():'—'}</div></div>
-    <div class="pagesub">${ko?t('st_sub_ko'):t('st_sub')}</div>`;
+    <div class="pagesub">${stSubText()}</div>`;
   if (ko) html += bracketHtml() + pulseHtml();
   html += groupsHtml();
   app.innerHTML = html;

@@ -228,7 +228,7 @@
   <div class="spinner"></div>
 </div>
 
-<script src="i18n.js?v=16"></script>
+<script src="i18n.js?v=18"></script>
 <script src="scoring.js?v=11"></script>
 <script>
 let teamsData = {}, results = [], answerKey = null, liveStats = null, ballStats = null, tagsMap = {}, groupsData = {};
@@ -392,7 +392,7 @@ function render() {
       <div class="stat-label">${t('lb_entries')}</div>
     </div>
     <div class="champ-card">
-      <div class="ttl">${leader ? (lbMode === 'group' ? t('lb_leader_group') : t('lb_leader')) : t('lb_champ')}</div>
+      <div class="ttl">${leader ? (lbMode === 'group' ? t('lb_leader_group') : t(answerKey && answerKey.final ? 'lb_leader_final' : 'lb_leader')) : t('lb_champ')}</div>
       <div class="champ-row">
         ${leader ? '' : (champ ? teamFlag(champ[0]) : '')}
         <div>
@@ -416,7 +416,7 @@ function render() {
   const stLink = document.createElement('a');
   stLink.href = '/standings.html';
   stLink.style.cssText = 'display:inline-block;color:var(--gold);font-weight:600;font-size:.85rem;text-decoration:none;margin-bottom:18px';
-  stLink.textContent = t('lb_view_standings');
+  stLink.textContent = t(answerKey && answerKey.final ? 'lb_view_standings_final' : 'lb_view_standings');
   app.appendChild(stLink);
 
   // ── THE LEADERBOARD (ranked, projected/live; tag-filterable) ──
@@ -424,9 +424,9 @@ function render() {
     const sec = section('🏆', t('nav_board'));
     const body = sec.querySelector('.section-body');
     body.innerHTML =
-      `<div style="font-size:.74rem;color:var(--grey-mid);margin-bottom:10px">${lbMode === 'group' ? t('lb_group_note') : t('lb_proj_note')}</div>` +
+      `<div style="font-size:.74rem;color:var(--grey-mid);margin-bottom:10px">${lbMode === 'group' ? t('lb_group_note') : t(answerKey && answerKey.final ? 'lb_final_note' : 'lb_proj_note')}</div>` +
       `<div class="lb-toggle lb-mode-toggle">` +
-        `<button data-mode="current" class="${lbMode === 'current' ? 'on' : ''}">${t('lb_mode_current')}</button>` +
+        `<button data-mode="current" class="${lbMode === 'current' ? 'on' : ''}">${t(answerKey && answerKey.final ? 'lb_mode_final' : 'lb_mode_current')}</button>` +
         `<button data-mode="group" class="${lbMode === 'group' ? 'on' : ''}">${t('lb_mode_group')}</button>` +
       `</div>` +
       `<div class="lb-toggle">` +
