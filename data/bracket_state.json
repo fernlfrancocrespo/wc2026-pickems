@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-15T21:08:15+00:00",
+  "updated": "2026-07-19T21:08:15+00:00",
   "provisional": false,
   "group_stage_complete": true,
   "qualifying_third_groups": [
@@ -110,6 +110,7 @@
     "100": "Argentina",
     "101": "Spain",
     "102": "Argentina"
+    "104": "Spain"
   },
   "results_warnings": [],
   "scores_note": "Goals scored by s1/s2 (see bracket.json for who's s1/s2 in each match). 'pens' present only when the shootout, not regulation/ET, decided it.",
@@ -249,6 +250,10 @@
     "102": {
       "s1": 1,
       "s2": 2
+    }
+    "104": { 
+      "s1": 1, 
+      "s2": 0 
     }
   }
 }

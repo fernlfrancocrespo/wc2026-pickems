@@ -2,11 +2,11 @@
   "updated": "2026-07-15T21:10:00+00:00",
   "source": "wikipedia",
   "knockout_note": "Knockout tallies MANUALLY MAINTAINED — use ./deploy.sh --no-scrape. 7/15: SEMIS COMPLETE — SF1 France 0-2 Spain (Oyarzabal 22' pen, Porro 58'); SF2 England 1-2 Argentina (Gordon 55'; Fernandez 85', La. Martinez 90+2'). FINAL: Spain-Argentina (M104) Jul 19; third-place game not scored (no M103). Shootouts: 4. ET: 8. knockout_top_scorers = live q22: Mbappe 4, Bellingham 4 (Oyarzabal 3). q3a/q3b filled: France + England.",
-  "matches_played": 102,
+  "matches_played": 104,
   "group_goals_total": 215,
-  "tournament_goals_total": 297,
+  "tournament_goals_total": 308,
   "penalty_shootouts": 4,
-  "extra_time_matches": 8,
+  "extra_time_matches": 9,
   "top_scorers": [
     {
       "player": "Lionel Messi",
@@ -16,7 +16,7 @@
     {
       "player": "Kylian Mbappé",
       "team": "France",
-      "goals": 8
+      "goals": 10
     },
     {
       "player": "Erling Haaland",
@@ -31,7 +31,7 @@
     {
       "player": "Jude Bellingham",
       "team": "England",
-      "goals": 6
+      "goals": 7
     },
     {
       "player": "Mikel Oyarzabal",
@@ -46,7 +46,7 @@
     {
       "player": "Ousmane Dembélé",
       "team": "France",
-      "goals": 4
+      "goals": 5
     },
     {
       "player": "Vinícius Júnior",
@@ -138,9 +138,9 @@
     }
   ],
   "goal_timing": {
-    "goals_counted": 297,
+    "goals_counted": 308 ,
     "fastest_goal_seconds": 64.0,
-    "added_time_goals": 33
+    "added_time_goals": 36
   },
   "group_stage_complete": true,
   "groups": {
@@ -830,7 +830,6 @@
     }
   },
   "knockout_top_scorers": [
-    "Kylian Mbappé",
-    "Jude Bellingham"
+    "Kylian Mbappé"
   ]
 }

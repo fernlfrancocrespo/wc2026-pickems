@@ -198,7 +198,7 @@ function computeAll(){
   const rows = entries.filter(e=>!e.hidden).map(e=>{
     const dg = isDefaultGroupOrder(e.answers.q8, groupsData);
     const s = scoreEntry(e.answers, key, { defaultGroup: dg });
-    const brk = scoreBracket(e.answers.bracket, bracketStruct, bResults, bracketScoreOpts(e, lateOverrides));
+    const brk = scoreBracket(e.bracket, bracketStruct, bResults, bracketScoreOpts(e, lateOverrides));
     s.total += brk.pts; s.lockedKO += brk.pts;
     const propsPts = PROP_QS.reduce((a,q)=>a+((s.breakdown[q]&&s.breakdown[q].pts)||0),0);
     let perfect = 0;
@@ -264,9 +264,9 @@ function newsHtml(rows){
   Object.keys(bracketState.results||{}).forEach(mid=>{
     const w = bracketState.results[mid], [a,b] = nwRealPair(mid);
     const l = w === a ? b : a; if (!l) return;
-    const pickers = rows.filter(r=>(r.e.answers.bracket||{})[mid]);
+    const pickers = rows.filter(r=>(r.e.bracket||{})[mid]);
     if (pickers.length < 10) return;
-    const p = Math.round(pickers.filter(r=>r.e.answers.bracket[mid]===w).length / pickers.length * 100);
+    const p = Math.round(pickers.filter(r=>r.e.bracket[mid]===w).length / pickers.length * 100);
     if (!shock || p < shock.p) shock = { p, w, l };
     if (!chalk || p > chalk.p) chalk = { p, w, l };
   });
