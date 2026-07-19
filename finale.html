@@ -127,7 +127,7 @@
 
 <div class="wrap" id="app"><div class="spinner"></div></div>
 
-<script src="i18n.js?v=17"></script>
+<script src="i18n.js?v=18"></script>
 <script src="scoring.js?v=11"></script>
 <script>
 let teamsData = {}, entries = [], answerKey = null, liveStats = null, ballStats = null,
@@ -228,63 +228,148 @@ function nwRealPair(mid){
   if (m.round==='R32'){ const r=(bracketState.r32_teams||{})[mid]||{}; return [r.s1,r.s2]; }
   return [(bracketState.results||{})[String(m.s1.m)], (bracketState.results||{})[String(m.s2.m)]];
 }
+const ordinal = n => getLang()==='pt' ? n+'º'
+  : n + (['th','st','nd','rd'][(n%100-20)%10] || ['th','st','nd','rd'][n%100] || 'th');
+
 function newsHtml(rows){
   const items = [];
+  const fin = isFinal();
   const alive = nwAlive();
   const ak = (answerKey && answerKey.answers) || {};
+  const bRes = (bracketState && bracketState.results) || {};
   const lead = rows[0];
-  items.push(['🏆', F(isFinal() ? 'fn_nw_winner' : 'fn_nw_leader',
-    { name: esc(lead.e.display_name||'anon'), g: Math.round(lead.s.lockedGroup),
+  const nm = r => esc(r.e.display_name||'anon');
+  const qTotal = r => r.s.total - r.brkPts;
+  const hasBracket = r => Object.keys(r.e.answers.bracket||{}).length > 0;
+  items.push(['🏆', F(fin ? 'fn_nw_winner' : 'fn_nw_leader',
+    { name: nm(lead), g: Math.round(lead.s.lockedGroup),
       k: Math.round(lead.s.lockedKO - lead.brkPts), b: Math.round(lead.brkPts) })]);
 
-  // champion picks: the favorite, the fallen, the most popular casualty
+  // ── final-edition stories: how the title was actually decided ──
+  if (fin && rows.length > 1) try {
+    // Re-grade everyone as of the MORNING of the final: strip the answers that were
+    // unknowable before the last day (final result, final scorers, FIFA awards, M104).
+    const prevKey = buildLiveKey();
+    ['q1','q2','q17_player','q19_player','q20_player','q21_player'].forEach(k=>delete prevKey[k]);
+    const prevRes = {...bRes}; delete prevRes['104'];
+    const prevTotal = r => {
+      const dg = isDefaultGroupOrder(r.e.answers.q8, groupsData);
+      return scoreEntry(r.e.answers, prevKey, { defaultGroup: dg }).total +
+             scoreBracket(r.e.answers.bracket, bracketStruct, prevRes, bracketScoreOpts(r.e, lateOverrides)).pts;
+    };
+    const prev = rows.map(r=>({ r, p: prevTotal(r) })).sort((a,b)=>b.p-a.p);
+    const wPrev = prev.findIndex(x=>x.r===rows[0]);
+    const deficit = Math.round(prev[0].p - prev[wPrev].p);
+    const margin = Math.round(rows[0].s.total - rows[1].s.total);
+    if (wPrev > 0 && prev[0].r !== rows[0])
+      items.push(['📸', F('fn_nw_photo', { w: nm(rows[0]), place: ordinal(wPrev+1),
+        lead: deficit, l: nm(prev[0].r), m: margin })]);
+  } catch(e){}
+
+  // the paper champion: best question score, no bracket — what an average bracket was worth
+  if (fin) {
+    const withB = rows.filter(hasBracket), noB = rows.filter(r=>!hasBracket(r));
+    if (withB.length && noB.length && rows.length > 2){
+      const paper = [...noB].sort((a,b)=>qTotal(b)-qTotal(a))[0];
+      const avg = Math.round(withB.reduce((s,r)=>s+r.brkPts,0)/withB.length);
+      const champT = Math.round(rows[0].s.total), thirdT = Math.round(rows[2].s.total);
+      const whatIf = Math.round(qTotal(paper)) + avg;
+      if (Math.round(qTotal(paper)) >= Math.round(Math.max(...rows.map(qTotal)))){
+        const res = whatIf > champT ? 'fn_nw_pk_win' : whatIf >= champT-1 ? 'fn_nw_pk_tie'
+                  : whatIf >= thirdT ? 'fn_nw_pk_podium' : null;
+        if (res) items.push(['🕳️', F('fn_nw_paperking',
+          { name: nm(paper), pts: Math.round(qTotal(paper)), avg, res: t(res) })]);
+      }
+    }
+  }
+
+  // unicorn picks (exactly one person right) + points nobody claimed
+  if (fin) {
+    const EX = [['q1','q1'],['q2','q2'],['q5','q5'],['q6','q6'],['q7','q7'],['q17_player','q17'],
+      ['q18_player','q18'],['q19_player','q19'],['q20_player','q20'],['q21_player','q21'],['q22_player','q22']];
+    let uni = null; const unclaimed = []; let unN = 0, unPts = 0;
+    EX.forEach(([qid, pk])=>{
+      const real = ak[qid]; if (!keyIsGraded(real)) return;
+      const withA = rows.filter(r=>r.e.answers[qid]); if (withA.length < 10) return;
+      const ok = withA.filter(r=>keyIncludes(r.e.answers[qid], real));
+      const isTeam = !qid.includes('player');
+      const disp = Array.isArray(real) ? real.map(v=>isTeam?teamLabel(v):v).join(', ') : (isTeam?teamLabel(real):real);
+      if (ok.length === 0){ unclaimed.push(`${esc(disp)} (${t(pk)})`); unN = Math.max(unN, withA.length); unPts += POINTS[pk]; }
+      else if (ok.length === 1 && (!uni || POINTS[pk] > uni.pts))
+        uni = { name: nm(ok[0]), n: withA.length, disp, label: t(pk), pts: POINTS[pk] };
+    });
+    if (uni) items.push(['🦄', F('fn_nw_unicorn',
+      { name: uni.name, n: uni.n, pick: esc(uni.disp), q: uni.label, pts: uni.pts })]);
+    if (unclaimed.length) items.push(['🙈', F('fn_nw_unclaimed',
+      { n: unN, list: unclaimed.join(' '+t('fn_and')+' '), pts: unPts })]);
+  }
+
+  // who actually drew this final in their bracket
+  if (fin && bRes['101'] && bRes['102'] && bRes['104']){
+    const withB = rows.filter(hasBracket);
+    const called = withB.filter(r=>r.e.answers.bracket['101']===bRes['101'] && r.e.answers.bracket['102']===bRes['102']);
+    const crowned = called.filter(r=>r.e.answers.bracket['104']===bRes['104']);
+    if (called.length && called.length <= withB.length/4)
+      items.push(['🔮', F(crowned.length===called.length ? 'fn_nw_calledfinal_all' : 'fn_nw_calledfinal_some',
+        { n: called.length, t: withB.length, a: teamLabel(bRes['101']), b: teamLabel(bRes['102']),
+          w: teamLabel(bRes['104']), k: crowned.length })]);
+  }
+
+  // champion picks: the favorite (and, pre-final only, the fallen)
   const champs = rows.filter(r=>r.e.answers.q1);
   if (champs.length){
     const tallies = {};
     champs.forEach(r=>{ tallies[r.e.answers.q1]=(tallies[r.e.answers.q1]||0)+1; });
     const [favTeam, favN] = Object.entries(tallies).sort((a,b)=>b[1]-a[1])[0];
-    const favState = (isFinal() && ak.q1 && keyIncludes(favTeam, ak.q1)) ? 'fn_nw_alive_won'
+    const favState = (fin && ak.q1 && keyIncludes(favTeam, ak.q1)) ? 'fn_nw_alive_won'
       : alive(favTeam) ? 'fn_nw_alive_yes' : 'fn_nw_alive_no';
     items.push(['👑', F('fn_nw_fav', { p: Math.round(favN/champs.length*100), team: teamLabel(favTeam),
       alive: t(favState) })]);
-    const deadRows = champs.filter(r=>!alive(r.e.answers.q1));
-    if (deadRows.length){
-      items.push(['🪦', F('fn_nw_dead', { n: deadRows.length, t: champs.length, p: Math.round(deadRows.length/champs.length*100) })]);
-      const dt = {};
-      deadRows.forEach(r=>{ dt[r.e.answers.q1]=(dt[r.e.answers.q1]||0)+1; });
-      const [dTeam, dN] = Object.entries(dt).sort((a,b)=>b[1]-a[1])[0];
-      if (dN >= 2) items.push(['💔', F('fn_nw_popdead', { team: teamLabel(dTeam), n: dN })]);
+    if (!fin){
+      const deadRows = champs.filter(r=>!alive(r.e.answers.q1));
+      if (deadRows.length){
+        items.push(['🪦', F('fn_nw_dead', { n: deadRows.length, t: champs.length, p: Math.round(deadRows.length/champs.length*100) })]);
+        const dt = {};
+        deadRows.forEach(r=>{ dt[r.e.answers.q1]=(dt[r.e.answers.q1]||0)+1; });
+        const [dTeam, dN] = Object.entries(dt).sort((a,b)=>b[1]-a[1])[0];
+        if (dN >= 2) items.push(['💔', F('fn_nw_popdead', { team: teamLabel(dTeam), n: dN })]);
+      }
     }
   }
 
   // bracket shock + chalk among decided matches (min 10 pickers so it means something)
   let shock = null, chalk = null;
-  Object.keys(bracketState.results||{}).forEach(mid=>{
-    const w = bracketState.results[mid], [a,b] = nwRealPair(mid);
+  Object.keys(bRes).forEach(mid=>{
+    const w = bRes[mid], [a,b] = nwRealPair(mid);
     const l = w === a ? b : a; if (!l) return;
     const pickers = rows.filter(r=>(r.e.answers.bracket||{})[mid]);
     if (pickers.length < 10) return;
-    const p = Math.round(pickers.filter(r=>r.e.answers.bracket[mid]===w).length / pickers.length * 100);
-    if (!shock || p < shock.p) shock = { p, w, l };
+    const ok = pickers.filter(r=>r.e.answers.bracket[mid]===w).length;
+    const p = Math.round(ok / pickers.length * 100);
+    if (!shock || p < shock.p) shock = { p, w, l, ok, n: pickers.length };
     if (!chalk || p > chalk.p) chalk = { p, w, l };
   });
-  if (shock) items.push(['🚨', F('fn_nw_upset', { p: shock.p, q: 100-shock.p, w: teamLabel(shock.w), l: teamLabel(shock.l) })]);
+  if (shock) items.push(shock.ok === 0
+    ? ['🚨', F('fn_nw_upset0', { n: shock.n, w: teamLabel(shock.w), l: teamLabel(shock.l) })]
+    : ['🚨', F('fn_nw_upset',  { p: shock.p, q: 100-shock.p, w: teamLabel(shock.w), l: teamLabel(shock.l) })]);
   if (chalk && chalk.p > (shock ? shock.p : 0)) items.push(['🧊', F('fn_nw_chalk', { p: chalk.p, w: teamLabel(chalk.w), l: teamLabel(chalk.l) })]);
 
   // the hosts' synchronized exit
   if (Array.isArray(ak.q4) && ak.q4.length === 3) items.push(['🤝', t('fn_nw_hosts')]);
 
-  // best call / collective whiff among officially graded picks
-  const graded = ['q4','q5','q6','q10'].filter(q => Array.isArray(ak[q]) ? ak[q].length : (ak[q] != null && ak[q] !== ''));
-  const pcts = graded.map(q => {
-    const withA = rows.filter(r=>r.e.answers[q]);
-    if (withA.length < 10) return null;
-    const ok = withA.filter(r => Array.isArray(ak[q]) ? ak[q].includes(r.e.answers[q]) : r.e.answers[q] === ak[q]).length;
-    return { q, p: Math.round(ok/withA.length*100) };
-  }).filter(Boolean).sort((a,b)=>b.p-a.p);
-  if (pcts.length >= 2){
-    items.push(['🎯', F('fn_nw_ace',   { q: t(pcts[0].q), p: pcts[0].p })]);
-    items.push(['🙈', F('fn_nw_whiff', { q: t(pcts[pcts.length-1].q), p: pcts[pcts.length-1].p })]);
+  // pre-final only: best call / collective whiff among the early-graded picks
+  if (!fin){
+    const graded = ['q4','q5','q6','q10'].filter(q => Array.isArray(ak[q]) ? ak[q].length : (ak[q] != null && ak[q] !== ''));
+    const pcts = graded.map(q => {
+      const withA = rows.filter(r=>r.e.answers[q]);
+      if (withA.length < 10) return null;
+      const ok = withA.filter(r => Array.isArray(ak[q]) ? ak[q].includes(r.e.answers[q]) : r.e.answers[q] === ak[q]).length;
+      return { q, p: Math.round(ok/withA.length*100) };
+    }).filter(Boolean).sort((a,b)=>b.p-a.p);
+    if (pcts.length >= 2){
+      items.push(['🎯', F('fn_nw_ace',   { q: t(pcts[0].q), p: pcts[0].p })]);
+      items.push(['🙈', F('fn_nw_whiff', { q: t(pcts[pcts.length-1].q), p: pcts[pcts.length-1].p })]);
+    }
   }
 
   return `<div class="sec"><div class="sec-head"><span class="sec-accent"></span><h2>${t('fn_news')}</h2>
@@ -398,6 +483,7 @@ function render(){
        <div class="chip"><div class="n">${rows.length}</div><div class="l">${t('lb_entries')}</div></div>
        ${champPct != null ? `<div class="chip"><div class="n">${champPct}%</div><div class="l">${t('fn_picked_champ')}</div></div>` : ''}
        <div class="chip"><div class="n">${Math.round(rows[0].s.total)}</div><div class="l">${t('lb_pts_short')} · ${esc(rows[0].e.display_name||'anon')}</div></div>
+       ${fin && rows.length > 1 ? `<div class="chip"><div class="n">${Math.round(rows[0].s.total - rows[1].s.total)}</div><div class="l">${t('fn_chip_margin')}</div></div>` : ''}
      </div>` +
     newsHtml(rows) +
     honorsHtml(rows) +
