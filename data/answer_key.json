@@ -1,7 +1,7 @@
 {
   "updated": "2026-07-19",
   "final": true,
-  "note": "Host-maintained truth for grading pick-ems. Fill values in as outcomes are known; nulls are 'not graded yet'. q8 = real final group order per letter. q3a/q3b = the two losing semifinalists (order-agnostic). q4 is an ARRAY here on purpose — all three host nations (Mexico, Canada, USA) were eliminated in the Round of 16, a genuine 3-way tie for furthest-advancing host, so anyone who picked any of the three is correct (see scoring.js keyIncludes/keyIsGraded).",
+  "note": "Host-maintained truth for grading pick-ems. Fill values in as outcomes are known; nulls are 'not graded yet'. q8 = real final group order per letter (copied verbatim from live_stats.json final tables so run-eval.js and the site grade from the same official key). q3a/q3b = the two losing semifinalists (order-agnostic). q4 is an ARRAY here on purpose — all three host nations (Mexico, Canada, USA) were eliminated in the Round of 16, a genuine 3-way tie for furthest-advancing host, so anyone who picked any of the three is correct (see scoring.js keyIncludes/keyIsGraded).",
   "answers": {
     "q1": "Spain",
     "q2": "Argentina",
@@ -18,7 +18,80 @@
       "Australia"
     ],
     "q7": "Paraguay",
-    "q8": {},
+    "q8": {
+      "A": [
+        "Mexico",
+        "South Africa",
+        "South Korea",
+        "Czechia"
+      ],
+      "B": [
+        "Switzerland",
+        "Canada",
+        "Bosnia and Herzegovina",
+        "Qatar"
+      ],
+      "C": [
+        "Brazil",
+        "Morocco",
+        "Scotland",
+        "Haiti"
+      ],
+      "D": [
+        "United States",
+        "Australia",
+        "Paraguay",
+        "Türkiye"
+      ],
+      "E": [
+        "Germany",
+        "Ivory Coast",
+        "Ecuador",
+        "Curaçao"
+      ],
+      "F": [
+        "Netherlands",
+        "Japan",
+        "Sweden",
+        "Tunisia"
+      ],
+      "G": [
+        "Belgium",
+        "Egypt",
+        "Iran",
+        "New Zealand"
+      ],
+      "H": [
+        "Spain",
+        "Cape Verde",
+        "Uruguay",
+        "Saudi Arabia"
+      ],
+      "I": [
+        "France",
+        "Norway",
+        "Senegal",
+        "Iraq"
+      ],
+      "J": [
+        "Argentina",
+        "Austria",
+        "Algeria",
+        "Jordan"
+      ],
+      "K": [
+        "Colombia",
+        "Portugal",
+        "DR Congo",
+        "Uzbekistan"
+      ],
+      "L": [
+        "England",
+        "Croatia",
+        "Ghana",
+        "Panama"
+      ]
+    },
     "q9": 215,
     "q10": "Yes",
     "q11": 308,
@@ -27,11 +100,13 @@
     "q14": 36,
     "q15": 31.23,
     "q16": 64.0,
-    "q17_player": "Lionel Messi",
+    "q17_player": "Rodri",
     "q18_player": "Kylian Mbappé",
-    "q19_player": "Lamine Yamal",
+    "q19_player": "Pau Cubarsí",
     "q20_player": "Unai Simón",
-    "q21_player": ["Ferran Torres"],
+    "q21_player": [
+      "Ferran Torres"
+    ],
     "q22_player": "Kylian Mbappé"
   }
 }

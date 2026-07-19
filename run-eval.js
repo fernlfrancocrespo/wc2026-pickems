@@ -18,7 +18,7 @@
  * ========================================================================== */
 const fs = require('fs');
 const path = require('path');
-const { scoreEntry, isDefaultGroupOrder, scoreBracket, isLateBracket, FULL_MAX, DEFAULT_GROUP_SCALE,
+const { scoreEntry, isDefaultGroupOrder, scoreBracket, bracketScoreOpts, FULL_MAX, DEFAULT_GROUP_SCALE,
         bandIndexFor } = require('./scoring.js');
 
 // Band option lists (mirror scoring.js BAND_OPTS) for the "which band is winning" view.
@@ -86,18 +86,24 @@ const tagOf = (r) => tags[r.slug] || tags[(r.email || '').toLowerCase()] || '';
 // ---- score ------------------------------------------------------------------
 const bracketStruct = readJSON('data/bracket.json', {});
 const bracketResults = (readJSON('data/bracket_state.json', {}) || {}).results || {};
+const lateOverrides = readJSON('data/late_entrants.json', {});
 let entries = rows.map((r) => {
   const a = JSON.parse(r.payload);
   const defaultGroup = isDefaultGroupOrder(a.q8, groups);
   const s = scoreEntry(a, key, { defaultGroup });
-  const late = isLateBracket(r.created_at);
-  const brk = scoreBracket(a.bracket, bracketStruct, bracketResults, { lateSfBonus: late ? 1 : 0 });
+  // Same per-entry bracket options as the site (date-based late bonus + one-off overrides).
+  const brk = scoreBracket(a.bracket, bracketStruct, bracketResults, bracketScoreOpts(r, lateOverrides));
   s.total += brk.pts; s.lockedKO += brk.pts; s.bracketPts = brk.pts;   // bracket bonus on top
   return {
     name: r.name, handle: r.display_name, slug: r.slug, tag: tagOf(r),
     defaultGroup, picks: a, created_at: r.created_at, ...s,
   };
 });
+
+// The site never ranks hidden entries — exclude them here too so this referee
+// matches the leaderboard/finale row-for-row.
+const hiddenCount = entries.filter((e) => e.picks.hidden).length;
+entries = entries.filter((e) => !e.picks.hidden);
 
 if (tagFilter) entries = entries.filter((e) => e.tag.toLowerCase() === tagFilter.toLowerCase());
 
@@ -111,7 +117,8 @@ const pct = (e) => (e.graded > 0 ? Math.round((e.total / e.graded) * 100) + '%' 
 
 console.log(`\nWORLD CUP 2026 PICK-'EMS — current standings`);
 if (projNote) console.log(projNote);
-console.log(`entries: ${entries.length}${tagFilter ? `  ·  tag: ${tagFilter}` : ''}` +
+console.log(`entries: ${entries.length}${hiddenCount ? ` (+${hiddenCount} hidden, excluded like the site)` : ''}` +
+            `${tagFilter ? `  ·  tag: ${tagFilter}` : ''}` +
             `  ·  graded so far: ${anyGraded ? 'partial' : 'NONE (answer key still empty)'}`);
 console.log(`default-group (rebalanced ×${DEFAULT_GROUP_SCALE.toFixed(2)}): ` +
             entries.filter((e) => e.defaultGroup).length + ` of ${entries.length}\n`);

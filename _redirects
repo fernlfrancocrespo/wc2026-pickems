@@ -1,3 +1,7 @@
+# Tournament over: the finale (final results) page IS the home page now.
+# The old entry form (index.html) is still served for /p/<slug> pick views below.
+/ /finale.html 200
+
 # Pretty share links: /p/<slug> serves the app (URL stays /p/<slug>), which then
 # looks the entry up via /api/entry?slug=<slug> and renders it read-only.
 /p/* /index.html 200
